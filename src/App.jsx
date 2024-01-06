@@ -8,7 +8,6 @@ function App() {
     <BrowserRouter>
       <>
         <AppClientRouter routes={routes} />
-        <div>sdsd</div>
       </>
     </BrowserRouter>
   );
