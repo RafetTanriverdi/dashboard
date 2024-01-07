@@ -5,12 +5,12 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom/dist/index.js";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { routes } from "./Routes/routes.js";
-import * as jose from 'jose'
+import { jwtDecode } from "jwt-decode";
 
 const queryClient = new QueryClient();
-
-const accessToken =localStorage.getItem("accessToken");
-
+const token = localStorage.getItem("accessToken");
+const decoded = jwtDecode(token);
+console.log(decoded);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter routes={routes}>
