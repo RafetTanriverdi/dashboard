@@ -1,32 +1,42 @@
 import { Button, Menu } from "antd";
-import React from "react";
-import { routes } from "../../Routes/routes";
+import { getRoutePath, routes } from "../../Routes/routes";
 import { NavLink } from "react-router-dom";
+import { signOut } from "aws-amplify/auth";
+import { Amplify } from "aws-amplify";
+import awsmobile from "@/Authentication/aws-exports";
+import { useNavigate } from "react-router-dom";
+import { ROUTES_ID } from "../../Routes/routes-id";
 
-const SignOut = () => {
-  return (
-    <Button onClick={() => alert("Sign Out Successfully !")}>Sign Out</Button>
-  );
-};
-
-const menu = routes
-  .filter((e) => e.isPublic === false)
-  .map((e) => {
-    return {
-      key: e.id,
-      label: <NavLink to={e.path}>{e.title}</NavLink>,
-    };
-  });
-const signOut = [
-  {
-    key: "signOut",
-    label: <SignOut />,
-  },
-];
-
-const combinedMenu = [...menu, ...signOut];
+Amplify.configure(awsmobile);
 
 const RTSider = () => {
+  const navigate = useNavigate();
+  const handleSignOut = async () => {
+    await signOut();
+    localStorage.removeItem("accessToken");
+    navigate(getRoutePath(ROUTES_ID.home));
+  };
+
+  const SignOut = () => {
+    return <Button onClick={handleSignOut}>Sign Out</Button>;
+  };
+
+  const menu = routes
+    .filter((e) => e.isPublic === false)
+    .map((e) => {
+      return {
+        key: e.id,
+        label: <NavLink to={e.path}>{e.title}</NavLink>,
+      };
+    });
+  const signOutd = [
+    {
+      key: "signOut",
+      label: <SignOut />,
+    },
+  ];
+
+  const combinedMenu = [...menu, ...signOutd];
   return (
     <Menu
       theme="dark"
