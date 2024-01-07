@@ -2,14 +2,36 @@ import { NavLink } from "react-router-dom";
 import { getRoutePath } from "../../Routes/routes";
 import { ROUTES_ID } from "../../Routes/routes-id";
 import { Space } from "antd";
+import './RTHeader.scss'
 
 const Pages = () => {
   return (
-    <div>
-      <Space>
-        <NavLink to={getRoutePath(ROUTES_ID.home)} className={({isActive})=>isActive?'active-link':''} >Home</NavLink>
-        <NavLink to={getRoutePath(ROUTES_ID.login)} className={({isActive})=>isActive?'active-link':''} >Login</NavLink>
-        <NavLink to={getRoutePath(ROUTES_ID.register)} className={({isActive})=>isActive?'active-link':''} >Register</NavLink>
+    <div >
+      <Space className="link-container" >
+        <NavLink
+          to={getRoutePath(ROUTES_ID.home)}
+          className={({ isActive }) => (isActive ? "active-link" : "active")}
+        >
+          Home
+        </NavLink>
+        <NavLink
+          to={getRoutePath(ROUTES_ID.login)}
+          className={({ isActive }) => (isActive ? "active-link" : "active")}
+        >
+          Login
+        </NavLink>
+        <NavLink
+          to={getRoutePath(ROUTES_ID.register)}
+          className={({ isActive }) => (isActive ? "active-link" : "active")}
+        >
+          Register
+        </NavLink>
+        <NavLink
+          to={getRoutePath(ROUTES_ID.contact)}
+          className={({ isActive }) => (isActive ? "active-link" : "active")}
+        >
+          Contact
+        </NavLink>
       </Space>
     </div>
   );

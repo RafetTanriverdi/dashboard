@@ -10,7 +10,7 @@ const PageLoading = () => {
         justifyContent: "center",
         height: "100vh",
         width: "100vw",
-        background:'transparent'
+        background:'#F5F5F5'
       }}
     >
       <Spin tip="Loading..." size="large">

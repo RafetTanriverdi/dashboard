@@ -1,10 +1,13 @@
-/* eslint-disable no-unused-vars */
-import React from 'react'
+import PublicLayout from "../../Layout/PublicLayout/PublicLayout";
+import RTHeader from "../../Components/RTHeader/RTHeader";
 
+const RegisterPageContainer = () => {
+  return <div>RegisterPage</div>;
+};
 const RegisterPage = () => {
   return (
-    <div>RegisterPage</div>
-  )
-}
+    <PublicLayout header={<RTHeader />} content={<RegisterPageContainer />} />
+  );
+};
 
-export default RegisterPage
+export default RegisterPage;

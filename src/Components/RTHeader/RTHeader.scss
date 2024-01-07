@@ -1,7 +1,12 @@
-.active-link {
-  color: "white";
-}
+.link-container {
+  width: 100%;
+  justify-content: flex-end;
 
-.link {
-  color: "black";
+  .active-link {
+    color: white !important;
+  }
+
+  .link {
+    color: "black";
+  }
 }

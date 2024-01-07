@@ -24,6 +24,13 @@ export const routes = [
     modulePath: "RegisterPage/RegisterPage",
     isPublic: true,
   },
+  {
+    id: ROUTES_ID.contact,
+    path: "/contact",
+    title: "Contact",
+    modulePath: "ContactPage/ContactPage",
+    isPublic: true,
+  },
 
   //private routes
   {
@@ -48,42 +55,42 @@ export const routes = [
     isPublic: false,
   },
   {
-    id: ROUTES_ID.categories,	
+    id: ROUTES_ID.categories,
     path: "/categories",
     title: "Categories",
     modulePath: "CategoriesPage/CategoriesPage",
     isPublic: false,
   },
   {
-    id: ROUTES_ID.myProfilePage,	
+    id: ROUTES_ID.myProfilePage,
     path: "/my-profile",
     title: "Profile",
     modulePath: "MyProfilePage/MyProfilePage",
     isPublic: false,
   },
   {
-    id: ROUTES_ID.manageTeamMembers,	
+    id: ROUTES_ID.manageTeamMembers,
     path: "/manage-team",
     title: "Manage Team",
     modulePath: "ManageTeamMembersPage/ManageTeamMembersPage",
     isPublic: false,
   },
   {
-    id: ROUTES_ID.calendar,	
+    id: ROUTES_ID.calendar,
     path: "/calendar",
     title: "Calendar",
     modulePath: "CalendarPage/CalendarPage",
     isPublic: false,
   },
   {
-    id: ROUTES_ID.feedback,	
+    id: ROUTES_ID.feedback,
     path: "/feedback",
     title: "Feedback",
     modulePath: "FeedbackPage/FeedbackPage",
     isPublic: false,
   },
   {
-    id: ROUTES_ID.faq,	
+    id: ROUTES_ID.faq,
     path: "/faq",
     title: "FAQ",
     modulePath: "FAQPage/FAQPage",
