@@ -11,8 +11,8 @@ jobs:
    steps:
      - name: Git clone the repository
        uses: actions/checkout@v3
-     - name: configure aws credentials
-       uses: aws-actions/configure-aws-credentials@v1.7.0
+     #- name: configure aws credentials
+       #uses: aws-actions/configure-aws-credentials@v1.7.0
        
      - name: Setup node
        uses: actions/setup-node@v2
