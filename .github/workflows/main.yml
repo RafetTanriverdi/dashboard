@@ -4,7 +4,15 @@ on:
  push:
    branches:
      - main
-
+version: 1
+env:
+  variables:
+    key: value
+backend:
+  phases:
+    build:
+      commands:
+        - amplifyPush --simple
 jobs:
  Deploy:
    runs-on: ubuntu-latest
