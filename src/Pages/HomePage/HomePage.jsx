@@ -3,7 +3,7 @@ import React from "react";
 
 import { signIn } from "aws-amplify/auth";
 import { Amplify } from "aws-amplify";
-import awsmobile from "../../aws-exports";
+import awsmobile from "../../Authentication/aws-exports";
 import { signOut } from "aws-amplify/auth";
 import { fetchAuthSession } from "aws-amplify/auth";
 import { useNavigate } from "react-router-dom";
