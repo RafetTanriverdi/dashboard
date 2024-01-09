@@ -2,7 +2,17 @@ import PropTypes from "prop-types";
 import { Form } from "antd";
 import { Input } from "antd";
 
-const Text = ({ label, name, required, onChange, value, defaultValue,className }) => {
+
+const Text = ({
+  label,
+  name,
+  required,
+  onChange,
+  value,
+  defaultValue,
+  className,
+  placeholder,
+}) => {
   return (
     <Form.Item
       label={label}
@@ -14,7 +24,13 @@ const Text = ({ label, name, required, onChange, value, defaultValue,className }
         },
       ]}
     >
-      <Input onChange={onChange} value={value} defaultValue={defaultValue} className={className}/>
+      <Input
+        onChange={onChange}
+        value={value}
+        defaultValue={defaultValue}
+        className={className}
+        placeholder={placeholder}
+      />
     </Form.Item>
   );
 };
@@ -27,6 +43,7 @@ Text.propTypes = {
   value: PropTypes.func,
   defaultValue: PropTypes.func,
   className: PropTypes.string,
+  placeholder: PropTypes.string,
 };
 
 export default Text;

@@ -2,20 +2,23 @@
 import React from "react";
 import PublicLayout from "../../Layout/PublicLayout/PublicLayout";
 import RTHeader from "../../Components/RTHeader/RTHeader";
-import { Form } from "antd";
+import { Button, Form } from "antd";
 import { RTInput } from "../../Components/RTInput";
-import './LoginPage.scss'
+import "./LoginPage.scss";
 import { Card } from "antd";
-
+import { Space } from "antd";
 
 const LoginPageContainer = () => {
   return (
-    <Form className="login-container"> 
-    <Card style={{background:'#828282'}} >
-
-      <RTInput.text className='input'/>
-      <RTInput.password className='input'/>
-    </Card>
+    <Form className="login-container">
+      <Card className="card-container" title='Login' >
+        <RTInput.text className="input" />
+        <RTInput.password className="input" />
+        <Space>
+          <Button type="primary">Login </Button>
+          <Button type="link">Register </Button>
+        </Space>
+      </Card>
     </Form>
   );
 };

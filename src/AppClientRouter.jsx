@@ -10,7 +10,7 @@ const AppClientRouter = ({ routes, ...props }) => {
   console.log(routes);
   const renderRoute = (el) => {
     const PageComp = React.lazy(() =>
-      import(/* @vite-ignore */ `./Pages/${el.modulePath}`)
+      import( `./Pages/AliasPath/${el.fileName}.jsx`)
     );
 
     //404, Privacy, Support Ananymous and Login User see at the same time..

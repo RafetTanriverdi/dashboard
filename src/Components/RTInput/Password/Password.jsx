@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { Form } from "antd";
 import { Input } from "antd";
 
-const Password = ({ label, name, required, onChange, value, defaultValue,className }) => {
+const Password = ({ label, name, required, onChange, value, defaultValue,className ,placeholder}) => {
   return (
     <Form.Item
       label={label}
@@ -19,6 +19,7 @@ const Password = ({ label, name, required, onChange, value, defaultValue,classNa
         value={value}
         defaultValue={defaultValue}
         className={className}
+        placeholder={placeholder}
       />
     </Form.Item>
   );
@@ -32,6 +33,7 @@ Password.propTypes = {
   value: PropTypes.func,
   defaultValue: PropTypes.func,
   className: PropTypes.string,
+  placeholder:PropTypes.string,
 };
 
 export default Password;

@@ -3,7 +3,7 @@ import { getRoutePath, routes } from "../../Routes/routes";
 import { NavLink } from "react-router-dom";
 import { signOut } from "aws-amplify/auth";
 import { Amplify } from "aws-amplify";
-import awsmobile from "@/Authentication/aws-exports";
+import awsmobile from "@rt/Authentication/aws-exports";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_ID } from "../../Routes/routes-id";
 

@@ -1,5 +1,3 @@
-// eslint-disable-next-line no-unused-vars
-import React from "react";
 import MainLayout from "../../Layout/MainLayout/MainLayout";
 import RTSider from "../../Components/RTSider/RTSider";
 

@@ -1,6 +1,8 @@
 import { ROUTES_ID } from "./routes-id";
 import { flatRoutes } from "./routes-util";
 
+
+
 export const routes = [
   //public routes
   {
@@ -8,6 +10,7 @@ export const routes = [
     path: "/",
     title: "Home",
     modulePath: "HomePage/HomePage",
+    fileName:'HomePageAlias',
     isPublic: true,
   },
   {
@@ -15,6 +18,7 @@ export const routes = [
     path: "/login",
     title: "Login",
     modulePath: "LoginPage/LoginPage",
+    fileName: "LoginPageAlias",
     isPublic: true,
   },
   {
@@ -22,6 +26,7 @@ export const routes = [
     path: "/register",
     title: "Register",
     modulePath: "RegisterPage/RegisterPage",
+    fileName: "RegisterPageAlias",
     isPublic: true,
   },
   {
@@ -29,6 +34,7 @@ export const routes = [
     path: "/contact",
     title: "Contact",
     modulePath: "ContactPage/ContactPage",
+    fileName: "ContactPageAlias",
     isPublic: true,
   },
 
@@ -38,6 +44,7 @@ export const routes = [
     path: "/dashboard",
     title: "Dashboard",
     modulePath: "DashboardPage/DashboardPage",
+    fileName: "DashboardPageAlias",
     isPublic: false,
   },
   {
@@ -45,6 +52,7 @@ export const routes = [
     path: "/customers",
     title: "Customers",
     modulePath: "CustomersPage/CustomersPage",
+    fileName: "CustomersPageAlias",
     isPublic: false,
   },
   {
@@ -52,6 +60,7 @@ export const routes = [
     path: "/products",
     title: "Products",
     modulePath: "ProductsPage/ProductsPage",
+    fileName: "ProductsPageAlias",
     isPublic: false,
   },
   {
@@ -59,6 +68,7 @@ export const routes = [
     path: "/categories",
     title: "Categories",
     modulePath: "CategoriesPage/CategoriesPage",
+    fileName: "CategoriesPageAlias",
     isPublic: false,
   },
   {
@@ -66,6 +76,7 @@ export const routes = [
     path: "/my-profile",
     title: "Profile",
     modulePath: "MyProfilePage/MyProfilePage",
+    fileName: "MyProfilePageAlias",
     isPublic: false,
   },
   {
@@ -73,6 +84,7 @@ export const routes = [
     path: "/manage-team",
     title: "Manage Team",
     modulePath: "ManageTeamMembersPage/ManageTeamMembersPage",
+    fileName: "ManageTeamMembersPageAlias",
     isPublic: false,
   },
   {
@@ -80,6 +92,7 @@ export const routes = [
     path: "/calendar",
     title: "Calendar",
     modulePath: "CalendarPage/CalendarPage",
+    fileName: "CalendarPageAlias",
     isPublic: false,
   },
   {
@@ -87,6 +100,7 @@ export const routes = [
     path: "/feedback",
     title: "Feedback",
     modulePath: "FeedbackPage/FeedbackPage",
+    fileName: "FeedbackPageAlias",
     isPublic: false,
   },
   {
@@ -94,6 +108,7 @@ export const routes = [
     path: "/faq",
     title: "FAQ",
     modulePath: "FAQPage/FAQPage",
+    fileName: "FAQPageAlias",
     isPublic: false,
   },
 ];

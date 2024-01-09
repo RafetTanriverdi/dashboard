@@ -1,4 +1,3 @@
-import React from 'react'
 import RTSider from '../../Components/RTSider/RTSider'
 import MainLayout from '../../Layout/MainLayout/MainLayout'
 
