@@ -3,7 +3,7 @@ import React from "react";
 
 import { signIn } from "aws-amplify/auth";
 import { Amplify } from "aws-amplify";
-import awsmobile from "../../Authentication/aws-exports";
+import config from '../../Authentication/amplifyconfiguration.json';
 import { signOut } from "aws-amplify/auth";
 import { fetchAuthSession } from "aws-amplify/auth";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,7 @@ import { getRoutePath } from "../../Routes/routes";
 import PublicLayout from "../../Layout/PublicLayout/PublicLayout";
 import RTHeader from "../../Components/RTHeader/RTHeader";
 
-Amplify.configure(awsmobile);
+Amplify.configure(config);
 
 const HomePageContainer = () => {
   const username = "by.rafet.tanriverdi@gmail.com";
