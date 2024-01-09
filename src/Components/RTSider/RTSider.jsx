@@ -2,12 +2,9 @@ import { Button, Menu } from "antd";
 import { getRoutePath, routes } from "../../Routes/routes";
 import { NavLink } from "react-router-dom";
 import { signOut } from "aws-amplify/auth";
-import { Amplify } from "aws-amplify";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_ID } from "../../Routes/routes-id";
-import config from "../../Authentication/amplifyconfiguration.json";
 
-Amplify.configure(config);
 
 const RTSider = () => {
   const navigate = useNavigate();

@@ -6,11 +6,7 @@ on:
      - main
 version: 1
 
-backend:
-  phases:
-    build:
-      commands:
-        - amplifyPush --simple
+
 jobs:
  Deploy:
    runs-on: ubuntu-latest
