@@ -1,5 +1,5 @@
 {
-  "name": "dashboard",
+  "name": "dashboard-2",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,19 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@ant-design/icons": "^5.2.6",
-    "@tanstack/react-query": "^5.17.8",
-    "antd": "^5.12.7",
-    "aws-amplify": "^6.0.10",
-    "axios": "^1.6.3",
-    "jwt-decode": "^4.0.0",
-    "path-to-regexp": "^6.2.1",
-    "prop-types": "^15.8.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.21.1",
-    "reset-css": "^5.0.2",
-    "sass": "^1.69.6"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
