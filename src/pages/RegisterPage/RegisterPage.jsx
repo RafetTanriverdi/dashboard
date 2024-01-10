@@ -7,6 +7,7 @@ import { useState } from "react";
 import { signUp } from "aws-amplify/auth";
 import { Amplify } from "aws-amplify";
 import awsExports from "../../authentication/aws-exports";
+import { RTInput } from "../../components/RTInput";
 
 Amplify.configure(awsExports);
 const RegisterPageContainer = () => {
