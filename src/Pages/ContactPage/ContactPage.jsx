@@ -1,5 +1,5 @@
-import PublicLayout from "../../Layout/PublicLayout/PublicLayout";
-import RTHeader from "../../Components/RTHeader/RTHeader";
+import PublicLayout from "../../layout/PublicLayout/PublicLayout";
+import RTHeader from "../../components/RTHeader/RTHeader";
 
 const ContactPageContainer = () => {
   return <div>ContactPage</div>;

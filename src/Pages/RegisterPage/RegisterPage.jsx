@@ -1,5 +1,5 @@
-import PublicLayout from "../../Layout/PublicLayout/PublicLayout";
-import RTHeader from "../../Components/RTHeader/RTHeader";
+import PublicLayout from "../../layout/PublicLayout/PublicLayout";
+import RTHeader from "../../components/RTHeader/RTHeader";
 import { Button, Form } from "antd";
 import { RTInput } from "../../Components/RTInput";
 import { Card } from "antd";
@@ -7,7 +7,7 @@ import "./RegisterPage.scss";
 import { useState } from "react";
 import { signUp } from "aws-amplify/auth";
 import { Amplify } from "aws-amplify";
-import awsExports from "@rt/Authentication/aws-exports";
+import awsExports from "../../authentication/aws-exports.js";
 
 Amplify.configure(awsExports);
 const RegisterPageContainer = () => {

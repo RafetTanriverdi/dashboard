@@ -1,6 +1,5 @@
-import MainLayout from "../../Layout/MainLayout/MainLayout";
-import RTSider from "../../Components/RTSider/RTSider";
-
+import RTSider from '../../components/RTSider/RTSider'
+import MainLayout from '../../layout/MainLayout/MainLayout'
 const DashboardPageContainer = () => {
   return(
     <div>Dashboard Page</div>

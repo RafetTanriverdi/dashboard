@@ -1,8 +1,8 @@
 // eslint-disable-next-line no-unused-vars
 import React from "react";
 
-import PublicLayout from "../../Layout/PublicLayout/PublicLayout";
-import RTHeader from "../../Components/RTHeader/RTHeader";
+import PublicLayout from "../../layout/PublicLayout/PublicLayout";
+import RTHeader from "../../components/RTHeader/RTHeader";
 
 const HomePageContainer = () => {
   return (

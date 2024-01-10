@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import PublicLayout from "../../Layout/PublicLayout/PublicLayout";
-import RTHeader from "../../Components/RTHeader/RTHeader";
+import PublicLayout from "../../layout/PublicLayout/PublicLayout";
+import RTHeader from "../../components/RTHeader/RTHeader";
 import { Button, Form } from "antd";
 import { RTInput } from "../../Components/RTInput";
 import "./LoginPage.scss";
@@ -9,11 +9,11 @@ import { Card } from "antd";
 import { Space } from "antd";
 import { useNavigate } from "react-router-dom";
 import { fetchAuthSession, signIn, signOut } from "aws-amplify/auth";
-import { getRoutePath } from "../../Routes/routes";
-import { ROUTES_ID } from "../../Routes/routes-id";
+import { getRoutePath } from "../../routes/routes";
+import { ROUTES_ID } from "../../routes/routes-id";
 import { useState } from "react";
 import { Amplify } from "aws-amplify";
-import awsExports from "@rt/Authentication/aws-exports";
+import awsExports from "../../authentication/aws-exports.js";
 
 Amplify.configure(awsExports)
 const LoginPageContainer = () => {

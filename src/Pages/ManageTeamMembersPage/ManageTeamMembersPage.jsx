@@ -1,5 +1,5 @@
-import MainLayout from "../../Layout/MainLayout/MainLayout";
-import RTSider from "../../Components/RTSider/RTSider";
+import MainLayout from "../../layout/MainLayout/MainLayout";
+import RTSider from "../../components/RTSider/RTSider";
 
 const ManageTeamMembersPageContainer = () => {
   return <div>ManageTeamMembersPage</div>;
