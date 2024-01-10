@@ -9,17 +9,21 @@ import { signUp } from "aws-amplify/auth";
 import { Amplify } from "aws-amplify";
 import awsExports from "@rt/Authentication/aws-exports";
 
-Amplify.configure(awsExports)
+Amplify.configure(awsExports);
 const RegisterPageContainer = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
 
   const handleSignIn = async () => {
     try {
       const { userId } = await signUp({
-        username:email,
+        username,
         password,
         options: {
+          userAttributes: {
+            email,
+          },
           // optional
           autoSignIn: true, // or SignInOptions e.g { authFlowType: "USER_SRP_AUTH" }
         },
@@ -34,6 +38,12 @@ const RegisterPageContainer = () => {
   return (
     <Form layout="vertical" className="register-container">
       <Card title="Register" className="register-card">
+        <RTInput.text
+          label="username"
+          name="username"
+          className="register-input"
+          onChange={(e) => setUsername(e.target.value)}
+        />
         <RTInput.text
           label="email"
           name="email"

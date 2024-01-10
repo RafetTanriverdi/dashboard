@@ -13,9 +13,9 @@ import { getRoutePath } from "../../Routes/routes";
 import { ROUTES_ID } from "../../Routes/routes-id";
 import { useState } from "react";
 import { Amplify } from "aws-amplify";
-import awsExports from "@rt/Authentication/aws-exports";
+import awsmobile from "../../Authentication/aws-exports";
 
-Amplify.configure(awsExports);
+Amplify.configure(awsmobile)
 const LoginPageContainer = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,7 +23,7 @@ const LoginPageContainer = () => {
   const navigate = useNavigate();
 
   const handleSignIn = async () => {
-    const { isSignedIn, nextStep } = await signIn({ username:email, password });
+    const { isSignedIn, nextStep } = await signIn({ username:email, password, });
     console.log("isSignedIn", isSignedIn);
     console.log("nextStep", nextStep);
 
