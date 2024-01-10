@@ -1,11 +1,11 @@
 import { Button, Menu } from "antd";
-import { getRoutePath, routes } from "../../routes/routes";
 import { NavLink } from "react-router-dom";
 import { signOut } from "aws-amplify/auth";
 import { useNavigate } from "react-router-dom";
-import { ROUTES_ID } from "../../routes/routes-id";
 import { Amplify } from "aws-amplify";
 import awsExports from "../../authentication/aws-exports";
+import { ROUTES_ID } from "../../routing/routes-id";
+import { getRoutePath, routes } from "../../routing/routes";
 
 Amplify.configure(awsExports);
 const RTSider = () => {

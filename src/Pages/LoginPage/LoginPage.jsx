@@ -3,17 +3,17 @@ import React from "react";
 import PublicLayout from "../../layout/PublicLayout/PublicLayout";
 import RTHeader from "../../components/RTHeader/RTHeader";
 import { Button, Form } from "antd";
-import { RTInput } from "../../Components/RTInput";
+import { RTInput } from "../../components/RTInput";
 import "./LoginPage.scss";
 import { Card } from "antd";
 import { Space } from "antd";
 import { useNavigate } from "react-router-dom";
-import { fetchAuthSession, signIn, signOut } from "aws-amplify/auth";
-import { getRoutePath } from "../../routes/routes";
-import { ROUTES_ID } from "../../routes/routes-id";
+import { fetchAuthSession, signIn } from "aws-amplify/auth";
 import { useState } from "react";
 import { Amplify } from "aws-amplify";
 import awsExports from "../../authentication/aws-exports";
+import { getRoutePath } from "../../routing/routes";
+import { ROUTES_ID } from "../../routing/routes-id";
 
 Amplify.configure(awsExports)
 const LoginPageContainer = () => {
