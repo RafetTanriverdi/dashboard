@@ -4,8 +4,10 @@ import { NavLink } from "react-router-dom";
 import { signOut } from "aws-amplify/auth";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_ID } from "../../Routes/routes-id";
+import { Amplify } from "aws-amplify";
+import awsmobile from "../../Authentication/aws-exports";
 
-
+Amplify.configure(awsmobile);
 const RTSider = () => {
   const navigate = useNavigate();
   const handleSignOut = async () => {
