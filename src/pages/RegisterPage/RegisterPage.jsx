@@ -1,7 +1,6 @@
 import PublicLayout from "../../layout/PublicLayout/PublicLayout";
 import RTHeader from "../../components/RTHeader/RTHeader";
 import { Button, Form } from "antd";
-import { RTInput } from "../../Components/RTInput";
 import { Card } from "antd";
 import "./RegisterPage.scss";
 import { useState } from "react";
