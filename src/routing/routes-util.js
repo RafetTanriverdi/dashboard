@@ -1,6 +1,6 @@
 import { parse } from "path-to-regexp";
-import { hasArrayElement } from "../utils/array-util";
-import { generateShortUID } from "../utils/object-util";
+import { hasArrayElement } from "../utils/array-utils";
+import { generateShortUID } from "../utils/object-utils";
 
 const flatten = (children, extractFn, outputArr) => {
   if (hasArrayElement(children)) {
