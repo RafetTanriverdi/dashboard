@@ -32,6 +32,7 @@ const HomePageContainer = () => {
   return (
     <>
       <button onClick={handleSignIn}>Sign in </button>
+      <p>sdfsddfs</p>
       <button onClick={handleSignOut}> Sign out</button>
     </>
   );
