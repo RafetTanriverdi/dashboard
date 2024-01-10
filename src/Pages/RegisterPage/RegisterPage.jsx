@@ -7,9 +7,9 @@ import "./RegisterPage.scss";
 import { useState } from "react";
 import { signUp } from "aws-amplify/auth";
 import { Amplify } from "aws-amplify";
-import awsmobile from "../../Authentication/aws-exports";
+import awsExports from "../../Authentication/aws-exports";
 
-Amplify.configure(awsmobile)
+Amplify.configure(awsExports)
 const RegisterPageContainer = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
