@@ -2,9 +2,9 @@ import React from "react";
 import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { RouteWithRedirections } from "./routing/RouteWithRedirections";
-import { ErrorBoundaryPage } from "./pages/ErrorPage/ErrorBoundaryPage";
 import { RTLoading } from "./components/RTLoading";
 import NotFound404Page from "./pages/NotFound404Page/NotFound404Page";
+import { ErrorBoundaryPage } from "./pages/ErrorPage/ErrorBoundaryPage";
 
 const AppClientRouter = ({ routes, ...props }) => {
   console.log(routes);
