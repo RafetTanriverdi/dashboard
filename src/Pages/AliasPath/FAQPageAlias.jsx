@@ -1,4 +1,4 @@
-import FAQPage from '@rt/Pages/FAQPage/FAQPage';
+import FAQPage from '../FAQPage/FAQPage';
 
 const Alias=(props)=><FAQPage {...props}/>;
 

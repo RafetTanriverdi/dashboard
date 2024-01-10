@@ -1,4 +1,4 @@
-import LoginPage from "@rt/Pages/LoginPage/LoginPage";
+import LoginPage from "../LoginPage/LoginPage";
 
 const Alias = (props) => <LoginPage {...props} />;
 

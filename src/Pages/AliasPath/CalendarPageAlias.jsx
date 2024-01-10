@@ -1,4 +1,5 @@
-import CalendarPage from "@rt/Pages/CalendarPage/CalendarPage";
+import CalendarPage from "../CalendarPage/CalendarPage";
+
 const Alias = (props) => <CalendarPage {...props} />;
 
 export default Alias;

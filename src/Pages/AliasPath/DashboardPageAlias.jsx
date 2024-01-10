@@ -1,4 +1,4 @@
-import DashboardPage from "@rt/Pages/DashboardPage/DashboardPage";
+import DashboardPage from "../DashboardPage/DashboardPage";
 
 const Alias=(props)=><DashboardPage{...props}/>;
 export default Alias;

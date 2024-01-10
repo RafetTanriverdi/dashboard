@@ -1,4 +1,4 @@
-import ManageTeamMembersPage from '@rt/Pages/ManageTeamMembersPage/ManageTeamMembersPage';
+import ManageTeamMembersPage from '../ManageTeamMembersPage/ManageTeamMembersPage';
 
 const Alias=(props)=><ManageTeamMembersPage {...props}/>;
 

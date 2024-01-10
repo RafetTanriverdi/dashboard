@@ -1,4 +1,4 @@
-import HomePage from "@rt/Pages/HomePage/HomePage";
+import HomePage from "../HomePage/HomePage";
 
 const Alias = (props) => <HomePage {...props} />;
 export default Alias;

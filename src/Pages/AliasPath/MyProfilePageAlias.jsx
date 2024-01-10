@@ -1,5 +1,5 @@
 
-import MyProfilePage from '@rt/Pages/MyProfilePage/MyProfilePage';  
+import MyProfilePage from '../MyProfilePage/MyProfilePage';  
 
 const Alias=(props)=><MyProfilePage {...props}/>;
 

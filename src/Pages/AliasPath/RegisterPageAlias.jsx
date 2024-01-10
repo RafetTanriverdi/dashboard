@@ -1,4 +1,4 @@
-import RegisterPage from "@rt/Pages/RegisterPage/RegisterPage";
+import RegisterPage from "../RegisterPage/RegisterPage";
 
 const Alias = (props) => <RegisterPage {...props} />;
 

@@ -1,4 +1,4 @@
-import FeedbackPage from '@rt/Pages/FeedbackPage/FeedbackPage';
+import FeedbackPage from '../FeedbackPage/FeedbackPage';
 
 const Alias=(props)=><FeedbackPage {...props}/>;
 

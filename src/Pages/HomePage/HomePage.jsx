@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React from "react";
-import awsExports from "@rt/Authentication/aws-exports";
+import awsExports from "../../Authentication/aws-exports";
 
 import PublicLayout from "../../Layout/PublicLayout/PublicLayout";
 import RTHeader from "../../Components/RTHeader/RTHeader";
