@@ -1,16 +1,16 @@
 import React from "react";
 import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
-import { RouteWithRedirections } from "./Routes/RouteWithRedirections";
-import { ErrorBoundaryPage } from "./Pages/ErrorPage/ErrorBoundaryPage";
-import { RTLoading } from "./Components/RTLoading";
-import NotFound404Page from "./Pages/NotFound404Page/NotFound404Page";
+import { RouteWithRedirections } from "./routes/RouteWithRedirections";
+import { ErrorBoundaryPage } from "./pages/ErrorPage/ErrorBoundaryPage";
+import { RTLoading } from "./components/RTLoading";
+import NotFound404Page from "./pages/NotFound404Page/NotFound404Page";
 
 const AppClientRouter = ({ routes, ...props }) => {
   console.log(routes);
   const renderRoute = (el) => {
     const PageComp = React.lazy(() =>
-      import( `./Pages/AliasPath/${el.fileName}.jsx`)
+      import( `./pages/AliasPath/${el.fileName}.jsx`)
     );
 
     //404, Privacy, Support Ananymous and Login User see at the same time..

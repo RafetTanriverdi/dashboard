@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
-import { getRoutePath } from "../../Routes/routes";
-import { ROUTES_ID } from "../../Routes/routes-id";
+import { getRoutePath } from "../../routes/routes";
+import { ROUTES_ID } from "../../routes/routes-id";
 import { Space } from "antd";
 import './RTHeader.scss'
 
