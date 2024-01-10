@@ -1,7 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import { RouteWithRedirections } from "./routing/RouteWithRedirections";
-import { RTLoading } from "./components/RTLoading";
 import { ErrorBoundaryPage } from "./pages/ErrorPage/ErrorBoundaryPage";
 import { Routes } from "react-router-dom";
 import NotFound404Page from "./pages/NotFound404Page/NotFound404Page";
