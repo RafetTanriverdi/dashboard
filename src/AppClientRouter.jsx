@@ -1,7 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import { RouteWithRedirections } from "./routing/RouteWithRedirections";
-import { ErrorBoundaryPage } from "./pages/ErrorPage/ErrorBoundaryPage";
 import { Routes } from "react-router-dom";
 import NotFound404Page from "./pages/NotFound404Page/NotFound404Page";
 
@@ -33,12 +32,10 @@ const AppClientRouter = ({ routes, ...props }) => {
   return (
     <>
       <React.Suspense fallback={<p>loading</p>}>
-        <ErrorBoundaryPage fallback={<p>Page Rendering Exception</p>}>
           <Routes>
             {routes.map(renderRoute)}
             <Route path={"*"} key={"404-page"} element={<NotFound404Page />} />
           </Routes>
-        </ErrorBoundaryPage>
       </React.Suspense>
     </>
   );
