@@ -38,3 +38,5 @@ jobs:
        env:
           DISTRIBUTION: 'E24XDKG4KA8D3H'
           PATHS: "/*" 
+
+          
