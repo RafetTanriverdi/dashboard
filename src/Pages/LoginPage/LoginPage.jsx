@@ -13,9 +13,9 @@ import { getRoutePath } from "../../Routes/routes";
 import { ROUTES_ID } from "../../Routes/routes-id";
 import { useState } from "react";
 import { Amplify } from "aws-amplify";
-import awsmobile from "../../Authentication/aws-exports";
+import awsExports from "@rt/Authentication/aws-exports";
 
-Amplify.configure(awsmobile)
+Amplify.configure(awsExports)
 const LoginPageContainer = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
