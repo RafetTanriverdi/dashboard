@@ -5,7 +5,7 @@ import { signOut } from "aws-amplify/auth";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_ID } from "../../Routes/routes-id";
 import { Amplify } from "aws-amplify";
-import awsExports from "../../Authentication/aws-exports";
+import awsExports from "@rt/Authentication/aws-exports";
 
 Amplify.configure(awsExports);
 const RTSider = () => {

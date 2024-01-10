@@ -7,7 +7,7 @@ import "./RegisterPage.scss";
 import { useState } from "react";
 import { signUp } from "aws-amplify/auth";
 import { Amplify } from "aws-amplify";
-import awsExports from "../../Authentication/aws-exports";
+import awsExports from "@rt/Authentication/aws-exports";
 
 Amplify.configure(awsExports)
 const RegisterPageContainer = () => {
