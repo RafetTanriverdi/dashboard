@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { isUserLoggedIn } from "../authentication/auth-utils";
-import { getRoutePath } from "./routes";
 import { ROUTES_ID } from "./routes-id";
+import { getRoutePath } from "./routes";
 
 const isOutsidePage = (path) => {
   const outsidePages = [
