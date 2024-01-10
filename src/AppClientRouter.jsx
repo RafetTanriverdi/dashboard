@@ -33,7 +33,7 @@ const AppClientRouter = ({ routes, ...props }) => {
 
   return (
     <>
-      <React.Suspense fallback={<RTLoading.page />}>
+      <React.Suspense fallback={<p>loading</p>}>
         <ErrorBoundaryPage fallback={<p>Page Rendering Exception</p>}>
           <Routes>
             {routes.map(renderRoute)}
