@@ -1,8 +1,8 @@
 import { Button, Result } from "antd";
 import CenterLayout from "../../layout/CenterLayout/CenterLayout";
 import { useNavigate } from "react-router-dom";
-import { getRoutePath } from "../../routes/routes";
-import { ROUTES_ID } from "../../routes/routes-id";
+import { getRoutePath } from "../../routing/routes";
+import { ROUTES_ID } from "../../routing/routes-id";
 
 const NotFound404Page = () => {
   const navigate = useNavigate();

@@ -1,6 +1,6 @@
 import "./App.css";
 import AppClientRouter from "./AppClientRouter";
-import { routes } from "./routes/routes";
+import { routes } from "./routing/routes";
 
 function App() {
   return (
