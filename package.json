@@ -10,8 +10,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.17.9",
+    "antd": "^5.12.8",
+    "aws-amplify": "^6.0.11",
+    "axios": "^1.6.5",
+    "path-to-regexp": "^6.2.1",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.21.1",
+    "reset-css": "^5.0.2",
+    "sass": "^1.69.7"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",

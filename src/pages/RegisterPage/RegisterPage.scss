@@ -1,0 +1,14 @@
+.register-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  .register-card{
+    text-align: center;
+  }
+}
+
+.register-input {
+  width: 300px;
+}
