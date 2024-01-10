@@ -13,7 +13,7 @@ import { getRoutePath } from "../../routes/routes";
 import { ROUTES_ID } from "../../routes/routes-id";
 import { useState } from "react";
 import { Amplify } from "aws-amplify";
-import awsExports from "../../authentication/aws-exports.js";
+import awsExports from "../../authentication/aws-exports";
 
 Amplify.configure(awsExports)
 const LoginPageContainer = () => {
