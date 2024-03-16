@@ -17,7 +17,7 @@ const NotFound404Page = () => {
           extra={
             <Button
               type="primary"
-              onClick={() => navigate(getRoutePath(ROUTES_ID.home))}
+              onClick={() => navigate(getRoutePath(ROUTES_ID.login))}
             >
               Back Home
             </Button>

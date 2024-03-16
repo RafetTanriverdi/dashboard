@@ -15,7 +15,7 @@ const RTSider = () => {
   const handleSignOut = async () => {
     await signOut();
     localStorage.removeItem("accessToken");
-    navigate(getRoutePath(ROUTES_ID.home));
+    navigate(getRoutePath(ROUTES_ID.login));
   };
 
   const SignOut = () => {
