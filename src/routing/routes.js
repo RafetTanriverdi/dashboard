@@ -5,14 +5,7 @@ import { flatRoutes } from "./routes-util";
 
 export const routes = [
   //public routes
-  {
-    id: ROUTES_ID.home,
-    path: "/",
-    title: "Home",
-    modulePath: "HomePage/HomePage",
-    fileName:'HomePageAlias',
-    isPublic: true,
-  },
+
   {
     id: ROUTES_ID.login,
     path: "/login",
@@ -29,16 +22,17 @@ export const routes = [
     fileName: "RegisterPageAlias",
     isPublic: true,
   },
-  {
-    id: ROUTES_ID.contact,
-    path: "/contact",
-    title: "Contact",
-    modulePath: "ContactPage/ContactPage",
-    fileName: "ContactPageAlias",
-    isPublic: true,
-  },
+
 
   //private routes
+  {
+    id: ROUTES_ID.dashboard,
+    path: "/",
+    title: "Dashboard",
+    modulePath: "DashboardPage/DashboardPage",
+    fileName: "DashboardPageAlias",
+    isPublic: false,
+  },
   {
     id: ROUTES_ID.dashboard,
     path: "/dashboard",

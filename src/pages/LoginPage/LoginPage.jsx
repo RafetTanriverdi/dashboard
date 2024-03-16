@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import PublicLayout from "../../layout/PublicLayout/PublicLayout";
-import RTHeader from "../../components/RTHeader/RTHeader";
 import { Button, Form } from "antd";
 import { RTInput } from "../../components/RTInput";
 import "./LoginPage.scss";
@@ -40,11 +39,11 @@ const LoginPageContainer = () => {
           className="input"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          label="email"
+          label="E-mail Or User Name"
           name="email"
         />
         <RTInput.password
-          label="password"
+          label="Password"
           name="password"
           className="input"
           value={password}
@@ -62,7 +61,7 @@ const LoginPageContainer = () => {
 };
 const LoginPage = () => {
   return (
-    <PublicLayout header={<RTHeader />} content={<LoginPageContainer />} />
+    <PublicLayout content={<LoginPageContainer />} />
   );
 };
 

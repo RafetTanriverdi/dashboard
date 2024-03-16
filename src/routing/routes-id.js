@@ -1,8 +1,6 @@
 export const ROUTES_ID = {
-  home: "home",
   login: "login",
   register: "register",
-  contact: "contact",
   dashboard: "dashboard",
   customers: "customers",
   products: "products",

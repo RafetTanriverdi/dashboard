@@ -6,9 +6,7 @@ import { getRoutePath } from "./routes";
 const isOutsidePage = (path) => {
   const outsidePages = [
     ROUTES_ID.login,
-    ROUTES_ID.home,
     ROUTES_ID.register,
-    ROUTES_ID.contact,
   ];
   const outsidePaths = outsidePages.map((path) => getRoutePath(path));
   return outsidePaths.some((route) => route === path);

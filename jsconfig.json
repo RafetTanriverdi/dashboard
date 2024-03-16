@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+      "baseUrl": "./",
+      "paths": {
+        "@ca/*": ["src/*"]
+      }
+    },
+    "include": ["src/**/*"]
+  }

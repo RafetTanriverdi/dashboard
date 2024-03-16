@@ -1,7 +1,26 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+/* eslint-disable no-undef */
 
-// https://vitejs.dev/config/
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
+
+function resolveSrc(_path) {
+  return path.resolve(__dirname, "./src", _path);
+}
+
 export default defineConfig({
-  plugins: [react()],
-})
+  resolve: {
+    alias: {
+      "@ca": resolveSrc(""),
+      
+    },
+  },
+
+  plugins: [
+    react(),
+ 
+  ],
+  define: {
+    global: {},
+  },
+});

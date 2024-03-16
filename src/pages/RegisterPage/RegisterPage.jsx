@@ -1,5 +1,4 @@
 import PublicLayout from "../../layout/PublicLayout/PublicLayout";
-import RTHeader from "../../components/RTHeader/RTHeader";
 import { Button, Form } from "antd";
 import { Card } from "antd";
 import "./RegisterPage.scss";
@@ -65,7 +64,7 @@ const RegisterPageContainer = () => {
 };
 const RegisterPage = () => {
   return (
-    <PublicLayout header={<RTHeader />} content={<RegisterPageContainer />} />
+    <PublicLayout  content={<RegisterPageContainer />} />
   );
 };
 
