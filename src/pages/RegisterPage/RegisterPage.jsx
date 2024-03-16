@@ -7,12 +7,18 @@ import { signUp } from "aws-amplify/auth";
 import { Amplify } from "aws-amplify";
 import awsExports from "../../authentication/aws-exports";
 import { RTInput } from "../../components/RTInput";
+import { useNavigate } from "react-router-dom";
+import { getRoutePath } from "@ca/routing/routes";
+import { ROUTES_ID } from "@ca/routing/routes-id";
+import { Space } from "antd";
 
 Amplify.configure(awsExports);
 const RegisterPageContainer = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSignIn = async () => {
     try {
@@ -55,17 +61,23 @@ const RegisterPageContainer = () => {
           className="register-input"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button type="primary" onClick={handleSignIn}>
-          Register{" "}
-        </Button>
+        <Space style={{ display: "flex", justifyContent: "space-between" }}>
+          <Button type="primary" onClick={handleSignIn}>
+            Register{" "}
+          </Button>
+          <Button
+            type="link"
+            onClick={() => navigate(getRoutePath(ROUTES_ID.login))}
+          >
+            Login{" "}
+          </Button>
+        </Space>
       </Card>
     </Form>
   );
 };
 const RegisterPage = () => {
-  return (
-    <PublicLayout  content={<RegisterPageContainer />} />
-  );
+  return <PublicLayout content={<RegisterPageContainer />} />;
 };
 
 export default RegisterPage;

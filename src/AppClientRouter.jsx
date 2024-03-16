@@ -4,6 +4,7 @@ import { RouteWithRedirections } from "./routing/RouteWithRedirections";
 import { Routes } from "react-router-dom";
 import NotFound404Page from "./pages/NotFound404Page/NotFound404Page";
 import { ErrorBoundaryPage } from "./pages/ErrorPage/ErrorBoundaryPage";
+import RTSpinner from "./components/RTSpinner/RTSpinner";
 
 const AppClientRouter = ({ routes, ...props }) => {
   console.log(routes);
@@ -31,7 +32,8 @@ const AppClientRouter = ({ routes, ...props }) => {
 
   return (
     <>
-      <React.Suspense fallback={<p>loading</p>}>
+      <React.Suspense fallback={<RTSpinner {...routes} />}>
+        
         <ErrorBoundaryPage fallback={<p> Someting error occoured</p>}>
           <Routes>
             {routes.map(renderRoute)}

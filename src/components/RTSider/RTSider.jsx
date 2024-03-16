@@ -23,7 +23,7 @@ const RTSider = () => {
   };
 
   const menu = routes
-    .filter((e) => e.isPublic === false)
+    .filter((e) => e.path !== '/'&&e.isPublic === false)
     .map((e) => {
       return {
         key: e.id,

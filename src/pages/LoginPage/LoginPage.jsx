@@ -13,8 +13,9 @@ import { Amplify } from "aws-amplify";
 import awsExports from "../../authentication/aws-exports";
 import { getRoutePath } from "../../routing/routes";
 import { ROUTES_ID } from "../../routing/routes-id";
+import { RTButton } from "@ca/components/RTButton";
 
-Amplify.configure(awsExports)
+Amplify.configure(awsExports);
 const LoginPageContainer = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,7 +23,10 @@ const LoginPageContainer = () => {
   const navigate = useNavigate();
 
   const handleSignIn = async () => {
-    const { isSignedIn, nextStep } = await signIn({ username:email, password, });
+    const { isSignedIn, nextStep } = await signIn({
+      username: email,
+      password,
+    });
     console.log("isSignedIn", isSignedIn);
     console.log("nextStep", nextStep);
 
@@ -31,16 +35,23 @@ const LoginPageContainer = () => {
     localStorage.setItem("idToken", idToken);
     navigate(getRoutePath(ROUTES_ID.dashboard));
   };
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSignIn();
+    }
+  };
 
   return (
-    <Form className="login-container" layout="vertical">
+    <Form className="login-container" layout="vertical" onFinish={handleSignIn}>
       <Card className="card-container" title="Login">
         <RTInput.text
+          label="E-mail Or User Name"
+          name="email"
           className="input"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          label="E-mail Or User Name"
-          name="email"
+          onKeyDown={handleKeyDown}
         />
         <RTInput.password
           label="Password"
@@ -48,21 +59,21 @@ const LoginPageContainer = () => {
           className="input"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
         <Space>
-          <Button type="primary" onClick={handleSignIn}>
-            Login{" "}
-          </Button>
-          <Button type="link">Register </Button>
+          <RTButton.login text="Login" />
+          <RTButton.register
+            onClick={() => navigate(getRoutePath(ROUTES_ID.register))}
+            text="Register"
+          />
         </Space>
       </Card>
     </Form>
   );
 };
 const LoginPage = () => {
-  return (
-    <PublicLayout content={<LoginPageContainer />} />
-  );
+  return <PublicLayout content={<LoginPageContainer />} />;
 };
 
 export default LoginPage;

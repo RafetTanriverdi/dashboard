@@ -125,3 +125,5 @@ export const getRouteId = (routePath) => {
   const routeData = FLAT_ROUTES.find((el) => el.path === routePath);
   return routeData?.id;
 };
+
+export const publicRoutes = routes.filter((el) => el.isPublic);

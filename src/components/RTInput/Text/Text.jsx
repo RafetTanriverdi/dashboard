@@ -12,6 +12,7 @@ const Text = ({
   defaultValue,
   className,
   placeholder,
+  onKeyDown,
 }) => {
   return (
     <Form.Item
@@ -30,6 +31,7 @@ const Text = ({
         defaultValue={defaultValue}
         className={className}
         placeholder={placeholder}
+        onKeyDown={onKeyDown}
       />
     </Form.Item>
   );
@@ -44,6 +46,7 @@ Text.propTypes = {
   defaultValue: PropTypes.func,
   className: PropTypes.string,
   placeholder: PropTypes.string,
+  onKeyDown: PropTypes.func,
 };
 
 export default Text;

@@ -1,21 +1,25 @@
 import { Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import "./RTSpinner.scss";
+import { publicRoutes } from "@ca/routing/routes";
+import { useLocation } from "react-router-dom";
+import MainLayout from "@ca/layout/MainLayout/MainLayout";
+import RTSider from "../RTSider/RTSider";
 
 const RTSpinner = () => {
-  return (
-    <>
-      <Spin
-        indicator={
-          <LoadingOutlined
-            style={{
-              fontSize: 24,
-            }}
-            spin
-          />
-        }
-      />
-    </>
-  );
+  const location = useLocation();
+  if (publicRoutes.find((e) => e.path === location.pathname)) {
+    return (
+      <div className="rt-spiner">
+        <Spin size="large" />
+      </div>
+    );
+  } else {
+    return (
+      <>
+        <MainLayout sider={<RTSider />} content={<Spin className="rt-spiner-layout" size="large" />} />
+      </>
+    );
+  }
 };
 
 export default RTSpinner;
