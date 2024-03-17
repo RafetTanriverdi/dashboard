@@ -1,8 +1,9 @@
 import RTSider from "@ca/components/RTSider/RTSider";
 import MainLayout from "@ca/layout/MainLayout/MainLayout";
+import ProductList from "./page-components/ProductList/ProductList";
 
 const ProductsPageContainer = () => {
-  return <div>ProductsPage</div>;
+  return <ProductList />;
 };
 
 const ProductsPage = () => {

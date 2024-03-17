@@ -7,7 +7,7 @@ import "./LoginPage.scss";
 import { Card } from "antd";
 import { Space } from "antd";
 import { useNavigate } from "react-router-dom";
-import { fetchAuthSession, signIn } from "aws-amplify/auth";
+import { fetchAuthSession, getCurrentUser, signIn } from "aws-amplify/auth";
 import { useState } from "react";
 import { Amplify } from "aws-amplify";
 import awsExports from "../../authentication/aws-exports";
@@ -23,17 +23,21 @@ const LoginPageContainer = () => {
   const navigate = useNavigate();
 
   const handleSignIn = async () => {
-    const { isSignedIn, nextStep } = await signIn({
-      username: email,
-      password,
-    });
-    console.log("isSignedIn", isSignedIn);
-    console.log("nextStep", nextStep);
+    try {
+      
+      const response = await signIn({
+        username: email,
 
-    const { accessToken, idToken } = (await fetchAuthSession()).tokens ?? {};
-    localStorage.setItem("accessToken", accessToken);
-    localStorage.setItem("idToken", idToken);
-    navigate(getRoutePath(ROUTES_ID.dashboard));
+        password,
+      });
+      console.log("response from login ", response);
+      const { accessToken, idToken } = (await fetchAuthSession()).tokens ?? {};
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("idToken", idToken);
+      navigate(getRoutePath(ROUTES_ID.dashboard));
+    } catch (e) {
+      console.log("error in login ", e);
+    }
   };
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {

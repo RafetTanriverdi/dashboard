@@ -12,6 +12,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.3.3",
     "@tanstack/react-query": "^5.17.9",
+    "@tanstack/react-query-devtools": "^5.28.4",
     "antd": "^5.12.8",
     "aws-amplify": "^6.0.11",
     "axios": "^1.6.5",
