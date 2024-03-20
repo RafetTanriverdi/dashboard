@@ -5,10 +5,11 @@ const MyProfilePageContainer = () => {
   return <div>MyProfilePage</div>;
 };
 
-const MyProfilePage = () => {
+const MyProfilePage = (props) => {
+  const { title } = props.routeData;
   return (
     <>
-      <MainLayout sider={<RTSider />} content={<MyProfilePageContainer />} />
+      <MainLayout title={title}  sider={<RTSider />} content={<MyProfilePageContainer />} />
     </>
   );
 };

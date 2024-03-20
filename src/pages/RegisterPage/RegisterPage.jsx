@@ -76,8 +76,9 @@ const RegisterPageContainer = () => {
     </Form>
   );
 };
-const RegisterPage = () => {
-  return <PublicLayout content={<RegisterPageContainer />} />;
+const RegisterPage = (props) => {
+  const { title } = props.routeData;
+  return <PublicLayout title={title} content={<RegisterPageContainer />} />;
 };
 
 export default RegisterPage;

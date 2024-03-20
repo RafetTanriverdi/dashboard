@@ -4,9 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import { Space } from "antd";
 import { Table } from "antd";
 import { TableView } from "./ProductActions";
-import { useNavigate } from "react-router-dom";
 import ViewProductDrawer from "./drawers/ViewProductDrawer";
 import { useState } from "react";
+import EditProductDrawer from "./drawers/EditProductDrawer";
+import DeleteProductDrawer from "./drawers/DeleteProductDrawer";
+import RTSkeleton from "@ca/components/RTSkeleton/RTSkeleton";
 
 const columns = [
   {
@@ -66,9 +68,15 @@ const TableActions = () => {
       <a href="#" role="button" onClick={() => showDrawer(TableView.DELETE)}>
         Delete
       </a>
-      {
-        open && type === TableView.VIEW && (<ViewProductDrawer onClose={onClose} open={open} />)
-      }
+      {open && type === TableView.VIEW && (
+        <ViewProductDrawer onClose={onClose} open={open} />
+      )}
+      {open && type === TableView.EDIT && (
+        <EditProductDrawer onClose={onClose} open={open} />
+      )}
+      {open && type === TableView.DELETE && (
+        <DeleteProductDrawer onClose={onClose} open={open} />
+      )}
     </Space>
   );
 };
@@ -97,11 +105,21 @@ const TableContainer = () => {
   }
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <RTSkeleton />
+      </div>
+    );
   } else if (error) {
     return <div>{error.message}</div>;
   } else {
-    return <Table columns={columns} dataSource={tableData} />;
+    return (
+      <Table
+        style={{ width: "100%" }}
+        columns={columns}
+        dataSource={tableData}
+      />
+    );
   }
 };
 

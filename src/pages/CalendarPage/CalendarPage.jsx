@@ -5,10 +5,11 @@ const CalendarPageContainer = () => {
   return <div>CalendarPage</div>;
 };
 
-const CalendarPage = () => {
+const CalendarPage = (params) => {
+  const {title}=params.routeData;
   return (
     <>
-      <MainLayout sider={<RTSider />} content={<CalendarPageContainer />} />
+      <MainLayout title={title} sider={<RTSider />} content={<CalendarPageContainer />} />
     </>
   );
 };

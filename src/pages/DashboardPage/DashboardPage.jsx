@@ -25,9 +25,12 @@ const DashboardPageContainer = () => {
   return <div>Dashboard Page</div>;
 };
 
-const DashboardPage = () => {
+const DashboardPage = (props) => {
+const {title}=props.routeData;
+
+
   return (
-    <MainLayout content={<DashboardPageContainer />} sider={<RTSider />} />
+    <MainLayout title={title} content={<DashboardPageContainer />} sider={<RTSider />} />
   );
 };
 

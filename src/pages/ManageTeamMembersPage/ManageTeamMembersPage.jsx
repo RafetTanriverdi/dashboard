@@ -7,10 +7,11 @@ const ManageTeamMembersPageContainer = () => {
   )
 }
 
-const ManageTeamMembersPage = () => {
+const ManageTeamMembersPage = (props) => {
+  const { title } = props.routeData
   return (
     <>
-      <MainLayout sider={<RTSider />} content={<ManageTeamMembersPageContainer />} />
+      <MainLayout title={title} sider={<RTSider />} content={<ManageTeamMembersPageContainer />} />
     </>
   )
 }

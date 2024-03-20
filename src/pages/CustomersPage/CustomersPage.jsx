@@ -5,9 +5,14 @@ const CustomersPageContainer = () => {
   return <div>CustomersPage</div>;
 };
 
-const CustomersPage = () => {
+const CustomersPage = (params) => {
+  const { title } = params.routeData;
   return (
-    <MainLayout sider={<RTSider />} content={<CustomersPageContainer />} />
+    <MainLayout
+      title={title}
+      sider={<RTSider />}
+      content={<CustomersPageContainer />}
+    />
   );
 };
 

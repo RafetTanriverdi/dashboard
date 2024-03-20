@@ -2,16 +2,26 @@
 import { Layout } from "antd";
 import React from "react";
 import "./MainLayout.scss";
+import { Helmet } from "react-helmet";
+import RTHeader from "@ca/components/RTHeader/RTHeader";
 
-const { Sider, Content } = Layout;
-const MainLayout = ({  sider, content }) => {
+const { Sider, Content, Header } = Layout;
+const MainLayout = ({ sider, content, title, header }) => {
   return (
-    <Layout className="container">
-      <Layout className="center-container">
+    <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{title &&`${title} | Rafet Tanriverdi`}</title>
+      </Helmet>
+
+      <Layout className="container">
         <Sider className="sidebar">{sider}</Sider>
-        <Content className="content">{content}</Content>
+        <Layout className="main-layout">
+           <Header className="header"><RTHeader/></Header> 
+          <Content className="content">{content}</Content>
+        </Layout>
       </Layout>
-    </Layout>
+    </>
   );
 };
 

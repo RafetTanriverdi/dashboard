@@ -1,0 +1,22 @@
+.product-list-container {
+
+  height: 100%;
+  padding: 0 20px;
+
+  .product-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .product-list {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .product-list-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

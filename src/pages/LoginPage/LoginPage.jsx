@@ -14,6 +14,7 @@ import awsExports from "../../authentication/aws-exports";
 import { getRoutePath } from "../../routing/routes";
 import { ROUTES_ID } from "../../routing/routes-id";
 import { RTButton } from "@ca/components/RTButton";
+import { UseUserDataStore } from "@ca/data/User/UserData";
 
 Amplify.configure(awsExports);
 const LoginPageContainer = () => {
@@ -21,16 +22,20 @@ const LoginPageContainer = () => {
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
-
+  const { setUserData ,userData} = UseUserDataStore();
+console.log("userData",userData);
   const handleSignIn = async () => {
     try {
-      
       const response = await signIn({
         username: email,
 
         password,
       });
       console.log("response from login ", response);
+      const user = await getCurrentUser();
+      setUserData(user);
+      console.log("user", user);
+
       const { accessToken, idToken } = (await fetchAuthSession()).tokens ?? {};
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("idToken", idToken);
@@ -76,8 +81,9 @@ const LoginPageContainer = () => {
     </Form>
   );
 };
-const LoginPage = () => {
-  return <PublicLayout content={<LoginPageContainer />} />;
+const LoginPage = (props) => {
+  const { title } = props.routeData;
+  return <PublicLayout title={title} content={<LoginPageContainer />} />;
 };
 
 export default LoginPage;

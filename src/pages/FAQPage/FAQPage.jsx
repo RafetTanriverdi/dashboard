@@ -5,10 +5,15 @@ const FAQPageContainer = () => {
   return <div>FAQPage</div>;
 };
 
-const FAQPage = () => {
+const FAQPage = (params) => {
+  const { title } = params.routeData;
   return (
     <>
-      <MainLayout sider={<RTSider />} content={<FAQPageContainer />} />
+      <MainLayout
+        title={title}
+        sider={<RTSider />}
+        content={<FAQPageContainer />}
+      />
     </>
   );
 };

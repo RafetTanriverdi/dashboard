@@ -6,10 +6,11 @@ const CategoriesPageContainer = () => {
     <div>CategoriesPage</div>
   )
 }
-const CategoriesPage = () => {
+const CategoriesPage = (params) => {
+  const {title}=params.routeData;
   return (
     <>
-    <MainLayout sider={<RTSider />} content={<CategoriesPageContainer />} />
+    <MainLayout title={title} sider={<RTSider />} content={<CategoriesPageContainer />} />
     </>
   )
 }

@@ -1,7 +1,17 @@
+import { Drawer } from "antd"
 
-const DeleteProductDrawer = () => {
+const DeleteProductDrawer = ({open,onClose}) => {
   return (
-    <div>DeleteProductDrawer</div>
+    
+    <Drawer
+    title="Delete Product"
+    placement="right"
+    size="large"
+    onClose={onClose}
+    open={open}
+    >
+
+    </Drawer>
   )
 }
 
