@@ -1,10 +1,10 @@
-import RTSider from "@ca/components/RTSider/RTSider";
-import MainLayout from "@ca/layout/MainLayout/MainLayout";
+import RTSider from "@rt/components/RTSider/RTSider";
+import MainLayout from "@rt/layout/MainLayout/MainLayout";
 import ProductList from "./page-components/ProductList/ProductList";
 import "./ProductsPage.scss";
 import { Typography } from "antd";
-import { RTButton } from "@ca/components/RTButton";
 import { Space } from "antd";
+import { NewProductButton } from "./page-components/NewProduct/NewProductDrawer";
 
 const ProductsPageContainer = () => {
   return (
@@ -12,22 +12,13 @@ const ProductsPageContainer = () => {
       <div
         style={{
           display: "flex",
-          alignItems: "center",
           justifyContent: "space-between",
         }}
       >
         <Typography.Title level={3}>Products</Typography.Title>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <RTButton.login text="Add New Product" />
-          <RTButton.login text="Add New Product" />
-        </div>
+        <Space>
+          <NewProductButton />
+        </Space>
       </div>
       <ProductList className="product-list" />
     </div>

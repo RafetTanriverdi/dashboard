@@ -8,8 +8,8 @@ import { Amplify } from "aws-amplify";
 import awsExports from "../../authentication/aws-exports";
 import { RTInput } from "../../components/RTInput";
 import { useNavigate } from "react-router-dom";
-import { getRoutePath } from "@ca/routing/routes";
-import { ROUTES_ID } from "@ca/routing/routes-id";
+import { getRoutePath } from "@rt/routing/routes";
+import { ROUTES_ID } from "@rt/routing/routes-id";
 import { Space } from "antd";
 
 Amplify.configure(awsExports);

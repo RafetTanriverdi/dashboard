@@ -1,8 +1,8 @@
 import { Spin } from "antd";
 import "./RTSpinner.scss";
-import { publicRoutes } from "@ca/routing/routes";
+import { publicRoutes } from "@rt/routing/routes";
 import { useLocation } from "react-router-dom";
-import MainLayout from "@ca/layout/MainLayout/MainLayout";
+import MainLayout from "@rt/layout/MainLayout/MainLayout";
 import RTSider from "../RTSider/RTSider";
 
 const RTSpinner = () => {

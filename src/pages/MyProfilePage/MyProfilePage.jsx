@@ -1,5 +1,5 @@
-import RTSider from "@ca/components/RTSider/RTSider";
-import MainLayout from "@ca/layout/MainLayout/MainLayout";
+import RTSider from "@rt/components/RTSider/RTSider";
+import MainLayout from "@rt/layout/MainLayout/MainLayout";
 
 const MyProfilePageContainer = () => {
   return <div>MyProfilePage</div>;

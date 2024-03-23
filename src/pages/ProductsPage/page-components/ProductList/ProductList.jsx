@@ -1,5 +1,5 @@
-import { axoisInstance } from "@ca/network/httpRequester";
-import { hasArrayElement } from "@ca/utils/array-utils";
+import { axoisInstance } from "@rt/network/httpRequester";
+import { hasArrayElement } from "@rt/utils/array-utils";
 import { useQuery } from "@tanstack/react-query";
 import { Space } from "antd";
 import { Table } from "antd";
@@ -8,7 +8,7 @@ import ViewProductDrawer from "./drawers/ViewProductDrawer";
 import { useState } from "react";
 import EditProductDrawer from "./drawers/EditProductDrawer";
 import DeleteProductDrawer from "./drawers/DeleteProductDrawer";
-import RTSkeleton from "@ca/components/RTSkeleton/RTSkeleton";
+import RTSkeleton from "@rt/components/RTSkeleton/RTSkeleton";
 
 const columns = [
   {

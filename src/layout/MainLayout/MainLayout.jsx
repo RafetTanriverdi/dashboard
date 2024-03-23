@@ -3,7 +3,7 @@ import { Layout } from "antd";
 import React from "react";
 import "./MainLayout.scss";
 import { Helmet } from "react-helmet";
-import RTHeader from "@ca/components/RTHeader/RTHeader";
+import RTHeader from "@rt/components/RTHeader/RTHeader";
 
 const { Sider, Content, Header } = Layout;
 const MainLayout = ({ sider, content, title, header }) => {

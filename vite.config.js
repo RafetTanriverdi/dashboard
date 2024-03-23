@@ -11,7 +11,7 @@ function resolveSrc(_path) {
 export default defineConfig({
   resolve: {
     alias: {
-      "@ca": resolveSrc(""),
+      "@rt": resolveSrc(""),
       
     },
   },

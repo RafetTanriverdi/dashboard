@@ -13,8 +13,8 @@ import { Amplify } from "aws-amplify";
 import awsExports from "../../authentication/aws-exports";
 import { getRoutePath } from "../../routing/routes";
 import { ROUTES_ID } from "../../routing/routes-id";
-import { RTButton } from "@ca/components/RTButton";
-import { UseUserDataStore } from "@ca/data/User/UserData";
+import { RTButton } from "@rt/components/RTButton";
+import { UseUserDataStore } from "@rt/data/User/UserData";
 
 Amplify.configure(awsExports);
 const LoginPageContainer = () => {
