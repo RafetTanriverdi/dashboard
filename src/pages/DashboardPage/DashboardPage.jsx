@@ -3,7 +3,7 @@ import RTSider from "../../components/RTSider/RTSider";
 import MainLayout from "../../layout/MainLayout/MainLayout";
 import { useState } from "react";
 import { ENDPOINTS } from "../../network/endpoints";
-import { axoisInstance } from "../../network/httpRequester";
+import { axiosInstance } from "../../network/httpRequester";
 
 const DashboardPageContainer = () => {
   const [list, setList] = useState([]);
@@ -11,7 +11,7 @@ const DashboardPageContainer = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axoisInstance.get(ENDPOINTS.PRODUCT.LIST);
+        const response = await axiosInstance.get(ENDPOINTS.PRODUCT.LIST);
         setList(response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);

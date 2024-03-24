@@ -1,4 +1,3 @@
-import { axoisInstance } from "@rt/network/httpRequester";
 import { hasArrayElement } from "@rt/utils/array-utils";
 import { useQuery } from "@tanstack/react-query";
 import { Space } from "antd";
@@ -9,6 +8,8 @@ import { useState } from "react";
 import EditProductDrawer from "./drawers/EditProductDrawer";
 import DeleteProductDrawer from "./drawers/DeleteProductDrawer";
 import RTSkeleton from "@rt/components/RTSkeleton/RTSkeleton";
+import { axiosInstance } from "@rt/network/httpRequester";
+import { ENDPOINTS } from "@rt/network/endpoints";
 
 const columns = [
   {
@@ -40,12 +41,12 @@ const columns = [
     title: "Action",
     dataIndex: "action",
     key: "action",
-    render: () => {
-      return <TableActions />;
+    render: (_, record) => {
+      return <TableActions data={record} />;
     },
   },
 ];
-const TableActions = () => {
+const TableActions = ({ data }) => {
   const [open, setOpen] = useState(false);
   const [type, setType] = useState(TableView.VIEW);
 
@@ -69,13 +70,13 @@ const TableActions = () => {
         Delete
       </a>
       {open && type === TableView.VIEW && (
-        <ViewProductDrawer onClose={onClose} open={open} />
+        <ViewProductDrawer onClose={onClose} open={open} data={data} />
       )}
       {open && type === TableView.EDIT && (
-        <EditProductDrawer onClose={onClose} open={open} />
+        <EditProductDrawer onClose={onClose} open={open} data={data} />
       )}
       {open && type === TableView.DELETE && (
-        <DeleteProductDrawer onClose={onClose} open={open} />
+        <DeleteProductDrawer onClose={onClose} open={open} data={data} />
       )}
     </Space>
   );
@@ -83,11 +84,9 @@ const TableActions = () => {
 const TableContainer = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["products"],
-    queryFn: () => axoisInstance.get("/products").then((res) => res.data.data),
+    queryFn: () =>
+      axiosInstance.get(ENDPOINTS.PRODUCT.LIST).then((res) => res.data.data),
   });
-  console.log(data, "result from products");
-  console.log(isLoading, "isLoading");
-  console.log(error, "error");
 
   let tableData = [];
 

@@ -4,7 +4,7 @@ import ProductList from "./page-components/ProductList/ProductList";
 import "./ProductsPage.scss";
 import { Typography } from "antd";
 import { Space } from "antd";
-import { NewProductButton } from "./page-components/NewProduct/NewProductDrawer";
+import { NewProductButton } from "./page-components/NewProduct/NewProductButton";
 
 const ProductsPageContainer = () => {
   return (

@@ -1,6 +1,8 @@
 import { Drawer } from "antd";
+import ReactJson from "react-json-view";
 
-const ViewProductDrawer = ({ onClose, open }) => {
+const ViewProductDrawer = ({ onClose, open,data }) => {
+
   return (
     <Drawer
       onClose={onClose}
@@ -8,7 +10,9 @@ const ViewProductDrawer = ({ onClose, open }) => {
       title="View Product"
       placement="right"
       size='large'
-    ></Drawer>
+    >
+      <ReactJson src={data} />
+    </Drawer>
   );
 };
 

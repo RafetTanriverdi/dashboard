@@ -1,10 +1,10 @@
 import { Button } from "antd";
 import PropTypes from "prop-types";
 
-const AddButton = ({ onClick, text }) => {
+const AddButton = ({ onClick, text, loading }) => {
   return (
     <>
-      <Button type="primary" onClick={onClick}>
+      <Button type="primary" onClick={onClick} loading={loading}>
         {text}
       </Button>
     </>
@@ -14,5 +14,6 @@ const AddButton = ({ onClick, text }) => {
 AddButton.propTypes = {
   onClick: PropTypes.func,
   text: PropTypes.string.isRequired,
+  loading: PropTypes.func,
 };
 export default AddButton;

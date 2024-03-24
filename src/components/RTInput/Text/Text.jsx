@@ -18,6 +18,7 @@ const Text = ({
     <Form.Item
       label={label}
       name={name}
+      
       rules={[
         {
           required: required,
@@ -26,6 +27,7 @@ const Text = ({
       ]}
     >
       <Input
+      
         onChange={onChange}
         value={value}
         defaultValue={defaultValue}
