@@ -9,20 +9,35 @@ on:
 jobs:
  Deploy:
    runs-on: ubuntu-latest
+   strategy:
+      matrix:
+        node-version: [18]
    steps:
      - name: Git clone the repository
        uses: actions/checkout@v3
      #- name: configure aws credentials
        #uses: aws-actions/configure-aws-credentials@v1.7.0
        
-     - name: Setup node
-       uses: actions/setup-node@v2
+     #- name: Setup node
+      # uses: actions/setup-node@v2
 
+     #- name: Install dependencies
+      # run: pnpm install
+
+     #- name: Build static file
+      # run: pnpm run build
+      
+     - uses: pnpm/action-setup@v2
+       with:
+           version: 8
+     - name: Use Node.js ${{ matrix.node-version }}
+       uses: actions/setup-node@v3
+       with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+          
      - name: Install dependencies
-       run: npm install
-
-     - name: Build static file
-       run: npm run build
+       run: pnpm install
 
      - name: Configure AWS Credentials
        uses: aws-actions/configure-aws-credentials@v4
