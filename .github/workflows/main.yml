@@ -38,6 +38,10 @@ jobs:
           
      - name: Install dependencies
        run: pnpm install
+     
+     - name: Build static file
+       run: pnpm run build
+      
 
      - name: Configure AWS Credentials
        uses: aws-actions/configure-aws-credentials@v4
