@@ -10,10 +10,11 @@ const NewProductPanel = ({
   setDescription,
   category,
   setCategory,
+  form,
 }) => {
   return (
     <>
-      <Form layout="vertical">
+      <Form layout="vertical" form={form}>
         <RTInput.text
           label="Title"
           name="Title"

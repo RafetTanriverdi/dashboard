@@ -1,11 +1,11 @@
 import { MoonOutlined, SunOutlined } from "@ant-design/icons";
 import { useThemeChangeStore } from "@rt/data/Theme/Theme";
-import { UseUserDataStore } from "@rt/data/User/UserData";
+import { useUserDataStore } from "@rt/data/User/UserData";
 import { Button, Space } from "antd";
 import { Typography } from "antd";
 
 const RTHeader = () => {
-  const { userData } = UseUserDataStore();
+  const { userData } = useUserDataStore();
   const { username } = userData;
   const { theme, changeTheme } = useThemeChangeStore();
 

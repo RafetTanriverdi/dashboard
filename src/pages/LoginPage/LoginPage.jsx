@@ -14,7 +14,7 @@ import awsExports from "../../authentication/aws-exports";
 import { getRoutePath } from "../../routing/routes";
 import { ROUTES_ID } from "../../routing/routes-id";
 import { RTButton } from "@rt/components/RTButton";
-import { UseUserDataStore } from "@rt/data/User/UserData";
+import { useUserDataStore } from "@rt/data/User/UserData";
 
 Amplify.configure(awsExports);
 const LoginPageContainer = () => {
@@ -22,7 +22,7 @@ const LoginPageContainer = () => {
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
-  const { setUserData ,userData} = UseUserDataStore();
+  const { setUserData ,userData} = useUserDataStore();
 console.log("userData",userData);
   const handleSignIn = async () => {
     try {

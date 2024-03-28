@@ -2,7 +2,7 @@ import { getCurrentUser } from "aws-amplify/auth";
 import "./App.css";
 import AppClientRouter from "./AppClientRouter";
 import { routes } from "./routing/routes";
-import { UseUserDataStore } from "./data/User/UserData";
+import { useUserDataStore } from "./data/User/UserData";
 import { useEffect } from "react";
 import { useThemeChangeStore } from "./data/Theme/Theme";
 import { ConfigProvider } from "antd";
@@ -10,7 +10,7 @@ import { darkTheme } from "./theme/DarkTheme/DarkTheme";
 import { lightTheme } from "./theme/LightTheme/LightTheme";
 
 function App() {
-  const { setUserData } = UseUserDataStore();
+  const { setUserData } = useUserDataStore();
   const { theme } = useThemeChangeStore();
 
 

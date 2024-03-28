@@ -9,7 +9,7 @@ const PublicLayout = ({  footer, content,title }) => {
   return (<>
   <Helmet>
     <meta charSet="utf-8" />
-    <title>{`${title} | Rafet Tanriverdi`}</title>
+    <title>{`${title} `}</title>
   </Helmet>
     <Layout className="container">
       <Content className="content">{content}</Content>
