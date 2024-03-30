@@ -1,20 +1,17 @@
 import { RTButton } from "@rt/components/RTButton";
 import { Drawer } from "antd";
 import { useState } from "react";
-import EditProductPanel from "../panels/EditProductPanel";
+import EditCategoryPanel from "../panels/EditCategoryPanel";
 import { Form } from "antd";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
 import Notification from "@rt/components/RTFeedback/Notification/Notification";
 
-const EditProductDrawer = ({ onClose, open, inheritedData }) => {
-  const { slug, title, price, description, category } = inheritedData;
+const EditCategoryDrawer = ({ onClose, open, inheritedData }) => {
+  const { slug, name } = inheritedData;
 
-  const [newTitle, setNewTitle] = useState(title);
-  const [newPrice, setNewPrice] = useState(price);
-  const [newDescription, setNewDescription] = useState(description);
-  const [newCategory, setNewCategory] = useState(category);
+  const [newName, setNewName] = useState(name);
 
   const { context, openNotification } = Notification();
 
@@ -22,7 +19,7 @@ const EditProductDrawer = ({ onClose, open, inheritedData }) => {
 
   const queryClient = useQueryClient();
 
-  const handleEditProduct = () => {
+  const handleEditCategory = () => {
     form
       .validateFields()
       .then((values) => {
@@ -40,28 +37,25 @@ const EditProductDrawer = ({ onClose, open, inheritedData }) => {
   };
 
   const postBody = {
-    title: newTitle,
-    price: newPrice,
-    description: newDescription,
-    category: newCategory,
+    name: newName,
   };
 
   console.log("postBody", postBody);
 
   const mutation = useMutation({
-    mutationKey: "updateProduct",
-    mutationFn: (updateProduct) => {
+    mutationKey: "updateCategory",
+    mutationFn: (updateCategory) => {
       return axiosInstance.put(
-        ENDPOINTS.PRODUCT.UPDATE.replace(":productTitle", slug),
-        updateProduct
+        ENDPOINTS.CATEGORIES.UPDATE.replace(":categoryTitle", slug),
+        updateCategory
       );
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
       openNotification({
         key: slug,
         type: "success",
-        message: "Product Edit Successfully",
+        message: "Category Edit Successfully",
         duration: 2,
         onClose: () => {
           onClose();
@@ -75,7 +69,7 @@ const EditProductDrawer = ({ onClose, open, inheritedData }) => {
         message: `Error:${Error}`,
         duration: 2.5,
       });
-      console.error("Error: Product could not be updated", error);
+      console.error("Error: Category could not be updated", error);
     },
   });
 
@@ -83,7 +77,7 @@ const EditProductDrawer = ({ onClose, open, inheritedData }) => {
     <>
       {context}
       <Drawer
-        title="Edit Product"
+        title="Edit Category"
         placement="right"
         size="large"
         onClose={onClose}
@@ -91,25 +85,15 @@ const EditProductDrawer = ({ onClose, open, inheritedData }) => {
         extra={
           <RTButton.add
             text="Save Changes"
-            onClick={handleEditProduct}
+            onClick={handleEditCategory}
             loading={mutation.isPending}
           />
         }
       >
-        <EditProductPanel
-          form={form}
-          newTitle={newTitle}
-          setNewTitle={setNewTitle}
-          newPrice={newPrice}
-          setNewPrice={setNewPrice}
-          newDescription={newDescription}
-          setNewDescription={setNewDescription}
-          newCategory={newCategory}
-          setNewCategory={setNewCategory}
-        />
+        <EditCategoryPanel form={form} newName={newName} setName={setNewName} />
       </Drawer>
     </>
   );
 };
 
-export default EditProductDrawer;
+export default EditCategoryDrawer;

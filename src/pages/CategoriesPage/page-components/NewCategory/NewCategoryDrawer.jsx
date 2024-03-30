@@ -1,5 +1,5 @@
 import { Drawer } from "antd";
-import NewProductPanel from "./NewProductPanel";
+import NewCategoryPanel from "./NewCategoryPanel";
 import { RTButton } from "@rt/components/RTButton";
 import { useState } from "react";
 import { axiosInstance } from "@rt/network/httpRequester";
@@ -8,11 +8,8 @@ import { ENDPOINTS } from "@rt/network/endpoints";
 import Notification from "@rt/components/RTFeedback/Notification/Notification";
 import { Form } from "antd";
 
-export const NewProductDrawer = ({ onClose, open }) => {
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState();
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
+export const NewCategoryDrawer = ({ onClose, open }) => {
+  const [name, setName] = useState("");
 
   const queryClient = useQueryClient();
 
@@ -37,26 +34,23 @@ export const NewProductDrawer = ({ onClose, open }) => {
   };
 
   const postBody = {
-    title: title,
-    price: price,
-    description: description,
-    category: category,
+    name: name,
   };
 
   const mutation = useMutation({
-    mutationKey: "addProduct",
-    mutationFn: (newProduct) => {
-      return axiosInstance.post(ENDPOINTS.PRODUCT.ADD, newProduct);
+    mutationFn: (newCategory) => {
+      return axiosInstance.post(ENDPOINTS.CATEGORIES.ADD, newCategory);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products"] });
-      form.resetFields();
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
+
       openNotification({
         type: "success",
-        message: "Product Added Successfully",
+        message: "Category Added Successfully",
         duration: 2,
         onClose: () => {
           onClose();
+          form.resetFields();
         },
       });
     },
@@ -74,30 +68,20 @@ export const NewProductDrawer = ({ onClose, open }) => {
     <>
       {context}
       <Drawer
-        title="Add New Product"
+        title="Add New Category"
         placement="right"
         size="large"
         onClose={onClose}
         open={open}
         extra={
           <RTButton.add
-            text="Add New Product"
+            text="Add New Category"
             onClick={handleForm}
             loading={mutation.isPending}
           />
         }
       >
-        <NewProductPanel
-          form={form}
-          title={title}
-          setTitle={setTitle}
-          price={price}
-          setPrice={setPrice}
-          description={description}
-          setDescription={setDescription}
-          category={category}
-          setCategory={setCategory}
-        />
+        <NewCategoryPanel form={form} name={name} setName={setName} />
       </Drawer>
     </>
   );

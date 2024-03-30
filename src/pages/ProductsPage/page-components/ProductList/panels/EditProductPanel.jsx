@@ -14,32 +14,37 @@ const EditProductPanel = ({
 }) => {
   return (
     <>
-      <Form layout="vertical" form={form}>
+      <Form
+        layout="vertical"
+        form={form}
+        initialValues={{
+          Title: newTitle,
+          Price: newPrice,
+          Description: newDescription,
+          Category: newCategory,
+        }}
+      >
         <RTInput.text
           label="Title"
           name="Title"
           onChange={(e) => setNewTitle(e.target.value)}
-          defaultValue={newTitle}
           required
         />
-        <RTInput.text
+        <RTInput.number
           label="Price"
           name="Price"
-          onChange={(e) => setNewPrice(e.target.value)}
-          defaultValue={newPrice}
+          onChange={(value) => setNewPrice(value)}
           required
         />
         <RTInput.text
           label="Description"
           name="Description"
           onChange={(e) => setNewDescription(e.target.value)}
-          defaultValue={newDescription}
         />
         <RTInput.text
           label="Category"
           name="Category"
           onChange={(e) => setNewCategory(e.target.value)}
-          defaultValue={newCategory}
           required
         />
       </Form>

@@ -27,7 +27,6 @@ const ProductsPageContainer = () => {
 
 const ProductsPage = (params) => {
   const { title } = params.routeData;
-  console.log("title", params);
   return (
     <MainLayout
       title={title}

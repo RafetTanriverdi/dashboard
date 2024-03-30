@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Drawer } from "antd";
 import ReactJson from "react-json-view";
 
-const DeleteProductDrawer = ({ open, onClose, inheritedData }) => {
+const DeleteCategoryDrawer = ({ open, onClose, inheritedData }) => {
   const { context, openNotification } = Notification();
 
   const queryClient = useQueryClient();
@@ -14,14 +14,17 @@ const DeleteProductDrawer = ({ open, onClose, inheritedData }) => {
   const mutation = useMutation({
     mutationFn: () => {
       return axiosInstance.delete(
-        ENDPOINTS.PRODUCT.DELETE.replace(":productTitle", inheritedData.slug)
+        ENDPOINTS.CATEGORIES.DELETE.replace(
+          ":categoryTitle",
+          inheritedData.slug
+        )
       );
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
       openNotification({
         type: "success",
-        message: "Product Deleted Successfully",
+        message: "Category Deleted Successfully",
         duration: 2,
         onClose: () => {
           onClose();
@@ -45,14 +48,14 @@ const DeleteProductDrawer = ({ open, onClose, inheritedData }) => {
       {context}
 
       <Drawer
-        title="Delete Product"
+        title="Delete Category"
         placement="right"
         size="large"
         onClose={onClose}
         open={open}
         extra={
           <RTButton.add
-            text="Delete Product"
+            text="Delete Category"
             onClick={() => mutation.mutate()}
             loading={mutation.isPending}
           />
@@ -64,4 +67,4 @@ const DeleteProductDrawer = ({ open, onClose, inheritedData }) => {
   );
 };
 
-export default DeleteProductDrawer;
+export default DeleteCategoryDrawer;
