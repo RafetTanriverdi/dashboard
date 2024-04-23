@@ -110,9 +110,6 @@ export const LayoutFlow = () => {
           }}
         >
           <Typography.Title
-            style={{
-              backgroundColor: "#f5f5f5",
-            }}
             level={3}
           >
             Your Team
