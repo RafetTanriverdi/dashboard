@@ -2,11 +2,11 @@ import { hasArrayElement } from "@rt/utils/array-utils";
 import { useQuery } from "@tanstack/react-query";
 import { Space } from "antd";
 import { Table } from "antd";
-import { TableView } from "./CategoryActions";
-import ViewCategoryDrawer from "./drawers/ViewCategoryDrawer";
+import { TableView } from "./CustomerActions";
+import ViewCustomerDrawer from "./drawers/ViewCustomerDrawer";
 import { useState } from "react";
-import EditCategoryDrawer from "./drawers/EditCategoryDrawer";
-import DeleteCategoryDrawer from "./drawers/DeleteCategoryDrawer";
+import EditCustomerDrawer from "./drawers/EditCustomerDrawer";
+import DeleteCustomerDrawer from "./drawers/DeleteCustomerDrawer";
 import RTSkeleton from "@rt/components/RTSkeleton/RTSkeleton";
 import { axiosInstance } from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
@@ -14,22 +14,22 @@ import { ENDPOINTS } from "@rt/network/endpoints";
 const TableAntdContainer = ({ style, dataSource }) => {
   const columns = [
     {
-      title: "Id",
-      dataIndex: "_id",
-      key: "_id",
-      sorter: (a, b) => a._id - b._id,
-    },
-    {
       title: "Name",
       dataIndex: "name",
       key: "name",
       sorter: (a, b) => a.name.localeCompare(b.name),
     },
     {
-      title: "Slug",
-      dataIndex: "slug",
-      key: "slug",
-      sorter: (a, b) => a.slug.localeCompare(b.slug),
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      sorter: (a, b) => a.email.localeCompare(b.email),
+    },
+    {
+      title: "Number",
+      dataIndex: "number",
+      key: "number",
+      sorter: (a, b) => a.number - b.number,
     },
 
     {
@@ -69,21 +69,21 @@ const TableActions = ({ data }) => {
         Delete
       </a>
       {open && type === TableView.VIEW && (
-        <ViewCategoryDrawer
+        <ViewCustomerDrawer
           onClose={onClose}
           open={open}
           inheritedData={data}
         />
       )}
       {open && type === TableView.EDIT && (
-        <EditCategoryDrawer
+        <EditCustomerDrawer
           onClose={onClose}
           open={open}
           inheritedData={data}
         />
       )}
       {open && type === TableView.DELETE && (
-        <DeleteCategoryDrawer
+        <DeleteCustomerDrawer
           onClose={onClose}
           open={open}
           inheritedData={data}
@@ -95,9 +95,9 @@ const TableActions = ({ data }) => {
 
 const TableContainer = () => {
   const { data, isLoading, error } = useQuery({
-    queryKey: ["categories"],
+    queryKey: ["customers"],
     queryFn: () =>
-      axiosInstance.get(ENDPOINTS.CATEGORIES.LIST).then((res) => res.data.data),
+      axiosInstance.get(ENDPOINTS.USER.LIST).then((res) => res.data.data),
   });
 
   let tableData = [];
@@ -107,12 +107,14 @@ const TableContainer = () => {
       .sort((a, b) => {
         return new Date(b.updatedAt) - new Date(a.updatedAt);
       })
-      .map((item, index) => {
+      .map((item) => {
         return {
           key: item._id,
-          _id: index + 1,
           name: item.name,
-          slug: item.slug,
+          email: item.email,
+          number: item.number,
+          createdAt: item.createdAt,
+          password: item.password,
         };
       });
   }
@@ -132,7 +134,7 @@ const TableContainer = () => {
   }
 };
 
-const CategoryList = () => {
+const CustomerList = () => {
   return <TableContainer />;
 };
-export default CategoryList;
+export default CustomerList;

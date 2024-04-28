@@ -1,0 +1,18 @@
+.customer-list-container{
+    height: 100%;
+    padding: 0 20px;
+    .customer-list-header{
+        display: flex;
+        justify-content: space-between;
+    }
+    .customer-list{
+        width: 100%;
+    }
+}
+@media screen and (max-width: 768px){
+    .customer-list-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

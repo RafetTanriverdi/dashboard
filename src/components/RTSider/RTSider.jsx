@@ -10,12 +10,17 @@ import { ROUTES_ID } from "../../routing/routes-id";
 
 
 Amplify.configure(awsExports);
+
+
 const RTSider = () => {
   const navigate = useNavigate();
+
+
   const handleSignOut = async () => {
     await signOut();
     localStorage.removeItem("accessToken");
     navigate(getRoutePath(ROUTES_ID.login));
+
   };
 
   const SignOut = () => {

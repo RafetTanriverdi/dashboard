@@ -1,7 +1,22 @@
 import RTSider from "@rt/components/RTSider/RTSider";
 import MainLayout from "@rt/layout/MainLayout/MainLayout";
+import { fetchUserAttributes } from "aws-amplify/auth";
+import { useEffect } from "react";
 
 const MyProfilePageContainer = () => {
+
+  useEffect(() => {
+    async function handleFetchUserAttributes() {
+      try {
+        const userAttributes = await fetchUserAttributes();
+        console.log(userAttributes);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    handleFetchUserAttributes()
+  }, [])
+  
   return <div>MyProfilePage</div>;
 };
 
