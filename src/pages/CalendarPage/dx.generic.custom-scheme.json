@@ -1,0 +1,14 @@
+{
+    "items": [
+        {
+            "key": "$base-bg",
+            "value": "rgba(0, 0, 0, 1)"
+        }
+    ],
+    "baseTheme": "generic.dark",
+    "outputColorScheme": "custom-scheme",
+    "makeSwatch": true,
+    "version": "23.2.5",
+    "widgets": [],
+    "removeExternalResources": true
+}

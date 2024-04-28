@@ -7,7 +7,23 @@ const awsExports = {
   aws_cognito_region: "eu-central-1",
   aws_user_pools_id: "eu-central-1_Aqadja7f9",
   aws_user_pools_web_client_id: "1orgjk83egbvgdja2kmcgh0sor",
-  oauth: {},
+  oauth: {
+    domain: "rafet-dashboard.auth.eu-central-1.amazoncognito.com",
+    scope: [
+      "email",
+      "openid",
+      "profile",
+      "aws.cognito.signin.user.admin",
+      "phone",
+    ],
+    redirectSignIn:
+      "http://localhost:5173/,https://d3o0qmvpbmut8f.cloudfront.net/",
+    redirectSignOut:
+      "http://localhost:5173/,https://d3o0qmvpbmut8f.cloudfront.net/",
+    responseType: "token",
+    // redirectSignIn: ["http://localhost:5173/"],
+    // redirectSignOut: ["http://localhost:5173/"],
+  },
   aws_cognito_username_attributes: ["EMAIL"],
   aws_cognito_social_providers: [],
   aws_cognito_signup_attributes: ["EMAIL", "USERNAME"],

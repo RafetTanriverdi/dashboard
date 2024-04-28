@@ -15,6 +15,9 @@ import { getRoutePath } from "../../routing/routes";
 import { ROUTES_ID } from "../../routing/routes-id";
 import { RTButton } from "@rt/components/RTButton";
 import { useUserDataStore } from "@rt/data/User/UserData";
+import GoogleSignIn from "@rt/pages/LoginPage/SocialProvider/GoogleSignIn";
+import FacebookSignIn from "./SocialProvider/FacebookSignIn";
+import { Layout } from "antd";
 
 Amplify.configure(awsExports);
 const LoginPageContainer = () => {
@@ -22,20 +25,16 @@ const LoginPageContainer = () => {
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
-  const { setUserData ,userData} = useUserDataStore();
-console.log("userData",userData);
+  const { setUserData, userData } = useUserDataStore();
+
   const handleSignIn = async () => {
     try {
-      const response = await signIn({
+      await signIn({
         username: email,
-
         password,
       });
-      console.log("response from login ", response);
       const user = await getCurrentUser();
       setUserData(user);
-      console.log("user", user);
-
       const { accessToken, idToken } = (await fetchAuthSession()).tokens ?? {};
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("idToken", idToken);
@@ -44,6 +43,7 @@ console.log("userData",userData);
       console.log("error in login ", e);
     }
   };
+
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -54,8 +54,12 @@ console.log("userData",userData);
   return (
     <Form className="login-container" layout="vertical" onFinish={handleSignIn}>
       <Card className="card-container" title="Login">
+        <Layout style={{gap:'10px', background:'none',marginBottom:'20px'}}>
+          <GoogleSignIn  text={"Sign-In With Google "}/>
+          <FacebookSignIn text={'Sign-In With Facebook'} />
+        </Layout>
         <RTInput.text
-          label="E-mail Or User Name"
+          label="E-mail "
           name="email"
           className="input"
           value={email}
