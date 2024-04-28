@@ -1,7 +1,5 @@
 import MainLayout from "@rt/layout/MainLayout/MainLayout";
 import RTSider from "@rt/components/RTSider/RTSider";
-
-import './dx.generic.custom-scheme.css'
 import { Scheduler } from "devextreme-react/scheduler";
 
 const calenderViews = ["day", "week", "month"];
