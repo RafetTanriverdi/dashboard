@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
   fetchAuthSession,
   getCurrentUser,
@@ -55,9 +56,7 @@ const FacebookSignIn = ({text}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log("error", error);
-  console.log("userData", userData);
-  console.log("customState", customState);
+
 
   const getUser = async () => {
     try {

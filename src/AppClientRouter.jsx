@@ -7,7 +7,6 @@ import { ErrorBoundaryPage } from "./pages/ErrorPage/ErrorBoundaryPage";
 import RTSpinner from "./components/RTSpinner/RTSpinner";
 
 const AppClientRouter = ({ routes, ...props }) => {
-  console.log(routes);
   const renderRoute = (el) => {
     const PageComp = React.lazy(() =>
       import(`./pages/AliasPath/${el.fileName}.jsx`)

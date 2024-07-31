@@ -19,6 +19,7 @@ function App() {
   const { theme, setTheme } = useThemeChangeStore();
   const { setUserData } = useUserDataStore();
 
+
   const [cookies, setCookie] = useCookies(["light-theme"]);
 
   themes.current(theme ? "generic.light" : "generic.dark");
