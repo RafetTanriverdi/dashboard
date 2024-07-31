@@ -20,11 +20,11 @@ function App() {
   const { setUserData } = useUserDataStore();
 
 
-  const [cookies, setCookie] = useCookies(["light-theme"]|| null);
+  const [cookies, setCookie] = useCookies(["light-theme"]);
 
-  if (theme !== null && theme !== undefined) {
-    themes.current(theme ? "generic.light" : "generic.dark");
-  }
+ 
+    themes.current("generic.light");
+
   
 
   useEffect(() => {
