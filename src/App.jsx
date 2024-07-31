@@ -20,7 +20,7 @@ function App() {
   const { setUserData } = useUserDataStore();
 
 
-  const [cookies, setCookie] = useCookies(["light-theme"]);
+  const [cookies, setCookie] = useCookies(["light-theme"]|| null);
 
   themes.current(theme ? "generic.light" : "generic.dark");
 
