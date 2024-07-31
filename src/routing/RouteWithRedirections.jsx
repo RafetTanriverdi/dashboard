@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Navigate } from "react-router-dom";
-import { isUserLoggedIn } from "../authentication/auth-utils";
 import { ROUTES_ID } from "./routes-id";
 import { getRoutePath } from "./routes";
+import { isUserLoggedIn } from "@rt/authentication/auth-utils";
 
 const isOutsidePage = (path) => {
   const outsidePages = [

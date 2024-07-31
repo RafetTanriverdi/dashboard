@@ -11,8 +11,8 @@ import { useNavigate } from "react-router-dom";
 import { getRoutePath } from "@rt/routing/routes";
 import { ROUTES_ID } from "@rt/routing/routes-id";
 import { Space } from "antd";
-import GoogleSignIn from "../LoginPage/SocialProvider/GoogleSignIn";
-import FacebookSignIn from "../LoginPage/SocialProvider/FacebookSignIn";
+// import GoogleSignIn from "../LoginPage/SocialProvider/GoogleSignIn";
+// import FacebookSignIn from "../LoginPage/SocialProvider/FacebookSignIn";
 import { Layout } from "antd";
 
 Amplify.configure(awsExports);
@@ -49,8 +49,8 @@ const RegisterPageContainer = () => {
         <Layout
           style={{ gap: "10px", background: "none", marginBottom: "20px" }}
         >
-          <GoogleSignIn text={"Sign-Up With Google"} />
-          <FacebookSignIn text={"Sign-Up With Facebook"} />
+          {/* <GoogleSignIn text={"Sign-Up With Google"} />
+          <FacebookSignIn text={"Sign-Up With Facebook"} /> */}
         </Layout>
         <RTInput.text
           label="username"

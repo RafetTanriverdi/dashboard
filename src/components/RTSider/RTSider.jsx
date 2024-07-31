@@ -6,6 +6,7 @@ import { Amplify } from "aws-amplify";
 import awsExports from "../../authentication/aws-exports";
 import { getRoutePath, routes } from "../../routing/routes";
 import { ROUTES_ID } from "../../routing/routes-id";
+import { useAuthStore } from "@rt/data/Auth/UseAuthStore";
 
 
 
@@ -14,11 +15,12 @@ Amplify.configure(awsExports);
 
 const RTSider = () => {
   const navigate = useNavigate();
+  const {setIsAuthenticated} = useAuthStore();
 
 
   const handleSignOut = async () => {
     await signOut();
-    localStorage.removeItem("accessToken");
+    setIsAuthenticated(null);
     navigate(getRoutePath(ROUTES_ID.login));
 
   };
