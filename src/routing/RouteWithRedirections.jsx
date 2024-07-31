@@ -30,6 +30,7 @@ export function RouteWithRedirections({ ...props }) {
     fetchData();
   }, [setIsAuthenticated]);
 
+  
   if (isAuthenticated) {
     if (isOutsidePage(props?.routeData?.path)) {
       return <Navigate to={getRoutePath(ROUTES_ID.dashboard)} />;
