@@ -22,10 +22,15 @@ function App() {
 
   const [cookies, setCookie] = useCookies(["light-theme"]|| null);
 
-  themes.current(theme ? "generic.light" : "generic.dark");
+  if (theme !== null && theme !== undefined) {
+    themes.current(theme ? "generic.light" : "generic.dark");
+  }
+  
 
   useEffect(() => {
-    setTheme(cookies["light-theme"] === "true" ? true : false);
+    const isLightTheme = cookies["light-theme"] === "true";
+    setTheme(isLightTheme !== undefined ? isLightTheme : true); // Varsayılan olarak 'true' (light theme) yapıyoruz
+  
     const user = async () =>
       await getCurrentUser()
         .then((user) => {
@@ -35,11 +40,12 @@ function App() {
           console.log("err", err);
         });
     user();
-
+  
     setCookie("light-theme", theme);
-  }, []);
+  }, [cookies, setTheme, setUserData, setCookie]);
+  
 
-  console.log("theme", cookies);
+  console.log("theme", theme);
   return (
     <>
       <ConfigProvider theme={theme ? lightTheme : darkTheme}>
