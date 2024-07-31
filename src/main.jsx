@@ -6,19 +6,19 @@ import { BrowserRouter } from "react-router-dom/dist/index.js";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { routes } from "./routing/routes";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
+import themes from "devextreme/ui/themes.js";
 
 const queryClient = new QueryClient();
 
-
-
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <BrowserRouter routes={routes}>
-      <QueryClientProvider client={queryClient}>
-        <App />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </BrowserRouter>
-  </React.StrictMode>
+themes.initialized(() =>
+  ReactDOM.createRoot(document.getElementById("root")).render(
+    <React.StrictMode>
+      <BrowserRouter routes={routes}>
+        <QueryClientProvider client={queryClient}>
+          <App />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </BrowserRouter>
+    </React.StrictMode>
+  )
 );
