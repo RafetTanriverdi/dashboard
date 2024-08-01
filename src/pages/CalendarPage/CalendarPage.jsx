@@ -11,9 +11,10 @@ const CalendarPageContainer = () => {
   const {theme}=useThemeChangeStore()
 
   useEffect(() => {
-  themes.current(theme ? "generic.light" : "generic.dark");
+    const selectedTheme = theme ? "generic.light" : "generic.dark";
+    themes.current(selectedTheme);
   }, [theme]);
-  
+
   return (
     <>
       <Scheduler
