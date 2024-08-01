@@ -6,7 +6,6 @@ import { useThemeChangeStore } from "./data/Theme/Theme";
 import { ConfigProvider } from "antd";
 import { darkTheme } from "./theme/DarkTheme/DarkTheme";
 import { lightTheme } from "./theme/LightTheme/LightTheme";
-import themes from "devextreme/ui/themes";
 import { useEffect } from "react";
 import { getCurrentUser } from "aws-amplify/auth";
 import { useCookies } from "react-cookie";
@@ -19,8 +18,6 @@ function App() {
   useEffect(() => {
     const isLightTheme = cookies["light-theme"] === "true";
     setTheme(isLightTheme !== undefined ? isLightTheme : true);
-    themes.current(isLightTheme ? "generic.light" : "generic.dark");
-
     const user = async () => {
       try {
         const currentUser = await getCurrentUser();
