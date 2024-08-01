@@ -1,10 +1,19 @@
 import MainLayout from "@rt/layout/MainLayout/MainLayout";
 import RTSider from "@rt/components/RTSider/RTSider";
 import { Scheduler } from "devextreme-react/scheduler";
+import { useEffect } from "react";
+import { useThemeChangeStore } from "@rt/data/Theme/Theme";
+import themes from "devextreme/ui/themes";
 
 const calenderViews = ["day", "week", "month"];
 
 const CalendarPageContainer = () => {
+  const {theme}=useThemeChangeStore()
+
+  useEffect(() => {
+  themes.current(theme ? "generic.light" : "generic.dark");
+  }, [theme]);
+  
   return (
     <>
       <Scheduler

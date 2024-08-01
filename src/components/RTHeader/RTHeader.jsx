@@ -10,10 +10,10 @@ const RTHeader = () => {
   const { username } = userData;
   const { theme, setTheme } = useThemeChangeStore();
 
-  const changeTheme = () => {
-    const newTheme = !theme;
-    setTheme(newTheme);
-    themes.current(newTheme ? "generic.light" : "generic.dark");
+  const handleTheme = () => {
+    setTheme(!theme);
+
+    themes.current(theme ? "generic.light" : "generic.dark");
   };
 
   return (
@@ -21,9 +21,8 @@ const RTHeader = () => {
       <Space style={{ display: "flex", justifyContent: "space-between" }}>
         <Typography.Title level={5}>Welcome {username}</Typography.Title>
         <Button
-        
           type="link"
-          onClick={changeTheme}
+          onClick={handleTheme}
           icon={theme ? <MoonOutlined /> : <SunOutlined />}
         />
       </Space>

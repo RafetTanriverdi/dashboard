@@ -8,16 +8,12 @@ import { darkTheme } from "./theme/DarkTheme/DarkTheme";
 import { lightTheme } from "./theme/LightTheme/LightTheme";
 import { useEffect } from "react";
 import { getCurrentUser } from "aws-amplify/auth";
-import { useCookies } from "react-cookie";
 
 function App() {
-  const { theme, setTheme } = useThemeChangeStore();
+  const { theme } = useThemeChangeStore();
   const { setUserData } = useUserDataStore();
-  const [cookies, setCookie] = useCookies(["light-theme"]);
 
   useEffect(() => {
-    const isLightTheme = cookies["light-theme"] === "true";
-    setTheme(isLightTheme !== undefined ? isLightTheme : true);
     const user = async () => {
       try {
         const currentUser = await getCurrentUser();
@@ -27,9 +23,7 @@ function App() {
       }
     };
     user();
-
-    setCookie("light-theme", theme);
-  }, [cookies, setTheme, setUserData, setCookie, theme]);
+  }, []);
 
   return (
     <ConfigProvider theme={theme ? lightTheme : darkTheme}>
