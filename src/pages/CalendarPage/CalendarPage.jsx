@@ -13,7 +13,7 @@ const CalendarPageContainer = () => {
   const schedulerRef = useRef(null);
 
   useEffect(() => {
-    const selectedTheme = theme ? "generic.dark" : "generic.light";
+    const selectedTheme = theme !== undefined && theme !== null ? (theme ? "generic.dark" : "generic.light") : "generic.light";
 
     themes.ready(() => {
       themes.current(selectedTheme);
