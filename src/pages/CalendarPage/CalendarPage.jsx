@@ -12,7 +12,11 @@ const CalendarPageContainer = () => {
 
   useEffect(() => {
     const selectedTheme = theme ? "generic.light" : "generic.dark";
-    themes.current(selectedTheme);
+
+    themes.ready(() => {
+      themes.current(selectedTheme);
+      
+    });
   }, [theme]);
 
   return (
