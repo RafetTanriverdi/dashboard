@@ -8,15 +8,12 @@ import themes from "devextreme/ui/themes";
 const calenderViews = ["day", "week", "month"];
 
 const CalendarPageContainer = () => {
-  const {theme}=useThemeChangeStore()
+  const { theme } = useThemeChangeStore();
 
   useEffect(() => {
-    const selectedTheme = !theme ? "generic.light" : "generic.dark";
+    const selectedTheme = theme ? "generic.light" : "generic.dark";
 
-    themes.ready(() => {
-      themes.current(selectedTheme);
-      
-    });
+    themes.current(selectedTheme);
   }, [theme]);
 
   return (
@@ -24,7 +21,6 @@ const CalendarPageContainer = () => {
       <Scheduler
         currentView="month"
         views={calenderViews}
-    
         defaultCurrentView="month"
         height={600}
       ></Scheduler>
