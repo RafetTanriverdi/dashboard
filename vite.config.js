@@ -15,6 +15,11 @@ export default defineConfig({
       
     },
   },
+  build: {
+    rollupOptions: {
+      external: ["devextreme/ui/themes"]
+    }
+  },
 
   plugins: [
     react(),
