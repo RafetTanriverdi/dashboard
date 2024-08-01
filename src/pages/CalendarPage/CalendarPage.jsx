@@ -1,44 +1,36 @@
-import MainLayout from "@rt/layout/MainLayout/MainLayout";
-import RTSider from "@rt/components/RTSider/RTSider";
+import { useEffect, useRef } from "react";
 import { Scheduler } from "devextreme-react/scheduler";
-import { useEffect } from "react";
-import { useThemeChangeStore } from "@rt/data/Theme/Theme";
 import themes from "devextreme/ui/themes";
+import { useThemeChangeStore } from "@rt/data/Theme/Theme";
 
 const calenderViews = ["day", "week", "month"];
 
 const CalendarPageContainer = () => {
   const { theme } = useThemeChangeStore();
+  const schedulerRef = useRef(null);
 
   useEffect(() => {
-    const selectedTheme = theme ? "generic.light" : "generic.dark";
+    const selectedTheme = theme ? "generic.dark" : "generic.light";
 
-    themes.current(selectedTheme);
+    themes.ready(() => {
+      themes.current(selectedTheme);
+      if (schedulerRef.current) {
+        schedulerRef.current.instance.repaint();
+      }
+    });
   }, [theme]);
 
   return (
     <>
       <Scheduler
+        ref={schedulerRef}
         currentView="month"
         views={calenderViews}
         defaultCurrentView="month"
         height={600}
-      ></Scheduler>
-    </>
-  );
-};
-
-const CalendarPage = (params) => {
-  const { title } = params.routeData;
-  return (
-    <>
-      <MainLayout
-        title={title}
-        sider={<RTSider />}
-        content={<CalendarPageContainer />}
       />
     </>
   );
 };
 
-export default CalendarPage;
+export default CalendarPageContainer;
