@@ -6,10 +6,9 @@ import { BrowserRouter } from "react-router-dom/dist/index.js";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { routes } from "./routing/routes";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import themes from "devextreme/ui/themes";
 
 const queryClient = new QueryClient();
-themes.initialized(() =>
+
   ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
       <BrowserRouter routes={routes}>
@@ -20,4 +19,4 @@ themes.initialized(() =>
       </BrowserRouter>
     </React.StrictMode>
   )
-);
+
