@@ -8,12 +8,18 @@ import { darkTheme } from "./theme/DarkTheme/DarkTheme";
 import { lightTheme } from "./theme/LightTheme/LightTheme";
 import { useEffect } from "react";
 import { getCurrentUser } from "aws-amplify/auth";
+import { useCookies } from "react-cookie";
 
 function App() {
-  const { theme } = useThemeChangeStore();
+  const { theme, setTheme } = useThemeChangeStore();
   const { setUserData } = useUserDataStore();
+  const [cookies, setCookie] = useCookies(["theme"]);
 
   useEffect(() => {
+    // Uygulama başlarken çerezden tema değerini al ve uygula
+    const savedTheme = cookies.theme === "dark" ? false : true;
+    setTheme(savedTheme);
+
     const user = async () => {
       try {
         const currentUser = await getCurrentUser();
@@ -24,6 +30,11 @@ function App() {
     };
     user();
   }, []);
+
+  useEffect(() => {
+    // Tema değiştiğinde çerezde güncelle
+    setCookie("theme", theme ? "light" : "dark", { path: "/" });
+  }, [theme]);
 
   return (
     <ConfigProvider theme={theme ? lightTheme : darkTheme}>

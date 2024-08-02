@@ -3,24 +3,19 @@ import { useThemeChangeStore } from "@rt/data/Theme/Theme";
 import { useUserDataStore } from "@rt/data/User/UserData";
 import { Button, Space } from "antd";
 import { Typography } from "antd";
-import themes from "devextreme/ui/themes";
+import { useCookies } from "react-cookie";
 
-const RTHeader = ({ scheduler }) => {
+const RTHeader = () => {
   const { userData } = useUserDataStore();
   const { username } = userData;
   const { theme, setTheme } = useThemeChangeStore();
+  // eslint-disable-next-line no-unused-vars
+  const [cookies, setCookie] = useCookies(["theme"]);
 
   const handleTheme = () => {
     setTheme(!theme);
-
-    const selectedTheme = theme ? "generic.dark" : "generic.light";
-    themes.current(selectedTheme);
-
-    themes.ready(() => {
-      if (scheduler.current) {
-        scheduler.current.instance.repaint();
-      }
-    });
+    // Tema değiştirildiğinde çerezi güncelle
+    setCookie("theme", !theme ? "light" : "dark", { path: "/" });
   };
 
   return (
