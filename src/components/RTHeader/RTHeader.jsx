@@ -3,17 +3,15 @@ import { useThemeChangeStore } from "@rt/data/Theme/Theme";
 import { useUserDataStore } from "@rt/data/User/UserData";
 import { Button, Space } from "antd";
 import { Typography } from "antd";
-import themes from "devextreme/ui/themes";
 
 const RTHeader = () => {
   const { userData } = useUserDataStore();
   const { username } = userData;
-  const { theme, setTheme } = useThemeChangeStore();
+  const { theme,setTheme, } = useThemeChangeStore();
 
   const handleTheme = () => {
     setTheme(!theme);
-
-    themes.current(theme ? "generic.light" : "generic.dark");
+   
   };
 
   return (
