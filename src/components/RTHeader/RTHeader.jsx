@@ -12,10 +12,15 @@ const RTHeader = ({ scheduler }) => {
 
   const handleTheme = () => {
     setTheme(!theme);
+
+    const selectedTheme = theme ? "generic.dark" : "generic.light";
+    themes.current(selectedTheme);
+
     themes.ready(() => {
-      scheduler.current.instance.repaint();
+      if (scheduler.current) {
+        scheduler.current.instance.repaint();
+      }
     });
-    themes.current(theme ? "generic.dark" : "generic.light");
   };
 
   return (

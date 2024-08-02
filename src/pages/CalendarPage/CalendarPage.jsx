@@ -32,9 +32,7 @@ const CalendarPage = () => {
   const scheduler = useRef(null);
   return (
     <MainLayout
-      content={
-        <CalendarPageContainer scheduler={scheduler} />
-      }
+      content={<CalendarPageContainer scheduler={scheduler} />}
       header={<RTHeader scheduler={scheduler} />}
       sider={<RTSider />}
       title={"Calendar Page"}
