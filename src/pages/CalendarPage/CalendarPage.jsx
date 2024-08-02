@@ -8,21 +8,17 @@ import { useRef } from "react";
 
 const calenderViews = ["day", "week", "month"];
 
-const CalendarPageContainer = () => {
-
-  const schaduler=useRef(null)
-
+const CalendarPageContainer = ({ scheduler }) => {
   useEffect(() => {
     themes.ready(() => {
-      schaduler.current.instance.repaint();
-  });
-
+      scheduler.current.instance.repaint();
+    });
   }, []);
 
   return (
     <>
       <Scheduler
-      ref={schaduler}
+        ref={scheduler}
         currentView="month"
         views={calenderViews}
         defaultCurrentView="month"
@@ -33,10 +29,13 @@ const CalendarPageContainer = () => {
 };
 
 const CalendarPage = () => {
+  const scheduler = useRef(null);
   return (
     <MainLayout
-      content={<CalendarPageContainer />}
-      header={<RTHeader />}
+      content={
+        <CalendarPageContainer scheduler={scheduler} />
+      }
+      header={<RTHeader scheduler={scheduler} />}
       sider={<RTSider />}
       title={"Calendar Page"}
     />

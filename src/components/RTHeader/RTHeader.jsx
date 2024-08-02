@@ -5,15 +5,17 @@ import { Button, Space } from "antd";
 import { Typography } from "antd";
 import themes from "devextreme/ui/themes";
 
-const RTHeader = () => {
+const RTHeader = ({ scheduler }) => {
   const { userData } = useUserDataStore();
   const { username } = userData;
-  const { theme,setTheme, } = useThemeChangeStore();
+  const { theme, setTheme } = useThemeChangeStore();
 
   const handleTheme = () => {
     setTheme(!theme);
- 
-  themes.current(theme ? 'generic.dark' : 'generic.light');
+    themes.ready(() => {
+      scheduler.current.instance.repaint();
+    });
+    themes.current(theme ? "generic.dark" : "generic.light");
   };
 
   return (
