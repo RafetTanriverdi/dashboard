@@ -1,29 +1,28 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { Scheduler } from "devextreme-react/scheduler";
-import themes from "devextreme/ui/themes";
 import MainLayout from "@rt/layout/MainLayout/MainLayout";
 import RTHeader from "@rt/components/RTHeader/RTHeader";
 import RTSider from "@rt/components/RTSider/RTSider";
-import { theme } from "antd";
+import themes from "devextreme/ui/themes";
+import { useRef } from "react";
 
 const calenderViews = ["day", "week", "month"];
 
 const CalendarPageContainer = () => {
-  const schedulerRef = useRef(null);
+
+  const schaduler=useRef(null)
 
   useEffect(() => {
     themes.ready(() => {
-      schedulerRef.current.instance.repaint();
-    });
-    themes.current(theme ? "generic.dark" : "generic.light");
+      schaduler.current.instance.repaint();
+  });
+
   }, []);
 
-  
   return (
     <>
-    
       <Scheduler
-        ref={schedulerRef}
+      ref={schaduler}
         currentView="month"
         views={calenderViews}
         defaultCurrentView="month"
@@ -43,4 +42,5 @@ const CalendarPage = () => {
     />
   );
 };
+
 export default CalendarPage;
