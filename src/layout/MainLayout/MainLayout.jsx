@@ -18,12 +18,12 @@ const {userData}=useContext(UserContext)
         <title>{title && `${title} | ${userData?.name}`}</title>
       </Helmet>
 
-      <Layout className="container">
-        <Sider className="sidebar">{sider}</Sider>
-        <Layout className="main-layout">
-          <Header className="header">
+      <Layout className="container">  <Header className="header">
             <RTHeader />
           </Header>
+     
+        <Layout className="main-layout">
+        <Sider className="sidebar">{sider}</Sider>
           <Content className="content">{content}</Content>
         </Layout>
       </Layout>

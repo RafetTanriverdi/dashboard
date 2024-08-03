@@ -47,7 +47,6 @@ const RTSider = () => {
   const combinedMenu = [...menu, ...signOutd];
   return (
     <Menu
-      theme="dark"
       mode="vertical"
       items={combinedMenu}
       style={{ flex: 1, minWidth: 0 }}

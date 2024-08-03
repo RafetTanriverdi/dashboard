@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
+.github/
 
 # Editor directories and files
 .vscode/*
@@ -26,6 +27,7 @@ dist-ssr
 .env.local
 .env.*.local
 .env.production
+
 
 
 #amplify-do-not-edit-begin
