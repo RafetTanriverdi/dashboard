@@ -9,12 +9,17 @@ import { lightTheme } from "./theme/LightTheme/LightTheme";
 import { useEffect } from "react";
 import { getCurrentUser } from "aws-amplify/auth";
 import { useCookies } from "react-cookie";
+import awsExports from "./aws-exports";
+import { Amplify } from "aws-amplify";
+Amplify.configure(awsExports);
+
+
 
 function App() {
   const { theme, setTheme } = useThemeChangeStore();
   const { setUserData } = useUserDataStore();
   const [cookies, setCookie] = useCookies(["theme"]);
-
+console.log('awsExports',awsExports)
   useEffect(() => {
     // Uygulama başlarken çerezden tema değerini al ve uygula
     const savedTheme = cookies.theme === "dark" ? false : true;
@@ -24,6 +29,7 @@ function App() {
       try {
         const currentUser = await getCurrentUser();
         setUserData(currentUser);
+        console.log("User data fetched:", currentUser);
       } catch (err) {
         console.log("Error fetching user data:", err);
       }
@@ -38,6 +44,7 @@ function App() {
 
   return (
     <ConfigProvider theme={theme ? lightTheme : darkTheme}>
+
       <AppClientRouter routes={routes} />
     </ConfigProvider>
   );

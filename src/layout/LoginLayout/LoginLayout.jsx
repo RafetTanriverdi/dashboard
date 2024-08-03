@@ -4,7 +4,7 @@ import "./LoginLayout.scss";
 
 const LoginLayout = ({ content }) => {
   return (
-    <Layout>
+    <Layout className="layout-container">
       <Content
        className="login-content-container"
       >

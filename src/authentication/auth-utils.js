@@ -1,18 +1,19 @@
-import { fetchAuthSession } from "aws-amplify/auth";
+import awsmobile from "@rt/aws-exports";
 
-export const getAccessToken = async () => {
 
-  try {
-    const sessions = await fetchAuthSession() || {};
-    const accessToken = sessions.tokens?.accessToken?.toString();
-    return accessToken||null;
-  } catch (error) {
-    console.error("Error fetching access token:", error);
-    return null;
+const getToken = () => {
+  const poolId=awsmobile.aws_user_pools_web_client_id
+  const userId=localStorage.getItem(`CognitoIdentityServiceProvider.${poolId}.LastAuthUser`);
+  const token = localStorage.getItem(`CognitoIdentityServiceProvider.${poolId}.${userId}.accessToken`);
+  console.log(token);
+  return token;
+}
+export function checkUserAuthentication() {
+  const token = getToken();
+  console.log(token);
+  if (token) {
+    return true;
   }
-};
-
-// export const isUserLoggedIn = async () => {
-//   const accessToken = await getAccessToken();
-//   return accessToken !== null;
-// };
+  return false;
+  
+}

@@ -1,9 +1,13 @@
-.login-content-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-  
+.layout-container {
+    height: 100vh;
+
+    .login-content-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+
+    }
 }

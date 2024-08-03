@@ -10,16 +10,16 @@ import { useNavigate } from "react-router-dom";
 import { fetchAuthSession, getCurrentUser, signIn } from "aws-amplify/auth";
 import { useState } from "react";
 import { Amplify } from "aws-amplify";
-import awsExports from "../../authentication/aws-exports";
+import awsExports from "@rt/aws-exports";
 import { getRoutePath } from "../../routing/routes";
 
 import { RTButton } from "@rt/components/RTButton";
 import { useUserDataStore } from "@rt/data/User/UserData";
-import GoogleSignIn from "@rt/pages/LoginPage/SocialProvider/GoogleSignIn";
-import FacebookSignIn from "./SocialProvider/FacebookSignIn";
+
 import { Layout } from "antd";
 import { ROUTES_ID } from "@rt/routing/routes-id";
 import { useAuthStore } from "@rt/data/Auth/UseAuthStore";
+import { checkUserAuthentication } from "@rt/authentication/auth-utils";
 
 Amplify.configure(awsExports);
 const LoginPageContainer = () => {
@@ -39,9 +39,8 @@ const LoginPageContainer = () => {
       });
       const user = await getCurrentUser();
       setUserData(user);
-      const { accessToken, idToken } = (await fetchAuthSession()).tokens ?? {};
-      setIsAuthenticated(accessToken);
-      localStorage.setItem("idToken", idToken);
+      const staus = checkUserAuthentication();
+      setIsAuthenticated(staus);
       navigate(getRoutePath(ROUTES_ID.dashboard));
     } catch (e) {
       console.log("error in login ", e);
@@ -58,12 +57,6 @@ const LoginPageContainer = () => {
   return (
     <Form className="login-container" layout="vertical" onFinish={handleSignIn}>
       <Card className="card-container" title="Login">
-        <Layout
-          style={{ gap: "10px", background: "none", marginBottom: "20px" }}
-        >
-          <GoogleSignIn  text={"Sign-In With Google "}/>
-          <FacebookSignIn text={'Sign-In With Facebook'} />
-        </Layout>
         <RTInput.text
           label="E-mail "
           name="email"
