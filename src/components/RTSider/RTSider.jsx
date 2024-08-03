@@ -6,7 +6,7 @@ import { Amplify } from "aws-amplify";
 import { getRoutePath, routes } from "../../routing/routes";
 import { ROUTES_ID } from "../../routing/routes-id";
 import { useAuthStore } from "@rt/data/Auth/UseAuthStore";
-import awsExports from '@rt/aws-exports'
+import awsExports from '../../aws-exports'
 
 
 
