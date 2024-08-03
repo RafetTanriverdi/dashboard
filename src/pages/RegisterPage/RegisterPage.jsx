@@ -5,7 +5,6 @@ import "./RegisterPage.scss";
 import { useState } from "react";
 import { signUp } from "aws-amplify/auth";
 import { Amplify } from "aws-amplify";
-import awsExports from "@rt/aws-exports";
 import { RTInput } from "../../components/RTInput";
 import { useNavigate } from "react-router-dom";
 import { getRoutePath } from "@rt/routing/routes";
@@ -13,8 +12,9 @@ import { ROUTES_ID } from "@rt/routing/routes-id";
 import { Space } from "antd";
 
 import { Layout } from "antd";
+import awsmobile from "@rt/aws-exports";
 
-Amplify.configure(awsExports);
+Amplify.configure(awsmobile);
 const RegisterPageContainer = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

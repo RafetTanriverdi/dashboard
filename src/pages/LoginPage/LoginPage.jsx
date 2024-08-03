@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import { fetchAuthSession, getCurrentUser, signIn } from "aws-amplify/auth";
 import { useState } from "react";
 import { Amplify } from "aws-amplify";
-import awsExports from "@rt/aws-exports";
 import { getRoutePath } from "../../routing/routes";
 
 import { RTButton } from "@rt/components/RTButton";
@@ -20,8 +19,9 @@ import { Layout } from "antd";
 import { ROUTES_ID } from "@rt/routing/routes-id";
 import { useAuthStore } from "@rt/data/Auth/UseAuthStore";
 import { checkUserAuthentication } from "@rt/authentication/auth-utils";
+import awsmobile from "@rt/aws-exports";
 
-Amplify.configure(awsExports);
+Amplify.configure(awsmobile);
 const LoginPageContainer = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

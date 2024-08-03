@@ -6,11 +6,11 @@ import { Amplify } from "aws-amplify";
 import { getRoutePath, routes } from "../../routing/routes";
 import { ROUTES_ID } from "../../routing/routes-id";
 import { useAuthStore } from "@rt/data/Auth/UseAuthStore";
-import awsExports from '../../aws-exports'
+import awsmobile from "@rt/aws-exports";
 
 
 
-Amplify.configure(awsExports);
+Amplify.configure(awsmobile);
 
 
 const RTSider = () => {
