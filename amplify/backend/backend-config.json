@@ -1,6 +1,6 @@
 {
   "auth": {
-    "reactdashboardapp708adf74": {
+    "reactdashboardapp6cdcd80f": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -30,7 +30,6 @@
   },
   "hosting": {
     "amplifyhosting": {
-      "lastPushTimeStamp": "2024-08-03T13:07:25.566Z",
       "service": "amplifyhosting",
       "type": "cicd"
     }

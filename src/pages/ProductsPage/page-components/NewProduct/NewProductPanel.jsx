@@ -1,4 +1,5 @@
 import { RTInput } from "@rt/components/RTInput";
+import RTSelect from "@rt/components/RTSelect/RTSelect";
 import { Form } from "antd";
 
 const NewProductPanel = ({
@@ -6,12 +7,25 @@ const NewProductPanel = ({
   setTitle,
   price,
   setPrice,
-  desription,
+  description,
   setDescription,
   category,
   setCategory,
   form,
+  setImageFile,
+  categories,
 }) => {
+  const handleImageChange = (e) => {
+    setImageFile(e.target.files[0]); // Seçilen dosyayı state'e kaydet
+  };
+
+  const selectedOptions = categories?.map((category) => ({
+    label: category?.categoryName,
+    value: category?.categoryId,
+  }));
+
+  const selectedValue =categories?.filter((e) => e.categoryId === category).categoryName;
+
   return (
     <>
       <Form layout="vertical" form={form}>
@@ -33,16 +47,25 @@ const NewProductPanel = ({
           label="Description"
           name="Description"
           onChange={(e) => setDescription(e.target.value)}
-          value={desription}
+          value={description}
           required
         />
-        <RTInput.text
-          label="Category"
-          name="Category"
-          onChange={(e) => setCategory(e.target.value)}
-          value={category}
-          required
+        <RTSelect
+          label={"Category"}
+          name={"Category"}
+          options={selectedOptions}
+          placeholder={"Select a Category"}
+          onChange={(value) => setCategory(value)}
+          value={selectedValue}
+          required={true}
         />
+        <Form.Item
+          label="Product Image"
+          name="Image"
+          rules={[{ required: true, message: "Please upload an image" }]}
+        >
+          <input type="file" accept="image/*" onChange={handleImageChange} />
+        </Form.Item>
       </Form>
     </>
   );

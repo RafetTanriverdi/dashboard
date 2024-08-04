@@ -1,14 +1,14 @@
 import { RTButton } from "@rt/components/RTButton";
 import { Drawer } from "antd";
 import { useState } from "react";
-import EditCustomerPanel from "../panels/EditCustomerPanel";
+import EditUserPanel from "../panels/EditUserPanel";
 import { Form } from "antd";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
 import Notification from "@rt/components/RTFeedback/Notification/Notification";
 
-const EditCustomerDrawer = ({ onClose, open, inheritedData }) => {
+const EditUserDrawer = ({ onClose, open, inheritedData }) => {
   const { key, name, number, email, password } = inheritedData;
 
   const [newName, setNewName] = useState(name);
@@ -23,7 +23,7 @@ const EditCustomerDrawer = ({ onClose, open, inheritedData }) => {
 
   const queryClient = useQueryClient();
 
-  const handleEditCustomer = () => {
+  const handleEditUser = () => {
     form
       .validateFields()
       .then((values) => {
@@ -47,11 +47,11 @@ const EditCustomerDrawer = ({ onClose, open, inheritedData }) => {
   console.log("postBody", postBody);
 
   const mutation = useMutation({
-    mutationKey: "updateCustomer",
-    mutationFn: (updateCustomer) => {
+    mutationKey: "updateUser",
+    mutationFn: (updateUser) => {
       return axiosInstance.put(
         ENDPOINTS.USER.UPDATE.replace(":userId", key),
-        updateCustomer
+        updateUser
       );
     },
     onSuccess: () => {
@@ -59,7 +59,7 @@ const EditCustomerDrawer = ({ onClose, open, inheritedData }) => {
       openNotification({
         key: key,
         type: "success",
-        message: "Customer Edit Successfully",
+        message: "User Edit Successfully",
         duration: 2,
         onClose: () => {
           onClose();
@@ -73,7 +73,7 @@ const EditCustomerDrawer = ({ onClose, open, inheritedData }) => {
         message: `Error:${Error}`,
         duration: 2.5,
       });
-      console.error("Error: Customer could not be updated", error);
+      console.error("Error: User could not be updated", error);
     },
   });
 
@@ -81,7 +81,7 @@ const EditCustomerDrawer = ({ onClose, open, inheritedData }) => {
     <>
       {context}
       <Drawer
-        title="Edit Customer"
+        title="Edit User"
         placement="right"
         size="large"
         onClose={onClose}
@@ -89,12 +89,12 @@ const EditCustomerDrawer = ({ onClose, open, inheritedData }) => {
         extra={
           <RTButton.add
             text="Save Changes"
-            onClick={handleEditCustomer}
+            onClick={handleEditUser}
             loading={mutation.isPending}
           />
         }
       >
-        <EditCustomerPanel
+        <EditUserPanel
           form={form}
           newPassword={newPassword}
           setNewPassword={setNewPassword}
@@ -112,4 +112,4 @@ const EditCustomerDrawer = ({ onClose, open, inheritedData }) => {
   );
 };
 
-export default EditCustomerDrawer;
+export default EditUserDrawer;

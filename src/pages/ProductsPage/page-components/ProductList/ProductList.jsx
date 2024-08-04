@@ -130,7 +130,7 @@ const TableContainer = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
-      axiosInstance.get(ENDPOINTS.PRODUCT.LIST).then((res) => res.data.data),
+      axiosInstance.get(ENDPOINTS.PRODUCT.LIST).then((res) => res.data),
   });
   const longDate = "mmmm d, yyyy";
 
@@ -143,14 +143,12 @@ const TableContainer = () => {
       })
       .map((item, index) => {
         return {
-          key: item._id,
+          key: item.productId,
           _id: index + 1,
-          title: item.title,
+          title: item.name,
           price: item.price,
-          category: item.category.name,
-          owner: item.createdBy.name,
+          owner: item.ownerId,
           description: item.description,
-          slug: item.slug,
           updatedAt: dateFormat(item.updatedAt, longDate),
         };
       });

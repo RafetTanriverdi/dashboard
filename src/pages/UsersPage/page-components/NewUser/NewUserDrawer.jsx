@@ -1,5 +1,5 @@
 import { Drawer } from "antd";
-import NewCustomerPanel from "./NewCustomerPanel";
+import NewUserPanel from "./NewUserPanel";
 import { RTButton } from "@rt/components/RTButton";
 import { useState } from "react";
 import { axiosInstance } from "@rt/network/httpRequester";
@@ -8,12 +8,12 @@ import { ENDPOINTS } from "@rt/network/endpoints";
 import Notification from "@rt/components/RTFeedback/Notification/Notification";
 import { Form } from "antd";
 
-export const NewCustomerDrawer = ({ onClose, open }) => {
+export const NewUserDrawer = ({ onClose, open }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [number, setNumber] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [role, setRole] = useState("");
+  const [permissions, setPermissions] = useState([]);
 
   const queryClient = useQueryClient();
 
@@ -38,24 +38,23 @@ export const NewCustomerDrawer = ({ onClose, open }) => {
   };
 
   const postBody = {
-    name: name,
-    email: email,
-    number: number,
-    password: password,
-    password_repeat: passwordConfirm,
-
+    name,
+    email,
+    phoneNumber,
+    role,
+    permissions,
   };
 
   const mutation = useMutation({
-    mutationFn: (newCustomer) => {
-      return axiosInstance.post(ENDPOINTS.USER.ADD, newCustomer);
+    mutationFn: (newUser) => {
+      return axiosInstance.post(ENDPOINTS.USER.ADD, newUser);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["customers"] });
+      queryClient.invalidateQueries({ queryKey: ["users"] });
 
       openNotification({
         type: "success",
-        message: "Customer Added Successfully",
+        message: "User Added Successfully",
         duration: 2,
         onClose: () => {
           onClose();
@@ -77,26 +76,31 @@ export const NewCustomerDrawer = ({ onClose, open }) => {
     <>
       {context}
       <Drawer
-        title="Add New Customer"
+        title="Add New User"
         placement="right"
         size="large"
         onClose={onClose}
         open={open}
         extra={
           <RTButton.add
-            text="Add New Customer"
+            text="Add New User"
             onClick={handleForm}
             loading={mutation.isPending}
           />
         }
       >
-        <NewCustomerPanel form={form} 
-        name={name} setName={setName} 
-        email={email} setEmail={setEmail}
-        number={number} setNumber={setNumber}
-        password={password} setPassword={setPassword}
-        passwordConfirm={passwordConfirm} setPasswordConfirm={setPasswordConfirm}
-        
+        <NewUserPanel
+          form={form}
+          name={name}
+          setName={setName}
+          email={email}
+          setEmail={setEmail}
+          phoneNumber={phoneNumber}
+          setPhoneNumber={setPhoneNumber}
+          role={role}
+          setRole={setRole}
+          permissions={permissions}
+          setPermissions={setPermissions}
         />
       </Drawer>
     </>

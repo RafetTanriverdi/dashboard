@@ -2,33 +2,33 @@ import { ENDPOINTS } from "@rt/network/endpoints";
 import { axiosInstance } from "@rt/network/httpRequester";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Drawer } from "antd";
-import ViewCustomerPanel from "../panels/ViewCustomerPanel";
+import ViewUserPanel from "../panels/ViewUserPanel";
 
-const ViewCustomerDrawer = ({ onClose, open, inheritedData }) => {
+const ViewUserDrawer = ({ onClose, open, inheritedData }) => {
   const { key, name } = inheritedData;
 
 console.log("key", key, "name", name);
   const queryClient = useQueryClient();
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["Customer", key],
+    queryKey: ["User", key],
     queryFn: () =>
       axiosInstance.get(ENDPOINTS.USER.GET.replace(":userId", key)),
   });
   const handleCloseDrawer = () => {
     onClose();
-    queryClient.removeQueries({ queryKey: ["Customer", key] });
+    queryClient.removeQueries({ queryKey: ["User", key] });
   };
 
   return (
     <Drawer
       onClose={handleCloseDrawer}
       open={open}
-      title={"View Customer: " + name}
+      title={"View User: " + name}
       placement="right"
       size="large"
     >
-      <ViewCustomerPanel
+      <ViewUserPanel
         data={data?.data.data}
         isLoading={isLoading}
         error={error}
@@ -37,4 +37,4 @@ console.log("key", key, "name", name);
   );
 };
 
-export default ViewCustomerDrawer;
+export default ViewUserDrawer;

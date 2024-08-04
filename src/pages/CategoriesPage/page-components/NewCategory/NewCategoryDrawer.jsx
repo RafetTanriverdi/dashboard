@@ -34,7 +34,7 @@ export const NewCategoryDrawer = ({ onClose, open }) => {
   };
 
   const postBody = {
-    name: name,
+    categoryName: name,
   };
 
   const mutation = useMutation({

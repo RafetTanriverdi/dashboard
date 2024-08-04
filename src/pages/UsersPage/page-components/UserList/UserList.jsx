@@ -2,11 +2,11 @@ import { hasArrayElement } from "@rt/utils/array-utils";
 import { useQuery } from "@tanstack/react-query";
 import { Space } from "antd";
 import { Table } from "antd";
-import { TableView } from "./CustomerActions";
-import ViewCustomerDrawer from "./drawers/ViewCustomerDrawer";
+import { TableView } from "./UserActions";
+import ViewUserDrawer from "./drawers/ViewUserDrawer";
 import { useState } from "react";
-import EditCustomerDrawer from "./drawers/EditCustomerDrawer";
-import DeleteCustomerDrawer from "./drawers/DeleteCustomerDrawer";
+import EditUserDrawer from "./drawers/EditUserDrawer";
+import DeleteUserDrawer from "./drawers/DeleteUserDrawer";
 import RTSkeleton from "@rt/components/RTSkeleton/RTSkeleton";
 import { axiosInstance } from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
@@ -69,21 +69,21 @@ const TableActions = ({ data }) => {
         Delete
       </a>
       {open && type === TableView.VIEW && (
-        <ViewCustomerDrawer
+        <ViewUserDrawer
           onClose={onClose}
           open={open}
           inheritedData={data}
         />
       )}
       {open && type === TableView.EDIT && (
-        <EditCustomerDrawer
+        <EditUserDrawer
           onClose={onClose}
           open={open}
           inheritedData={data}
         />
       )}
       {open && type === TableView.DELETE && (
-        <DeleteCustomerDrawer
+        <DeleteUserDrawer
           onClose={onClose}
           open={open}
           inheritedData={data}
@@ -95,9 +95,9 @@ const TableActions = ({ data }) => {
 
 const TableContainer = () => {
   const { data, isLoading, error } = useQuery({
-    queryKey: ["customers"],
+    queryKey: ["users"],
     queryFn: () =>
-      axiosInstance.get(ENDPOINTS.USER.LIST).then((res) => res.data.data),
+      axiosInstance.get(ENDPOINTS.USER.LIST).then((res) => res.data),
   });
 
   let tableData = [];
@@ -109,7 +109,7 @@ const TableContainer = () => {
       })
       .map((item) => {
         return {
-          key: item._id,
+          key: item.userId,
           name: item.name,
           email: item.email,
           number: item.number,
@@ -134,7 +134,7 @@ const TableContainer = () => {
   }
 };
 
-const CustomerList = () => {
+const UserList = () => {
   return <TableContainer />;
 };
-export default CustomerList;
+export default UserList;

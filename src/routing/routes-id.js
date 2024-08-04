@@ -2,7 +2,7 @@ export const ROUTES_ID = {
   login: "login",
   register: "register",
   dashboard: "dashboard",
-  customers: "customers",
+  users: "users",
   products: "products",
   categories: "categories",
   myProfilePage: "myProfilePage",

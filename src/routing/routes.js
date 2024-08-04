@@ -42,11 +42,11 @@ export const routes = [
     isPublic: false,
   },
   {
-    id: ROUTES_ID.customers,
-    path: "/customers",
-    title: "Customers",
-    modulePath: "CustomersPage/CustomersPage",
-    fileName: "CustomersPageAlias",
+    id: ROUTES_ID.users,
+    path: "/users",
+    title: "Users",
+    modulePath: "UsersPage/UsersPage",
+    fileName: "UsersPageAlias",
     isPublic: false,
   },
   {

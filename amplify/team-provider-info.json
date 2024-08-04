@@ -1,23 +1,23 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-reactdashboardapp-dev-e0f79-authRole",
-      "UnauthRoleArn": "arn:aws:iam::895476881817:role/amplify-reactdashboardapp-dev-e0f79-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::895476881817:role/amplify-reactdashboardapp-dev-e0f79-authRole",
-      "Region": "us-west-1",
-      "DeploymentBucketName": "amplify-reactdashboardapp-dev-e0f79-deployment",
-      "UnauthRoleName": "amplify-reactdashboardapp-dev-e0f79-unauthRole",
-      "StackName": "amplify-reactdashboardapp-dev-e0f79",
-      "StackId": "arn:aws:cloudformation:us-west-1:895476881817:stack/amplify-reactdashboardapp-dev-e0f79/c2d088e0-5198-11ef-895b-0678eb141fff",
-      "AmplifyAppId": "d2abqfjovludxz"
+      "AuthRoleName": "amplify-reactdashboardapp-dev-ff55b-authRole",
+      "UnauthRoleArn": "arn:aws:iam::895476881817:role/amplify-reactdashboardapp-dev-ff55b-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::895476881817:role/amplify-reactdashboardapp-dev-ff55b-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-reactdashboardapp-dev-ff55b-deployment",
+      "UnauthRoleName": "amplify-reactdashboardapp-dev-ff55b-unauthRole",
+      "StackName": "amplify-reactdashboardapp-dev-ff55b",
+      "StackId": "arn:aws:cloudformation:us-east-1:895476881817:stack/amplify-reactdashboardapp-dev-ff55b/c04d9370-51d8-11ef-8926-0e184773dacb",
+      "AmplifyAppId": "dq3co0htd0a6m"
     },
     "categories": {
       "auth": {
-        "reactdashboardapp708adf74": {}
+        "reactdashboardapp6cdcd80f": {}
       },
       "hosting": {
         "amplifyhosting": {
-          "appId": "d2abqfjovludxz",
+          "appId": "dq3co0htd0a6m",
           "type": "cicd"
         }
       }

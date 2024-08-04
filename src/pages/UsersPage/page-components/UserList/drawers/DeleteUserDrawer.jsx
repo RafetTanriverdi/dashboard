@@ -24,7 +24,7 @@ const DeleteCategoryDrawer = ({ open, onClose, inheritedData }) => {
       queryClient.invalidateQueries({ queryKey: ["customers"] });
       openNotification({
         type: "success",
-        message: "Customer Deleted Successfully",
+        message: "User Deleted Successfully",
         duration: 2,
         onClose: () => {
           onClose();
@@ -48,14 +48,14 @@ const DeleteCategoryDrawer = ({ open, onClose, inheritedData }) => {
       {context}
 
       <Drawer
-        title="Delete Customer"
+        title="Delete User"
         placement="right"
         size="large"
         onClose={onClose}
         open={open}
         extra={
           <RTButton.add
-            text="Delete Customer"
+            text="Delete User"
             onClick={() => mutation.mutate()}
             loading={mutation.isPending}
           />

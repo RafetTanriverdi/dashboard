@@ -17,9 +17,9 @@ export const ENDPOINTS = {
     },
     CATEGORIES:{
         LIST:'categories',
-        GET:'categories/:categoryTitle',
+        GET:'categories/:categoryId',
         ADD:'categories',
-        UPDATE:'categories/:categoryTitle',
-        DELETE:'categories/:categoryTitle',
+        UPDATE:'categories/:categoryId',
+        DELETE:'categories/:categoryId',
     },
 }

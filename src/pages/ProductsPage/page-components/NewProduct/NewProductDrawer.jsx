@@ -3,7 +3,7 @@ import NewProductPanel from "./NewProductPanel";
 import { RTButton } from "@rt/components/RTButton";
 import { useState } from "react";
 import { axiosInstance } from "@rt/network/httpRequester";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ENDPOINTS } from "@rt/network/endpoints";
 import Notification from "@rt/components/RTFeedback/Notification/Notification";
 import { Form } from "antd";
@@ -13,6 +13,7 @@ export const NewProductDrawer = ({ onClose, open }) => {
   const [price, setPrice] = useState();
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
+  const [imageFile, setImageFile] = useState(null); // Yeni state
 
   const queryClient = useQueryClient();
 
@@ -20,11 +21,28 @@ export const NewProductDrawer = ({ onClose, open }) => {
 
   const [form] = Form.useForm();
 
-  const handleForm = () => {
+
+
+  const { data } = useQuery({
+    queryKey: ["categories"],
+    queryFn: () =>
+      axiosInstance.get(ENDPOINTS.CATEGORIES.LIST).then((res) => res.data),
+  });
+
+  const handleForm = async () => {
     form
       .validateFields()
-      .then(() => {
-        mutation.mutate(postBody);
+      .then(async () => {
+        if (imageFile) {
+          const base64Image = await convertToBase64(imageFile); // Görseli base64'e çevir
+          mutation.mutate({ ...postBody, imageBase64: base64Image, imageMimeType: imageFile.type });
+        } else {
+          openNotification({
+            type: "error",
+            message: `Error: Please upload an image`,
+            duration: 2.5,
+          });
+        }
       })
       .catch((error) => {
         console.error("Error: Please fill out all fields", error);
@@ -36,11 +54,20 @@ export const NewProductDrawer = ({ onClose, open }) => {
       });
   };
 
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result.split(",")[1]); // Base64 kısmını almak için ayrılır
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
   const postBody = {
-    title: title,
+    name: title,
     price: price,
     description: description,
-    category: category,
+    categoryId: category,
   };
 
   const mutation = useMutation({
@@ -97,6 +124,8 @@ export const NewProductDrawer = ({ onClose, open }) => {
           setDescription={setDescription}
           category={category}
           setCategory={setCategory}
+          categories={data}
+          setImageFile={setImageFile} // Görseli state'e kaydet
         />
       </Drawer>
     </>
