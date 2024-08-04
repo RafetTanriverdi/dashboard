@@ -93,6 +93,7 @@ const EditUserDrawer = ({ onClose, open, inheritedData }) => {
             loading={mutation.isPending}
           />
         }
+        
       >
         <EditUserPanel
           form={form}
