@@ -7,7 +7,6 @@ import ViewUserPanel from "../panels/ViewUserPanel";
 const ViewUserDrawer = ({ onClose, open, inheritedData }) => {
   const { key, name } = inheritedData;
 
-console.log("key", key, "name", name);
   const queryClient = useQueryClient();
 
   const { data, isLoading, error } = useQuery({
@@ -29,7 +28,7 @@ console.log("key", key, "name", name);
       size="large"
     >
       <ViewUserPanel
-        data={data?.data.data}
+        data={data?.data}
         isLoading={isLoading}
         error={error}
       />

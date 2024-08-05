@@ -15,7 +15,6 @@ export const getToken = () => {
 };
 export function checkUserAuthentication() {
   const { AccessToken } = getToken();
-  console.log(AccessToken);
   if (AccessToken) {
     return true;
   }

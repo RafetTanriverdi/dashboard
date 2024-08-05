@@ -9,13 +9,12 @@ import { ENDPOINTS } from "@rt/network/endpoints";
 import Notification from "@rt/components/RTFeedback/Notification/Notification";
 
 const EditUserDrawer = ({ onClose, open, inheritedData }) => {
-  const { key, name, number, email, password } = inheritedData;
+  const { key, name, number, role, permissions } = inheritedData;
 
   const [newName, setNewName] = useState(name);
   const [newNumber, setNewNumber] = useState(number);
-  const [newEmail, setNewEmail] = useState(email);
-  const [newPassword, setNewPassword] = useState(password);
-  const [newPasswordConfirm, setNewPasswordConfirm] = useState(password);
+  const [newRole, setNewRole] = useState(role);
+  const [newPermissions, setNewPermissions] = useState(permissions);
 
   const { context, openNotification } = Notification();
 
@@ -24,10 +23,10 @@ const EditUserDrawer = ({ onClose, open, inheritedData }) => {
   const queryClient = useQueryClient();
 
   const handleEditUser = () => {
+    console.log(postBody);
     form
       .validateFields()
-      .then((values) => {
-        console.log("values", values);
+      .then(() => {
         mutation.mutate(postBody);
       })
       .catch((error) => {
@@ -42,14 +41,16 @@ const EditUserDrawer = ({ onClose, open, inheritedData }) => {
 
   const postBody = {
     name: newName,
+    phoneNumber: newNumber,
+    role: newRole,
+    permissions: newPermissions,
   };
 
-  console.log("postBody", postBody);
-
+ 
   const mutation = useMutation({
     mutationKey: "updateUser",
     mutationFn: (updateUser) => {
-      return axiosInstance.put(
+      return axiosInstance.patch(
         ENDPOINTS.USER.UPDATE.replace(":userId", key),
         updateUser
       );
@@ -93,20 +94,17 @@ const EditUserDrawer = ({ onClose, open, inheritedData }) => {
             loading={mutation.isPending}
           />
         }
-        
       >
         <EditUserPanel
           form={form}
-          newPassword={newPassword}
-          setNewPassword={setNewPassword}
-          newPasswordConfirm={newPasswordConfirm}
-          setNewPasswordConfirm={setNewPasswordConfirm}
-          newEmail={newEmail}
-          setNewEmail={setNewEmail}
+          newPermissions={newPermissions}
+          setNewPermissions={setNewPermissions}
+          newRole={newRole}
+          setNewRole={setNewRole}
           newNumber={newNumber}
           setNewNumber={setNewNumber}
           newName={newName}
-          setName={setNewName}
+          setNewName={setNewName}
         />
       </Drawer>
     </>

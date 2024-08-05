@@ -27,9 +27,8 @@ function App() {
       try {
         const currentUser = await getCurrentUser();
         setUserData(currentUser);
-        console.log("User data fetched:", currentUser);
       } catch (err) {
-        console.log("Error fetching user data:", err);
+        console.error("Error fetching user data:", err);
       }
     };
     user();

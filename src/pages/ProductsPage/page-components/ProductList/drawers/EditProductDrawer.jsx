@@ -25,8 +25,7 @@ const EditProductDrawer = ({ onClose, open, inheritedData }) => {
   const handleEditProduct = () => {
     form
       .validateFields()
-      .then((values) => {
-        console.log("values", values);
+      .then(() => {
         mutation.mutate(postBody);
       })
       .catch((error) => {
@@ -46,12 +45,11 @@ const EditProductDrawer = ({ onClose, open, inheritedData }) => {
     category: newCategory,
   };
 
-  console.log("postBody", postBody);
 
   const mutation = useMutation({
     mutationKey: "updateProduct",
     mutationFn: (updateProduct) => {
-      return axiosInstance.put(
+      return axiosInstance.patch(
         ENDPOINTS.PRODUCT.UPDATE.replace(":productTitle", slug),
         updateProduct
       );

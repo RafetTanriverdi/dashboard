@@ -63,6 +63,8 @@ export const NewProductDrawer = ({ onClose, open }) => {
     });
   };
 
+
+
   const postBody = {
     name: title,
     price: price,

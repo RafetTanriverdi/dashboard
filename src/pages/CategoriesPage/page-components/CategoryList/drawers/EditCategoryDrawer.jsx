@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { RTButton } from "@rt/components/RTButton";
 import { Drawer } from "antd";
 import { useState } from "react";
@@ -23,7 +24,6 @@ const EditCategoryDrawer = ({ onClose, open, inheritedData }) => {
     form
       .validateFields()
       .then((values) => {
-        console.log("values", values);
         mutation.mutate(postBody);
       })
       .catch((error) => {
@@ -40,7 +40,6 @@ const EditCategoryDrawer = ({ onClose, open, inheritedData }) => {
     name: newName,
   };
 
-  console.log("postBody", postBody);
 
   const mutation = useMutation({
     mutationKey: "updateCategory",

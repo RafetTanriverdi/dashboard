@@ -10,6 +10,7 @@ import DeleteUserDrawer from "./drawers/DeleteUserDrawer";
 import RTSkeleton from "@rt/components/RTSkeleton/RTSkeleton";
 import { axiosInstance } from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
+import dayjs from "dayjs";
 
 const TableAntdContainer = ({ style, dataSource }) => {
   const columns = [
@@ -26,10 +27,22 @@ const TableAntdContainer = ({ style, dataSource }) => {
       sorter: (a, b) => a.email.localeCompare(b.email),
     },
     {
-      title: "Number",
+      title: "Phone Number",
       dataIndex: "number",
       key: "number",
       sorter: (a, b) => a.number - b.number,
+    },
+    {
+      title: "Role",
+      dataIndex: "role",
+      key: "role",
+      sorter: (a, b) => a.email.localeCompare(b.email),
+    },
+    {
+      title:'Updated',
+      dataIndex:'updatedAt',
+      key:'updatedAt',
+      sorter: (a, b) => new Date(a.updatedAt) - new Date(b.updatedAt),
     },
 
     {
@@ -69,25 +82,13 @@ const TableActions = ({ data }) => {
         Delete
       </a>
       {open && type === TableView.VIEW && (
-        <ViewUserDrawer
-          onClose={onClose}
-          open={open}
-          inheritedData={data}
-        />
+        <ViewUserDrawer onClose={onClose} open={open} inheritedData={data} />
       )}
       {open && type === TableView.EDIT && (
-        <EditUserDrawer
-          onClose={onClose}
-          open={open}
-          inheritedData={data}
-        />
+        <EditUserDrawer onClose={onClose} open={open} inheritedData={data} />
       )}
       {open && type === TableView.DELETE && (
-        <DeleteUserDrawer
-          onClose={onClose}
-          open={open}
-          inheritedData={data}
-        />
+        <DeleteUserDrawer onClose={onClose} open={open} inheritedData={data} />
       )}
     </Space>
   );
@@ -112,9 +113,11 @@ const TableContainer = () => {
           key: item.userId,
           name: item.name,
           email: item.email,
-          number: item.number,
+          number: item.phoneNumber,
+          permissions: item.permissions,
+          role: item.role,
           createdAt: item.createdAt,
-          password: item.password,
+          updatedAt: dayjs(item.updatedAt).format('MMMM D, YYYY'),
         };
       });
   }

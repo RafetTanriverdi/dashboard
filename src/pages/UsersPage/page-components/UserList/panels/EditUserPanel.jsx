@@ -5,14 +5,12 @@ const EditUserPanel = ({
   form,
   newName,
   setNewName,
-  setNewEmail,
-  newEmail,
   setNewNumber,
   newNumber,
-  setNewPassword,
-  newPassword,
-  setNewPasswordConfirm,
-  newPasswordConfirm,
+  newRole,
+  setNewRole,
+  newPermissions,
+  setNewPermissions,
 }) => {
   return (
     <>
@@ -21,10 +19,10 @@ const EditUserPanel = ({
         form={form}
         initialValues={{
           Name: newName,
-          Email: newEmail,
           Number: newNumber,
-          Password: newPassword,
-          "Confirm Password": newPasswordConfirm,
+          Role: newRole,
+          Permissions: newPermissions,
+
           
         }}
       >
@@ -34,12 +32,7 @@ const EditUserPanel = ({
           onChange={(e) => setNewName(e.target.value)}
           required
         />
-        <RTInput.text
-          label="Email"
-          name="Email"
-          onChange={(e) => setNewEmail(e.target.value)}
-          required
-        />
+     
         <RTInput.text
           label="Number"
           name="Number"
@@ -47,15 +40,15 @@ const EditUserPanel = ({
           required
         />
         <RTInput.text
-          label="Password"
-          name="Password"
-          onChange={(e) => setNewPassword(e.target.value)}
+          label="Role"
+          name="Role"
+          onChange={(e) => setNewRole(e.target.value)}
           required
         />
         <RTInput.text
-          label="Confirm Password"
-          name="Confirm Password"
-          onChange={(e) => setNewPasswordConfirm(e.target.value)}
+          label="Permissions"
+          name="Permissions"
+          onChange={(e) => setNewPermissions(e.target.value)}
           required
         />
       </Form>

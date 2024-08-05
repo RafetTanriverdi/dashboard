@@ -10,4 +10,5 @@ export const ROUTES_ID = {
   calendar: "calendar",
   feedback: "feedback",
   faq: "faq",
+  forceChangePassword: "forceChangePassword",
 };

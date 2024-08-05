@@ -12,14 +12,14 @@
       "AmplifyAppId": "dq3co0htd0a6m"
     },
     "categories": {
-      "auth": {
-        "reactdashboardapp6cdcd80f": {}
-      },
       "hosting": {
         "amplifyhosting": {
           "appId": "dq3co0htd0a6m",
           "type": "cicd"
         }
+      },
+      "auth": {
+        "reactdashboardappca62b59e": {}
       }
     }
   }

@@ -1,8 +1,6 @@
 import { ROUTES_ID } from "./routes-id";
 import { flatRoutes } from "./routes-util";
 
-
-
 export const routes = [
   //public routes
 
@@ -22,7 +20,14 @@ export const routes = [
     fileName: "RegisterPageAlias",
     isPublic: true,
   },
-
+  {
+    id: ROUTES_ID.forceChangePassword,
+    path: "/force-change-password",
+    title: "Force Change Password",
+    modulePath: "ForceChangePasswordPage/ForceChangePasswordPage",
+    fileName: "ForceChangePasswordPageAlias",
+    isPublic: true,
+  },
 
   //private routes
   {

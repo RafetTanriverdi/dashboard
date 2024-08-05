@@ -7,7 +7,7 @@ const ViewUserPanel = ({ data, isLoading, error }) => {
   if (isLoading) {
     return<RTSkeleton/>;
   } else if (error) {
-    console.log(error);
+    console.error(error);
     return <RTAlert message={errorMessage} type={"error"} /> ;
   } else {
     return <ReactJson src={data} />;

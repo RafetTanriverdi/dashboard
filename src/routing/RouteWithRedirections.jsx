@@ -10,7 +10,7 @@ import { checkUserAuthentication } from "@rt/authentication/auth-utils";
 import { useLocation } from "react-router-dom";
 
 const isOutsidePage = (path) => {
-  const outsidePages = [ROUTES_ID.login, ROUTES_ID.register];
+  const outsidePages = [ROUTES_ID.login, ROUTES_ID.register, ROUTES_ID.forceChangePassword];
   const outsidePaths = outsidePages.map((path) => getRoutePath(path));
   return outsidePaths.some((route) => route === path);
 };

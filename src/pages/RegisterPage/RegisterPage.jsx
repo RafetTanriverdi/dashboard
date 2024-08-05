@@ -24,7 +24,7 @@ const RegisterPageContainer = () => {
 
   const handleSignIn = async () => {
     try {
-      const { userId } = await signUp({
+      await signUp({
         username: email,
         password,
         options: {
@@ -36,10 +36,8 @@ const RegisterPageContainer = () => {
           autoSignIn: true, // or SignInOptions e.g { authFlowType: "USER_SRP_AUTH" }
         },
       });
-
-      console.log(userId);
     } catch (error) {
-      console.log("error signing up:", error);
+      console.error("error signing up:", error);
     }
   };
 

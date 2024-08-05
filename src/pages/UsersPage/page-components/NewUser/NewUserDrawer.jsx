@@ -45,6 +45,7 @@ export const NewUserDrawer = ({ onClose, open }) => {
     permissions,
   };
 
+  console.log("postBody: ", postBody);
   const mutation = useMutation({
     mutationFn: (newUser) => {
       return axiosInstance.post(ENDPOINTS.USER.ADD, newUser);
@@ -64,6 +65,7 @@ export const NewUserDrawer = ({ onClose, open }) => {
     },
     onError: (error) => {
       const Error = error.response.data.message;
+      console.error("Error: ", Error);
       openNotification({
         type: "error",
         message: `Error: ${Error}`,

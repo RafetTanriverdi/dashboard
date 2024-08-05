@@ -7,7 +7,6 @@ const ViewProductPanel = ({ data, isLoading, error }) => {
   if (isLoading) {
     return<RTSkeleton/>;
   } else if (error) {
-    console.log(error);
     return <RTAlert message={errorMessage} type={"error"} /> ;
   } else {
     return <ReactJson src={data} />;

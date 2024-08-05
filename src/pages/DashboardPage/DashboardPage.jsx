@@ -1,36 +1,40 @@
+/* eslint-disable no-unused-vars */
 import { useEffect } from "react";
 import RTSider from "../../components/RTSider/RTSider";
 import MainLayout from "../../layout/MainLayout/MainLayout";
 import { useState } from "react";
 import { ENDPOINTS } from "../../network/endpoints";
 import { axiosInstance } from "../../network/httpRequester";
+import { fetchAuthSession } from "aws-amplify/auth";
 
 const DashboardPageContainer = () => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    async function currentSession() {
       try {
-        const response = await axiosInstance.get(ENDPOINTS.PRODUCT.LIST);
-        setList(response.data.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+        const { accessToken, idToken } =
+          (await fetchAuthSession()).tokens ?? {};
+          console.log(accessToken, idToken);
+      } catch (err) {
+        console.log(err);
       }
-    };
-
-    fetchData();
+    }
+    currentSession();
   }, []);
 
-  console.log(list);
   return <div>Dashboard Page</div>;
 };
 
 const DashboardPage = (props) => {
-const {title}=props.routeData;
-
+  const { title } = props.routeData;
 
   return (
-    <MainLayout title={title} content={<DashboardPageContainer />} sider={<RTSider />} />
+    <MainLayout
+      title={title}
+      content={<DashboardPageContainer />}
+      sider={<RTSider />}
+    />
   );
 };
 
