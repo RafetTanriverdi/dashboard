@@ -12,7 +12,7 @@ export const NewUserDrawer = ({ onClose, open }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState(null);
   const [permissions, setPermissions] = useState([]);
 
   const queryClient = useQueryClient();

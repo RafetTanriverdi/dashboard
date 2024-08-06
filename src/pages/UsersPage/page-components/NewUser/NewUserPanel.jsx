@@ -1,58 +1,12 @@
-/* eslint-disable no-unused-vars */
 import { RTInput } from "@rt/components/RTInput";
-import { Input, Select, Tree, Form } from "antd";
-import { useState } from "react";
-
-const { Option } = Select;
-
-const roleOptions = [
-  { name: 'Admin', permissions: ['Product:Create', 'Product:Read', 'Product:Update', 'Product:Delete', 'Category:Create', 'Category:Read', 'Category:Update', 'Category:Delete', 'User:Create', 'User:Read', 'User:Update', 'User:Delete'] },
-  { name: 'Manager', permissions: ['Product:Read', 'Category:Read', 'User:Read'] },
-  { name: 'User', permissions: ['Product:Read'] },
-];
-
-const permissionsList = [
-  {
-    name: "Products",
-    permissions: [
-      "Product:Create",
-      "Product:Read",
-      "Product:Update",
-      "Product:Delete",
-    ],
-  },
-  {
-    name: "Categories",
-    permissions: [
-      "Category:Create",
-      "Category:Read",
-      "Category:Update",
-      "Category:Delete",
-    ],
-  },
-  {
-    name: "Users",
-    permissions: [
-      "User:Create",
-      "User:Read",
-      "User:Update",
-      "User:Delete",
-    ],
-  },
-];
-
-const generateTreeDataFromPermissions = (permissionsList) => {
-  return permissionsList.map((item, index) => ({
-    title: item.name,
-    key: `0-${index}`,
-    children: item.permissions.map((permission, subIndex) => ({
-      title: permission,
-      key: `0-${index}-${subIndex}`,
-    })),
-  }));
-};
-
-const treeData = generateTreeDataFromPermissions(permissionsList);
+import { Form } from "antd";
+import {
+  permissionsList,
+  roleOptions,
+  generateTreeDataFromPermissions,
+} from "./PermissionsAndRoleList";
+import RTSelect from "@rt/components/RTSelect/RTSelect";
+import RTTree from "@rt/components/RTTree/RTTree";
 
 const NewUserPanel = ({
   name,
@@ -62,71 +16,60 @@ const NewUserPanel = ({
   phoneNumber,
   setPhoneNumber,
   form,
+  setRole,
+  setPermissions,
+  role,
+  permissions,
 }) => {
-  const [checkedKeys, setCheckedKeys] = useState([]);
-  const [customRole, setCustomRole] = useState('');
-  const [role, setRole] = useState(null);
+  const treeData = generateTreeDataFromPermissions(permissionsList);
 
   const onCheck = (checkedKeysValue) => {
     const newCheckedKeys = [...checkedKeysValue];
 
-    permissionsList.forEach((group, groupIndex) => {
-      const readKey = `0-${groupIndex}-1`; // Read izinlerinin key'leri
-      const updateKey = `0-${groupIndex}-2`;
-      const createKey = `0-${groupIndex}-0`;
-      const deleteKey = `0-${groupIndex}-3`;
+    permissionsList.forEach((group) => {
+      const readKey = group.permissions.find((perm) => perm.includes("Read"));
+      const updateKey = group.permissions.find((perm) =>
+        perm.includes("Update")
+      );
+      const createKey = group.permissions.find((perm) =>
+        perm.includes("Create")
+      );
+      const deleteKey = group.permissions.find((perm) =>
+        perm.includes("Delete")
+      );
 
-      // Update, Create veya Delete izni seçildiyse, Read iznini ekle
-      if (newCheckedKeys.includes(updateKey) || newCheckedKeys.includes(createKey) || newCheckedKeys.includes(deleteKey)) {
+      // If Update, Create, or Delete is checked, add Read permission automatically
+      if (
+        newCheckedKeys.includes(updateKey) ||
+        newCheckedKeys.includes(createKey) ||
+        newCheckedKeys.includes(deleteKey)
+      ) {
         if (!newCheckedKeys.includes(readKey)) {
           newCheckedKeys.push(readKey);
         }
       }
     });
 
-    setCheckedKeys(newCheckedKeys);
-    console.log('onCheck', newCheckedKeys);
+    setPermissions(newCheckedKeys);
+    form.setFieldsValue({ Permissions: newCheckedKeys }); // Update the form field value
   };
 
   const handleRoleChange = (value) => {
-    if (roleOptions.map(role => role.name).includes(value)) {
-      const selectedRole = roleOptions.find((role) => role.name === value);
+    const selectedRole = roleOptions.find((role) => role.name === value);
+    if (selectedRole) {
       setRole(selectedRole.name);
-      setCheckedKeys(generateKeysFromPermissions(selectedRole.permissions));
-      setCustomRole('');
+      setPermissions(selectedRole.permissions);
+      form.setFieldsValue({ Permissions: selectedRole.permissions }); // Update the form field value
     } else {
-      setRole(null);
-      setCustomRole(value);
-      setCheckedKeys([]); // Özel rol seçildiğinde izinler manuel olarak seçilir
+      setRole("Other");
+      setPermissions([]);
+      form.setFieldsValue({ Permissions: [] }); // Clear the form field value
     }
-  };
-
-  const handleCustomRoleChange = (e) => {
-    setCustomRole(e.target.value);
-    if (e.target.value) {
-      setRole(null);
-      setCheckedKeys([]); // Kullanıcı bir şey yazdığında mevcut rol ve izinleri sıfırla
-    }
-  };
-
-  const generateKeysFromPermissions = (permissions) => {
-    const keys = [];
-    permissionsList.forEach((group, groupIndex) => {
-      group.permissions.forEach((permission, subIndex) => {
-        if (permissions.includes(permission)) {
-          keys.push(`0-${groupIndex}-${subIndex}`);
-        }
-      });
-    });
-    return keys;
   };
 
   return (
     <>
-      <Form
-        layout="vertical"
-        form={form}
-      >
+      <Form layout="vertical" form={form}>
         <RTInput.text
           label="Name"
           name="Name"
@@ -141,55 +84,40 @@ const NewUserPanel = ({
           value={email}
           required
         />
-        <RTInput.text
+        <RTInput.phone
           label="Phone Number"
           name="PhoneNumber"
+          pattern={/^[0-9]{10,15}$/}
           onChange={(e) => setPhoneNumber(e.target.value)}
           value={phoneNumber}
           required
         />
-        <Form.Item label="Role">
-          <Select
-            showSearch
-            value={role || customRole}
-            placeholder="Select a role or create new"
-            style={{ width: 300 }}
-            onChange={handleRoleChange}
-            dropdownRender={(menu) => (
-              <>
-                {menu}
-                <div style={{ display: 'flex', padding: '8px' }}>
-                  <Input
-                    style={{ flex: 'auto' }}
-                    placeholder="Enter custom role"
-                    value={customRole}
-                    onChange={handleCustomRoleChange}
-                  />
-                </div>
-              </>
-            )}
-          >
-            {roleOptions.map((role) => (
-              <Option key={role.name} value={role.name}>
-                {role.name}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
-        <Form.Item
-          label="Permissions"
-          name="Permissions"
-          rules={[{ required: true, message: 'Please select permissions!' }]}
-        >
-          <Tree
-            checkable
-            defaultExpandedKeys={['0-0', '0-1']}
-            checkedKeys={checkedKeys}
-            onCheck={onCheck}
-            treeData={treeData}
-            selectable={false}
-          />
-        </Form.Item>
+        <RTSelect
+          label="Role"
+          name="Role"
+          required
+          value={role}
+          placeholder="Select a role"
+          onChange={handleRoleChange}
+          options={[
+            ...roleOptions.map((role) => ({
+              value: role.name,
+              label: role.name,
+            })),
+          ]}
+        />
+
+        <RTTree
+          label={"Permissions"}
+          name={"Permissions"}
+          required
+          checkable
+          defaultExpandedKeys={["Products", "Categories"]}
+          checkedKeys={permissions}
+          onCheck={onCheck}
+          treeData={treeData}
+          selectable={false}
+        />
       </Form>
     </>
   );

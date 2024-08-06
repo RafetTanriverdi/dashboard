@@ -1,58 +1,121 @@
 import { RTInput } from "@rt/components/RTInput";
 import { Form } from "antd";
+import RTSelect from "@rt/components/RTSelect/RTSelect";
+import RTTree from "@rt/components/RTTree/RTTree";
+import {
+  permissionsList,
+  roleOptions,
+  generateTreeDataFromPermissions,
+} from "@rt/pages/UsersPage/page-components/NewUser/PermissionsAndRoleList";
 
 const EditUserPanel = ({
   form,
   newName,
   setNewName,
-  setNewNumber,
   newNumber,
+  setNewNumber,
   newRole,
   setNewRole,
   newPermissions,
   setNewPermissions,
 }) => {
-  return (
-    <>
-      <Form
-        layout="vertical"
-        form={form}
-        initialValues={{
-          Name: newName,
-          Number: newNumber,
-          Role: newRole,
-          Permissions: newPermissions,
+  const treeData = generateTreeDataFromPermissions(permissionsList);
 
-          
-        }}
-      >
-        <RTInput.text
-          label="Name"
-          name="Name"
-          onChange={(e) => setNewName(e.target.value)}
-          required
-        />
-     
-        <RTInput.text
-          label="Number"
-          name="Number"
-          onChange={(e) => setNewNumber(e.target.value)}
-          required
-        />
-        <RTInput.text
-          label="Role"
-          name="Role"
-          onChange={(e) => setNewRole(e.target.value)}
-          required
-        />
-        <RTInput.text
-          label="Permissions"
-          name="Permissions"
-          onChange={(e) => setNewPermissions(e.target.value)}
-          required
-        />
-      </Form>
-    </>
+  const onCheck = (checkedKeysValue) => {
+    const newCheckedKeys = [...checkedKeysValue];
+
+    permissionsList.forEach((group) => {
+      const readKey = group.permissions.find((perm) => perm.includes("Read"));
+      const updateKey = group.permissions.find((perm) =>
+        perm.includes("Update")
+      );
+      const createKey = group.permissions.find((perm) =>
+        perm.includes("Create")
+      );
+      const deleteKey = group.permissions.find((perm) =>
+        perm.includes("Delete")
+      );
+
+      if (
+        newCheckedKeys.includes(updateKey) ||
+        newCheckedKeys.includes(createKey) ||
+        newCheckedKeys.includes(deleteKey)
+      ) {
+        if (!newCheckedKeys.includes(readKey)) {
+          newCheckedKeys.push(readKey);
+        }
+      }
+    });
+
+    setNewPermissions(newCheckedKeys);
+    form.setFieldsValue({ Permissions: newCheckedKeys });
+  };
+
+  const handleRoleChange = (value) => {
+    const selectedRole = roleOptions.find((role) => role.name === value);
+    if (selectedRole) {
+      setNewRole(selectedRole.name);
+      setNewPermissions(selectedRole.permissions);
+      form.setFieldsValue({ Permissions: selectedRole.permissions });
+    } else {
+      setNewRole("Other");
+      setNewPermissions([]);
+      form.setFieldsValue({ Permissions: [] });
+    }
+  };
+
+  return (
+    <Form
+      layout="vertical"
+      form={form}
+      initialValues={{
+        Name: newName,
+        "Phone Number": newNumber,
+        Role: newRole,
+        Permissions: newPermissions,
+      }}
+    >
+      <RTInput.text
+        label="Name"
+        name="Name"
+        onChange={(e) => setNewName(e.target.value)}
+        value={newName}
+        required
+      />
+      <RTInput.phone
+        label="Phone Number"
+        name="Phone Number"
+        pattern={/^[0-9]{10,15}$/}
+        value={newNumber}
+        onChange={(e) => setNewNumber(e.target.value)}
+        required
+      />
+      <RTSelect
+        label="Role"
+        name="Role"
+        required
+        value={newRole}
+        placeholder="Select a role"
+        onChange={handleRoleChange}
+        options={[
+          ...roleOptions.map((role) => ({
+            value: role.name,
+            label: role.name,
+          })),
+        ]}
+      />
+      <RTTree
+        label={"Permissions"}
+        name={"Permissions"}
+        required
+        checkable
+        defaultExpandedKeys={["Products", "Categories"]}
+        checkedKeys={newPermissions}
+        onCheck={onCheck}
+        treeData={treeData}
+        selectable={false}
+      />
+    </Form>
   );
 };
 

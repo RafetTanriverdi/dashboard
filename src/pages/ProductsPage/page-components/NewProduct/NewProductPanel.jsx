@@ -1,6 +1,7 @@
 import { RTInput } from "@rt/components/RTInput";
 import RTSelect from "@rt/components/RTSelect/RTSelect";
 import { Form } from "antd";
+import { dollarFormatter, dollarParser } from "../utils/dollarParser";
 
 const NewProductPanel = ({
   title,
@@ -13,10 +14,18 @@ const NewProductPanel = ({
   setCategory,
   form,
   setImageFile,
+  imageFile,
   categories,
+  stock,
+  setStock,
 }) => {
-  const handleImageChange = (e) => {
-    setImageFile(e.target.files[0]); // Seçilen dosyayı state'e kaydet
+  const handleImageChange = (info) => {
+    // Check if the file has been selected and store it in state
+    if (info.fileList.length > 0) {
+      setImageFile(info.fileList[0].originFileObj);
+    } else {
+      setImageFile(null);
+    }
   };
 
   const selectedOptions = categories?.map((category) => ({
@@ -24,8 +33,11 @@ const NewProductPanel = ({
     value: category?.categoryId,
   }));
 
-  const selectedValue =categories?.filter((e) => e.categoryId === category).categoryName;
+  const selectedValue = categories?.find(
+    (e) => e.categoryId === category
+  )?.categoryName;
 
+  console.log("file", imageFile);
   return (
     <>
       <Form layout="vertical" form={form}>
@@ -36,18 +48,30 @@ const NewProductPanel = ({
           value={title}
           required
         />
-        <RTInput.text
+        <RTInput.number
           label="Price"
           name="Price"
-          onChange={(e) => setPrice(e.target.value)}
+          onChange={(e) => setPrice(e)}
           value={price}
+          prefix={"$"}
+          min={0.1}
           required
+          formatter={dollarFormatter}
+          parser={dollarParser}
         />
         <RTInput.text
           label="Description"
           name="Description"
           onChange={(e) => setDescription(e.target.value)}
           value={description}
+          required
+        />
+        <RTInput.number
+          min={1}
+          label="Stock"
+          name="stock"
+          onChange={(e) => setStock(e)}
+          value={stock}
           required
         />
         <RTSelect
@@ -59,13 +83,13 @@ const NewProductPanel = ({
           value={selectedValue}
           required={true}
         />
-        <Form.Item
-          label="Product Image"
-          name="Image"
-          rules={[{ required: true, message: "Please upload an image" }]}
-        >
-          <input type="file" accept="image/*" onChange={handleImageChange} />
-        </Form.Item>
+
+        <RTInput.image
+          label={"Product Image"}
+          name={"Image"}
+          maxCount={1}
+          handleImageChange={handleImageChange}
+        />
       </Form>
     </>
   );

@@ -6,16 +6,19 @@ export const getToken = () => {
     `CognitoIdentityServiceProvider.${poolIdFromEnv}.LastAuthUser`
   );
   const AccessToken = localStorage.getItem(
-    `CognitoIdentityServiceProvider.${poolIdFromEnv}.${userId}.accessToken`
+    `CognitoIdentityServiceProvider.${poolIdFromEnv}.${userId}.refreshToken`
   );
   const IdToken = localStorage.getItem(
     `CognitoIdentityServiceProvider.${poolIdFromEnv}.${userId}.idToken`
   );
-  return { AccessToken, IdToken };
+  const RefreshToken = localStorage.getItem(
+    `CognitoIdentityServiceProvider.${poolIdFromEnv}.${userId}.refreshToken`
+  );
+  return { AccessToken, IdToken,RefreshToken };
 };
 export function checkUserAuthentication() {
-  const { AccessToken } = getToken();
-  if (AccessToken) {
+  const { RefreshToken } = getToken();
+  if (RefreshToken) {
     return true;
   }
   return false;

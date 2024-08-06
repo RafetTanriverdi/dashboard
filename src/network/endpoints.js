@@ -9,11 +9,10 @@ export const ENDPOINTS = {
     },
     PRODUCT:{
         LIST:'products',
-        GET:'products/:productTitle',
+        GET:'products/:productId',
         ADD:'products',
-        UPDATE:'products/:productTitle',
-        DELETE:'products/:productTitle',
-        PAGINATE:'products?limit=:limit&page=:page',
+        UPDATE:'products/:productId',
+        DELETE:'products/:productId',
     },
     CATEGORIES:{
         LIST:'categories',

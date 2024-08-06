@@ -10,6 +10,9 @@ const Number = ({
   name,
   required,
   min,
+  prefix,
+  parser,
+  formatter,
 }) => {
   return (
     <Form.Item
@@ -24,11 +27,11 @@ const Number = ({
     >
       <InputNumber
         style={{ width: "100%" }}
-        prefix="$"
+        prefix={prefix}
         min={min}
         defaultValue={defaultValue}
-        formatter={(value) => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-        parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+        formatter={formatter}
+        parser={parser || ((value) => value.replace(/[^\d]/g, ""))}
         onChange={onChange}
         value={value}
       />
@@ -36,7 +39,7 @@ const Number = ({
   );
 };
 
-Number.Proptypes = {
+Number.PropTypes = {
   onChange: PropTypes.func,
   defaultValue: PropTypes.number,
   value: PropTypes.number,
@@ -44,5 +47,9 @@ Number.Proptypes = {
   name: PropTypes.string,
   required: PropTypes.bool,
   min: PropTypes.number,
+  prefix: PropTypes.string,
+  parser: PropTypes.func,
+  formatter: PropTypes.func,
 };
+
 export default Number;

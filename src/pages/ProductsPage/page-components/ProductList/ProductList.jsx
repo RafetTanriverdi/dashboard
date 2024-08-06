@@ -141,10 +141,10 @@ const TableContainer = () => {
       .sort((a, b) => {
         return new Date(b.updatedAt) - new Date(a.updatedAt);
       })
-      .map((item, index) => {
+      .map((item, ) => {
         return {
           key: item.productId,
-          _id: index + 1,
+          id:item.productId ,
           title: item.name,
           price: item.price,
           owner: item.ownerId,

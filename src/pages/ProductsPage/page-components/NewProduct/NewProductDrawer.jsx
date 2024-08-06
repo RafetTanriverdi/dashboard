@@ -13,15 +13,14 @@ export const NewProductDrawer = ({ onClose, open }) => {
   const [price, setPrice] = useState();
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-  const [imageFile, setImageFile] = useState(null); // Yeni state
+  const [imageFile, setImageFile] = useState(null);
+  const [stock, setStock] = useState(0);
 
   const queryClient = useQueryClient();
 
   const { context, openNotification } = Notification();
 
   const [form] = Form.useForm();
-
-
 
   const { data } = useQuery({
     queryKey: ["categories"],
@@ -34,8 +33,12 @@ export const NewProductDrawer = ({ onClose, open }) => {
       .validateFields()
       .then(async () => {
         if (imageFile) {
-          const base64Image = await convertToBase64(imageFile); // Görseli base64'e çevir
-          mutation.mutate({ ...postBody, imageBase64: base64Image, imageMimeType: imageFile.type });
+          const base64Image = await convertToBase64(imageFile);
+          mutation.mutate({
+            ...postBody,
+            imageBase64: base64Image,
+            imageMimeType: imageFile.type,
+          });
         } else {
           openNotification({
             type: "error",
@@ -58,18 +61,17 @@ export const NewProductDrawer = ({ onClose, open }) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result.split(",")[1]); // Base64 kısmını almak için ayrılır
+      reader.onload = () => resolve(reader.result.split(",")[1]);
       reader.onerror = (error) => reject(error);
     });
   };
-
-
 
   const postBody = {
     name: title,
     price: price,
     description: description,
     categoryId: category,
+    stock: stock,
   };
 
   const mutation = useMutation({
@@ -79,18 +81,18 @@ export const NewProductDrawer = ({ onClose, open }) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
-      form.resetFields();
       openNotification({
         type: "success",
         message: "Product Added Successfully",
         duration: 2,
         onClose: () => {
           onClose();
+          form.resetFields();
         },
       });
     },
     onError: (error) => {
-      const Error = error.response.data.message;
+      const Error = error.response?.data?.message || "An error occurred";
       openNotification({
         type: "error",
         message: `Error: ${Error}`,
@@ -98,6 +100,7 @@ export const NewProductDrawer = ({ onClose, open }) => {
       });
     },
   });
+  console.log(postBody)
 
   return (
     <>
@@ -127,7 +130,10 @@ export const NewProductDrawer = ({ onClose, open }) => {
           category={category}
           setCategory={setCategory}
           categories={data}
-          setImageFile={setImageFile} // Görseli state'e kaydet
+          imageFile={imageFile}
+          setImageFile={setImageFile}
+          stock={stock}
+          setStock={setStock}
         />
       </Drawer>
     </>

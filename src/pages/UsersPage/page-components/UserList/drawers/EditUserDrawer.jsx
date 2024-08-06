@@ -1,12 +1,13 @@
 import { RTButton } from "@rt/components/RTButton";
 import { Drawer } from "antd";
 import { useState } from "react";
-import EditUserPanel from "../panels/EditUserPanel";
+
 import { Form } from "antd";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
 import Notification from "@rt/components/RTFeedback/Notification/Notification";
+import EditUserPanel from "../panels/EditUserPanel";
 
 const EditUserDrawer = ({ onClose, open, inheritedData }) => {
   const { key, name, number, role, permissions } = inheritedData;
@@ -23,7 +24,6 @@ const EditUserDrawer = ({ onClose, open, inheritedData }) => {
   const queryClient = useQueryClient();
 
   const handleEditUser = () => {
-    console.log(postBody);
     form
       .validateFields()
       .then(() => {
@@ -46,7 +46,6 @@ const EditUserDrawer = ({ onClose, open, inheritedData }) => {
     permissions: newPermissions,
   };
 
- 
   const mutation = useMutation({
     mutationKey: "updateUser",
     mutationFn: (updateUser) => {
@@ -60,7 +59,7 @@ const EditUserDrawer = ({ onClose, open, inheritedData }) => {
       openNotification({
         key: key,
         type: "success",
-        message: "User Edit Successfully",
+        message: "User Updated Successfully",
         duration: 2,
         onClose: () => {
           onClose();
