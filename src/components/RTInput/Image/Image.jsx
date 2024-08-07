@@ -14,7 +14,7 @@ const ImageUpload = ({
       rules={[{ required: true, message: ` Please upload an ${label}` }]}
     >
       <Upload
-    
+    showUploadList={{showPreviewIcon: false}}
         listType="picture-card"
         maxCount={maxCount}
         onChange={handleImageChange}

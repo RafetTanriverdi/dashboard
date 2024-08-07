@@ -2,7 +2,7 @@ import { RTButton } from "@rt/components/RTButton";
 import { useState } from "react";
 import { NewProductDrawer } from "./NewProductDrawer";
 
-export const NewProductButton = () => {
+export const NewProductButton = ({ categories }) => {
   const [open, setOpen] = useState(false);
   const onClose = () => {
     setOpen(false);
@@ -11,7 +11,7 @@ export const NewProductButton = () => {
   return (
     <>
       <RTButton.add text="Add New Product" onClick={() => setOpen(true)} />
-      <NewProductDrawer onClose={onClose} open={open} />
+      <NewProductDrawer onClose={onClose} open={open} categories={categories} />
     </>
   );
 };

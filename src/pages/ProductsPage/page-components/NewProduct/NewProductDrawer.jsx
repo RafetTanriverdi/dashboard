@@ -3,12 +3,12 @@ import NewProductPanel from "./NewProductPanel";
 import { RTButton } from "@rt/components/RTButton";
 import { useState } from "react";
 import { axiosInstance } from "@rt/network/httpRequester";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ENDPOINTS } from "@rt/network/endpoints";
 import Notification from "@rt/components/RTFeedback/Notification/Notification";
 import { Form } from "antd";
 
-export const NewProductDrawer = ({ onClose, open }) => {
+export const NewProductDrawer = ({ onClose, open ,categories}) => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState();
   const [description, setDescription] = useState("");
@@ -22,11 +22,7 @@ export const NewProductDrawer = ({ onClose, open }) => {
 
   const [form] = Form.useForm();
 
-  const { data } = useQuery({
-    queryKey: ["categories"],
-    queryFn: () =>
-      axiosInstance.get(ENDPOINTS.CATEGORIES.LIST).then((res) => res.data),
-  });
+
 
   const handleForm = async () => {
     form
@@ -129,7 +125,7 @@ export const NewProductDrawer = ({ onClose, open }) => {
           setDescription={setDescription}
           category={category}
           setCategory={setCategory}
-          categories={data}
+          categories={categories}
           imageFile={imageFile}
           setImageFile={setImageFile}
           stock={stock}

@@ -10,15 +10,14 @@ import DeleteProductDrawer from "./drawers/DeleteProductDrawer";
 import RTSkeleton from "@rt/components/RTSkeleton/RTSkeleton";
 import { axiosInstance } from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
-
-import dateFormat from "dateformat";
+import dayjs from "dayjs";
+import { Badge } from "antd";
 
 const TableAntdContainer = ({ style, dataSource }) => {
   // Create Category Filters
   const getCategoryFilters = (data, find) => {
-    const categories = new Set(data.map((item) => item[find])); // Catch the Categories
+    const categories = new Set(data.map((item) => item[find]));
 
-    // Convert from Set to Array and create filter objects for each category
     return Array.from(categories)
       .sort((a, b) => a.localeCompare(b))
       .map((category) => ({
@@ -28,12 +27,6 @@ const TableAntdContainer = ({ style, dataSource }) => {
   };
 
   const columns = [
-    {
-      title: "Id",
-      dataIndex: "_id",
-      key: "_id",
-      sorter: (a, b) => a._id - b._id,
-    },
     {
       title: "Title",
       dataIndex: "title",
@@ -68,10 +61,31 @@ const TableAntdContainer = ({ style, dataSource }) => {
       filterSearch: true,
     },
     {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (status) => (
+      
+          <Badge
+            count={`${status ? "Active" : "Inactive"}`}
+            color={`${status ? "green" : "red"}`}
+            size="default"
+            style={{ padding: "0 10px" }}
+          />
+      
+      ),
+    },
+    {
       title: "Update",
       dataIndex: "updatedAt",
       key: "updatedAt",
       sorter: (a, b) => new Date(a.updatedAt) - new Date(b.updatedAt),
+    },
+    {
+      title: "Create",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
       title: "Actions",
@@ -126,13 +140,19 @@ const TableActions = ({ data }) => {
   );
 };
 
-const TableContainer = () => {
+const TableContainer = ({ categoriesData }) => {
+  console.log(categoriesData);
   const { data, isLoading, error } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
       axiosInstance.get(ENDPOINTS.PRODUCT.LIST).then((res) => res.data),
   });
-  const longDate = "mmmm d, yyyy";
+  const longDate = "MMMM DD, YYYY";
+
+  const categoryNamefilter = (item) => {
+    return categoriesData?.filter((e) => e.categoryId === item.categoryId)[0]
+      ?.categoryName;
+  };
 
   let tableData = [];
 
@@ -141,15 +161,17 @@ const TableContainer = () => {
       .sort((a, b) => {
         return new Date(b.updatedAt) - new Date(a.updatedAt);
       })
-      .map((item, ) => {
+      .map((item) => {
         return {
           key: item.productId,
-          id:item.productId ,
+          id: item.productId,
           title: item.name,
           price: item.price,
-          owner: item.ownerId,
-          description: item.description,
-          updatedAt: dateFormat(item.updatedAt, longDate),
+          owner: item.ownerName,
+          status: item.active,
+          category: categoryNamefilter(item),
+          updatedAt: dayjs(item.updatedAt).format(longDate),
+          createdAt: dayjs(item.createdAt).format(longDate),
         };
       });
   }
@@ -169,7 +191,7 @@ const TableContainer = () => {
   }
 };
 
-const ProductList = () => {
-  return <TableContainer />;
+const ProductList = ({ categoriesData }) => {
+  return <TableContainer categoriesData={categoriesData} />;
 };
 export default ProductList;
