@@ -5,22 +5,33 @@ const ImageUpload = ({
   label,
   name,
   maxCount,
-  handleImageChange,
+  onChange,
+  fileList,
+  onPreview,
+  showPreviewIcon,
+  required,
 }) => {
   return (
     <Form.Item
       label={label}
       name={name}
-      rules={[{ required: true, message: ` Please upload an ${label}` }]}
+      rules={[
+        {
+          required: required && !fileList.length,
+          message: `Please upload an ${label}`,
+        },
+      ]}
     >
       <Upload
-    showUploadList={{showPreviewIcon: false}}
+        fileList={fileList}
+        onPreview={onPreview}
+        showUploadList={{ showPreviewIcon: showPreviewIcon || false }}
         listType="picture-card"
         maxCount={maxCount}
-        onChange={handleImageChange}
-        beforeUpload={() => false}
+        onChange={onChange}
+        beforeUpload={() => false} // prevent upload as we are managing it in state
       >
-       Click to Upload
+        {fileList.length < maxCount && 'Click to Upload'}
       </Upload>
     </Form.Item>
   );
@@ -32,6 +43,9 @@ ImageUpload.propTypes = {
   fileList: PropTypes.array,
   maxCount: PropTypes.number,
   handleImageChange: PropTypes.func,
+  onPreview: PropTypes.func,
+  showPreviewIcon: PropTypes.bool,
+  required: PropTypes.bool,
 };
 
 export default ImageUpload;

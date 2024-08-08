@@ -10,7 +10,7 @@ import { ENDPOINTS } from "@rt/network/endpoints";
 import Notification from "@rt/components/RTFeedback/Notification/Notification";
 
 const EditCategoryDrawer = ({ onClose, open, inheritedData }) => {
-  const { slug, name } = inheritedData;
+  const { key, name } = inheritedData;
 
   const [newName, setNewName] = useState(name);
 
@@ -37,22 +37,22 @@ const EditCategoryDrawer = ({ onClose, open, inheritedData }) => {
   };
 
   const postBody = {
-    name: newName,
+    categoryName: newName,
   };
-
+console.log(postBody)
 
   const mutation = useMutation({
     mutationKey: "updateCategory",
     mutationFn: (updateCategory) => {
-      return axiosInstance.put(
-        ENDPOINTS.CATEGORIES.UPDATE.replace(":categoryTitle", slug),
+      return axiosInstance.patch(
+        ENDPOINTS.CATEGORIES.UPDATE.replace(":categoryId", key),
         updateCategory
       );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
       openNotification({
-        key: slug,
+        key: key,
         type: "success",
         message: "Category Edit Successfully",
         duration: 2,
@@ -89,7 +89,7 @@ const EditCategoryDrawer = ({ onClose, open, inheritedData }) => {
           />
         }
       >
-        <EditCategoryPanel form={form} newName={newName} setName={setNewName} />
+        <EditCategoryPanel form={form} newName={newName} setNewName={setNewName} />
       </Drawer>
     </>
   );

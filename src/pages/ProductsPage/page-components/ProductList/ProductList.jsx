@@ -13,7 +13,7 @@ import { ENDPOINTS } from "@rt/network/endpoints";
 import dayjs from "dayjs";
 import { Badge } from "antd";
 
-const TableAntdContainer = ({ style, dataSource }) => {
+const TableAntdContainer = ({ style, dataSource, categoriesData }) => {
   // Create Category Filters
   const getCategoryFilters = (data, find) => {
     const categories = new Set(data.map((item) => item[find]));
@@ -28,10 +28,10 @@ const TableAntdContainer = ({ style, dataSource }) => {
 
   const columns = [
     {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
-      sorter: (a, b) => a.title.localeCompare(b.title),
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      sorter: (a, b) => a.name.localeCompare(b.name),
     },
     {
       title: "Price",
@@ -42,10 +42,10 @@ const TableAntdContainer = ({ style, dataSource }) => {
     },
     {
       title: "Category",
-      dataIndex: "category",
-      key: "category",
+      dataIndex: "categoryName",
+      key: "categoryName",
       sorter: (a, b) => a.category.localeCompare(b.category),
-      filters: getCategoryFilters(dataSource, "category"),
+      filters: getCategoryFilters(dataSource, "categoryName"),
       onFilter: (value, record) => record.category.startsWith(value),
       filterMode: "tree",
       filterSearch: true,
@@ -65,14 +65,12 @@ const TableAntdContainer = ({ style, dataSource }) => {
       dataIndex: "status",
       key: "status",
       render: (status) => (
-      
-          <Badge
-            count={`${status ? "Active" : "Inactive"}`}
-            color={`${status ? "green" : "red"}`}
-            size="default"
-            style={{ padding: "0 10px" }}
-          />
-      
+        <Badge
+          count={`${status ? "Active" : "Inactive"}`}
+          color={`${status ? "green" : "red"}`}
+          size="default"
+          style={{ padding: "0 10px" }}
+        />
       ),
     },
     {
@@ -92,7 +90,7 @@ const TableAntdContainer = ({ style, dataSource }) => {
       dataIndex: "actions",
       key: "actions",
       render: (_, record) => {
-        return <TableActions data={record} />;
+        return <TableActions data={record} categoriesData={categoriesData} />;
       },
     },
   ];
@@ -100,7 +98,7 @@ const TableAntdContainer = ({ style, dataSource }) => {
   return <Table style={style} columns={columns} dataSource={dataSource} />;
 };
 
-const TableActions = ({ data }) => {
+const TableActions = ({ data, categoriesData }) => {
   const [open, setOpen] = useState(false);
   const [type, setType] = useState(TableView.VIEW);
 
@@ -114,20 +112,25 @@ const TableActions = ({ data }) => {
 
   return (
     <Space size="middle">
-      <a href="#" role="button" onClick={() => showDrawer(TableView.VIEW)}>
+      <a  role="button" onClick={() => showDrawer(TableView.VIEW)}>
         View
       </a>
-      <a href="#" role="button" onClick={() => showDrawer(TableView.EDIT)}>
+      <a  role="button" onClick={() => showDrawer(TableView.EDIT)}>
         Edit
       </a>
-      <a href="#" role="button" onClick={() => showDrawer(TableView.DELETE)}>
+      <a  role="button" onClick={() => showDrawer(TableView.DELETE)}>
         Delete
       </a>
       {open && type === TableView.VIEW && (
         <ViewProductDrawer onClose={onClose} open={open} inheritedData={data} />
       )}
       {open && type === TableView.EDIT && (
-        <EditProductDrawer onClose={onClose} open={open} inheritedData={data} />
+        <EditProductDrawer
+          onClose={onClose}
+          open={open}
+          inheritedData={data}
+          categoriesData={categoriesData}
+        />
       )}
       {open && type === TableView.DELETE && (
         <DeleteProductDrawer
@@ -147,12 +150,7 @@ const TableContainer = ({ categoriesData }) => {
     queryFn: () =>
       axiosInstance.get(ENDPOINTS.PRODUCT.LIST).then((res) => res.data),
   });
-  const longDate = "MMMM DD, YYYY";
-
-  const categoryNamefilter = (item) => {
-    return categoriesData?.filter((e) => e.categoryId === item.categoryId)[0]
-      ?.categoryName;
-  };
+  const longDate = "  MMMM DD, YYYY - hh:ss A ";
 
   let tableData = [];
 
@@ -165,11 +163,15 @@ const TableContainer = ({ categoriesData }) => {
         return {
           key: item.productId,
           id: item.productId,
-          title: item.name,
+          name: item.productName,
           price: item.price,
           owner: item.ownerName,
           status: item.active,
-          category: categoryNamefilter(item),
+          description: item.description,
+          stock: item.stock,
+          imageUrl: item.imageUrl,
+          categoryName: item.categoryName,
+          categoryId: item.categoryId,
           updatedAt: dayjs(item.updatedAt).format(longDate),
           createdAt: dayjs(item.createdAt).format(longDate),
         };
@@ -186,7 +188,11 @@ const TableContainer = ({ categoriesData }) => {
     return <div>{error.message}</div>;
   } else {
     return (
-      <TableAntdContainer style={{ width: "100%" }} dataSource={tableData} />
+      <TableAntdContainer
+        style={{ width: "100%" }}
+        dataSource={tableData}
+        categoriesData={categoriesData}
+      />
     );
   }
 };

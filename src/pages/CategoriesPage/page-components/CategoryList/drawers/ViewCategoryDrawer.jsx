@@ -5,18 +5,18 @@ import { Drawer } from "antd";
 import ViewCategoryPanel from "../panels/ViewCategoryPanel";
 
 const ViewCategoryDrawer = ({ onClose, open, inheritedData }) => {
-  const { slug, name } = inheritedData;
+  const { key, name } = inheritedData;
 
   const queryClient = useQueryClient();
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["Category", slug],
+    queryKey: ["Category", key],
     queryFn: () =>
-      axiosInstance.get(ENDPOINTS.CATEGORIES.GET.replace(":categoryTitle", slug)),
+      axiosInstance.get(ENDPOINTS.CATEGORIES.GET.replace(":categoryId", key)),
   });
   const handleCloseDrawer = () => {
     onClose();
-    queryClient.removeQueries({ queryKey: ["Category", slug] });
+    queryClient.removeQueries({ queryKey: ["Category", key] });
   };
 
   return (
@@ -28,7 +28,7 @@ const ViewCategoryDrawer = ({ onClose, open, inheritedData }) => {
       size="large"
     >
       <ViewCategoryPanel
-        data={data?.data.data}
+        data={data?.data}
         isLoading={isLoading}
         error={error}
       />

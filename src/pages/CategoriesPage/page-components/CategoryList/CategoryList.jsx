@@ -10,15 +10,10 @@ import DeleteCategoryDrawer from "./drawers/DeleteCategoryDrawer";
 import RTSkeleton from "@rt/components/RTSkeleton/RTSkeleton";
 import { axiosInstance } from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
+import dayjs from "dayjs";
 
 const TableAntdContainer = ({ style, dataSource }) => {
   const columns = [
-    {
-      title: "Id",
-      dataIndex: "_id",
-      key: "_id",
-      sorter: (a, b) => a._id - b._id,
-    },
     {
       title: "Name",
       dataIndex: "name",
@@ -26,10 +21,29 @@ const TableAntdContainer = ({ style, dataSource }) => {
       sorter: (a, b) => a.name.localeCompare(b.name),
     },
     {
-      title: "Slug",
-      dataIndex: "slug",
-      key: "slug",
-      sorter: (a, b) => a.slug.localeCompare(b.slug),
+      title: "Product Amount",
+      dataIndex: "productAmount",
+      key: "productAmount",
+      sorter: (a, b) => a.productAmount - b.productAmount,
+    },
+    {
+      title: "Owner",
+      dataIndex: "ownerName",
+      key: "ownerName",
+      sorter: (a, b) => a.ownerName.localeCompare(b.ownerName),
+    },
+    {
+      title: "Update",
+      dataIndex: "updatedAt",
+      key: "updatedAt",
+      sorter: (a, b) => a._id - b._id,
+    },
+
+    {
+      title: "Create",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      sorter: (a, b) => a._id - b._id,
     },
 
     {
@@ -59,13 +73,13 @@ const TableActions = ({ data }) => {
 
   return (
     <Space size="middle">
-      <a href="#" role="button" onClick={() => showDrawer(TableView.VIEW)}>
+      <a  role="button" onClick={() => showDrawer(TableView.VIEW)}>
         View
       </a>
-      <a href="#" role="button" onClick={() => showDrawer(TableView.EDIT)}>
+      <a  role="button" onClick={() => showDrawer(TableView.EDIT)}>
         Edit
       </a>
-      <a href="#" role="button" onClick={() => showDrawer(TableView.DELETE)}>
+      <a  role="button" onClick={() => showDrawer(TableView.DELETE)}>
         Delete
       </a>
       {open && type === TableView.VIEW && (
@@ -107,14 +121,15 @@ const TableContainer = () => {
       .sort((a, b) => {
         return new Date(b.updatedAt) - new Date(a.updatedAt);
       })
-      .map((item, index) => {
+      .map((item) => {
         return {
           key: item.categoryId,
-          _id: index + 1,
+          id: item.categoryId,
           name: item.categoryName,
-          product:item.productCount,
-          createdAt: new Date(item.createdAt).toLocaleDateString(),
-          ownerId: item.ownerId,
+          productAmount: item.productCount,
+          ownerName: item.ownerName,
+          createdAt: dayjs(item.createdAt).format(" MMMM DD, YYYY -  hh:mm A"),
+          updatedAt: dayjs(item.updatedAt).format(" MMMM DD, YYYY -  hh:mm A"),
         };
       });
   }

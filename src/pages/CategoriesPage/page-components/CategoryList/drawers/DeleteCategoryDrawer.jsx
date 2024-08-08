@@ -15,8 +15,8 @@ const DeleteCategoryDrawer = ({ open, onClose, inheritedData }) => {
     mutationFn: () => {
       return axiosInstance.delete(
         ENDPOINTS.CATEGORIES.DELETE.replace(
-          ":categoryTitle",
-          inheritedData.slug
+          ":categoryId",
+          inheritedData.key
         )
       );
     },
@@ -37,7 +37,7 @@ const DeleteCategoryDrawer = ({ open, onClose, inheritedData }) => {
       const Error = error.response.data.message;
       openNotification({
         type: "error",
-        message: `Error: ${Error}`,
+        message: `${Error}`,
         duration: 2.5,
       });
     },

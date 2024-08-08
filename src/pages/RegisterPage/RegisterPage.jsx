@@ -34,7 +34,7 @@ const RegisterPageContainer = () => {
             "custom:role": "Admin",
             "custom:phone_number": "1234567890",
             "custom:permissions":
-              "Product:Read,Product:Create,Product:Delete,Product:Edit,Category:Create,Category:Read,Category:Update,Category:Delete,User:Create,User:Read,User:Update,User:Delete",
+              "Product:Read,Product:Create,Product:Delete,Product:Update,Category:Create,Category:Read,Category:Update,Category:Delete,User:Create,User:Read,User:Update,User:Delete",
           },
           // optional
           autoSignIn: true, // or SignInOptions e.g { authFlowType: "USER_SRP_AUTH" }

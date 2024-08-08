@@ -72,13 +72,13 @@ const TableActions = ({ data }) => {
 
   return (
     <Space size="middle">
-      <a href="#" role="button" onClick={() => showDrawer(TableView.VIEW)}>
+      <a  role="button" onClick={() => showDrawer(TableView.VIEW)}>
         View
       </a>
-      <a href="#" role="button" onClick={() => showDrawer(TableView.EDIT)}>
+      <a  role="button" onClick={() => showDrawer(TableView.EDIT)}>
         Edit
       </a>
-      <a href="#" role="button" onClick={() => showDrawer(TableView.DELETE)}>
+      <a  role="button" onClick={() => showDrawer(TableView.DELETE)}>
         Delete
       </a>
       {open && type === TableView.VIEW && (

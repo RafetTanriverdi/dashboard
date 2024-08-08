@@ -9,7 +9,7 @@ import Notification from "@rt/components/RTFeedback/Notification/Notification";
 import { Form } from "antd";
 
 export const NewProductDrawer = ({ onClose, open ,categories}) => {
-  const [title, setTitle] = useState("");
+  const [name, setName] = useState("");
   const [price, setPrice] = useState();
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -63,7 +63,7 @@ export const NewProductDrawer = ({ onClose, open ,categories}) => {
   };
 
   const postBody = {
-    name: title,
+    productName: name,
     price: price,
     description: description,
     categoryId: category,
@@ -88,7 +88,7 @@ export const NewProductDrawer = ({ onClose, open ,categories}) => {
       });
     },
     onError: (error) => {
-      const Error = error.response?.data?.message || "An error occurred";
+      const Error = error.response?.data?.message ;
       openNotification({
         type: "error",
         message: `Error: ${Error}`,
@@ -102,7 +102,7 @@ export const NewProductDrawer = ({ onClose, open ,categories}) => {
     <>
       {context}
       <Drawer
-        title="Add New Product"
+        name="Add New Product"
         placement="right"
         size="large"
         onClose={onClose}
@@ -117,8 +117,8 @@ export const NewProductDrawer = ({ onClose, open ,categories}) => {
       >
         <NewProductPanel
           form={form}
-          title={title}
-          setTitle={setTitle}
+          name={name}
+          setName={setName}
           price={price}
           setPrice={setPrice}
           description={description}

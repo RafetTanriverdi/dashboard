@@ -55,6 +55,7 @@ export const NewCategoryDrawer = ({ onClose, open }) => {
       });
     },
     onError: (error) => {
+      console.error("Error: ", error);
       const Error = error.response.data.message;
       openNotification({
         type: "error",
