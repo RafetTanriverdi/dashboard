@@ -5,7 +5,7 @@ import "./ProductsPage.scss";
 import { Typography } from "antd";
 import { Space } from "antd";
 import { NewProductButton } from "./page-components/NewProduct/NewProductButton";
-import { axiosInstance } from "@rt/network/httpRequester";
+import axiosInstance from "@rt/network/httpRequester";
 import { useQuery } from "@tanstack/react-query";
 import { ENDPOINTS } from "@rt/network/endpoints";
 

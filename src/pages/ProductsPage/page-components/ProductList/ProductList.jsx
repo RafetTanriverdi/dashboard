@@ -8,7 +8,7 @@ import { useState } from "react";
 import EditProductDrawer from "./drawers/EditProductDrawer";
 import DeleteProductDrawer from "./drawers/DeleteProductDrawer";
 import RTSkeleton from "@rt/components/RTSkeleton/RTSkeleton";
-import { axiosInstance } from "@rt/network/httpRequester";
+import axiosInstance from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
 import dayjs from "dayjs";
 import { Badge } from "antd";

@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { Form } from "antd";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { axiosInstance } from "@rt/network/httpRequester";
+import axiosInstance from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
 import Notification from "@rt/components/RTFeedback/Notification/Notification";
 import EditUserPanel from "../panels/EditUserPanel";

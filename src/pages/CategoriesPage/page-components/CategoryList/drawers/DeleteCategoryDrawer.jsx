@@ -1,7 +1,7 @@
 import { RTButton } from "@rt/components/RTButton";
 import Notification from "@rt/components/RTFeedback/Notification/Notification";
 import { ENDPOINTS } from "@rt/network/endpoints";
-import { axiosInstance } from "@rt/network/httpRequester";
+import axiosInstance from "@rt/network/httpRequester";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Drawer } from "antd";
 import ReactJson from "react-json-view";

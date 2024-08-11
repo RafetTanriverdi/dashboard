@@ -1,23 +1,29 @@
 import { Button, Menu } from "antd";
 import { NavLink } from "react-router-dom";
-import { signOut } from "aws-amplify/auth";
 import { useNavigate } from "react-router-dom";
 import { Amplify } from "aws-amplify";
 import { getRouteId, getRoutePath, routes } from "../../routing/routes";
 import { ROUTES_ID } from "../../routing/routes-id";
-import { useAuthStore } from "@rt/data/Auth/UseAuthStore";
 import awsmobile from "@rt/aws-exports";
+import { useQueryClient } from "@tanstack/react-query";
+import { signOut } from "aws-amplify/auth";
 
 Amplify.configure(awsmobile);
 
 const RTSider = () => {
   const navigate = useNavigate();
-  const { setIsAuthenticated } = useAuthStore();
+  const queryClient = useQueryClient();
 
   const handleSignOut = async () => {
-    await signOut();
-    setIsAuthenticated(null);
-    navigate(getRoutePath(ROUTES_ID.login));
+    try {
+      await signOut(); // Sign out from AWS Amplify
+      localStorage.clear(); // Clear local storage
+      sessionStorage.clear()
+      queryClient.clear(); // Clear cache asynchronously
+      navigate(getRoutePath(ROUTES_ID.login)); // Navigate to login page
+    } catch (error) {
+      console.error("Error during sign out:", error);
+    }
   };
 
   const SignOut = () => {
@@ -32,6 +38,7 @@ const RTSider = () => {
         label: <NavLink to={e.path}>{e.title}</NavLink>,
       };
     });
+
   const signOutd = [
     {
       key: "signOut",

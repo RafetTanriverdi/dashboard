@@ -2,41 +2,24 @@
 import { Navigate } from "react-router-dom";
 import { ROUTES_ID } from "./routes-id";
 import { getRoutePath } from "./routes";
-import { useAuthStore } from "@rt/data/Auth/UseAuthStore";
-import { useState, useEffect } from "react";
-import LoginLayout from "@rt/layout/LoginLayout/LoginLayout";
-import RTSpinner from "@rt/components/RTSpinner/RTSpinner";
 import { checkUserAuthentication } from "@rt/authentication/auth-utils";
-import { useLocation } from "react-router-dom";
+import { useWebSocketConnection } from "@rt/authentication/WebSocketsConnections";
+import useAutoLogoutOnInactivity from "@rt/authentication/useAutoLogoutOnInactivity ";
 
 const isOutsidePage = (path) => {
-  const outsidePages = [ROUTES_ID.login, ROUTES_ID.register, ROUTES_ID.forceChangePassword];
+  const outsidePages = [
+    ROUTES_ID.login,
+    ROUTES_ID.register,
+    ROUTES_ID.forceChangePassword,
+  ];
   const outsidePaths = outsidePages.map((path) => getRoutePath(path));
   return outsidePaths.some((route) => route === path);
 };
 
 export function RouteWithRedirections({ ...props }) {
-  const { isAuthenticated, setIsAuthenticated } = useAuthStore();
-  const [loading, setLoading] = useState(true);
-  const location=useLocation();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const authenticated = checkUserAuthentication(); 
-      setIsAuthenticated(authenticated);
-      setLoading(false); 
-    
-    };
-    fetchData();
-  }, [location]);
-
-  if (loading) {
-    if (isOutsidePage(props?.routeData?.path)) {
-      return <LoginLayout content={<RTSpinner />} />;
-    } else {
-      return <RTSpinner />;
-    }
-  }
+  const isAuthenticated = checkUserAuthentication();
+  useAutoLogoutOnInactivity();
+  useWebSocketConnection();
 
   if (isAuthenticated) {
     if (isOutsidePage(props?.routeData?.path)) {

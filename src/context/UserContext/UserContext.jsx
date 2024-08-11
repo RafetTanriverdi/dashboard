@@ -1,6 +1,6 @@
 import awsmobile from "@rt/aws-exports";
 import { Amplify } from "aws-amplify";
-import { fetchUserAttributes } from "aws-amplify/auth";
+import { fetchUserAttributes, getCurrentUser } from "aws-amplify/auth";
 import { useEffect } from "react";
 import { createContext, useState } from "react";
 Amplify.configure(awsmobile);
@@ -11,6 +11,8 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        const { username, userId, signInDetails } = await getCurrentUser();
+console.log(username, userId, signInDetails,'getCurrentUser');
         const attributes = await fetchUserAttributes();
         setUserData(attributes);
       } catch (error) {

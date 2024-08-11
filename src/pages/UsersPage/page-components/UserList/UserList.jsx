@@ -8,9 +8,11 @@ import { useState } from "react";
 import EditUserDrawer from "./drawers/EditUserDrawer";
 import DeleteUserDrawer from "./drawers/DeleteUserDrawer";
 import RTSkeleton from "@rt/components/RTSkeleton/RTSkeleton";
-import { axiosInstance } from "@rt/network/httpRequester";
+import axiosInstance from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
 import dayjs from "dayjs";
+import { Tag } from "antd";
+import { CheckCircleOutlined, SyncOutlined } from "@ant-design/icons";
 
 const TableAntdContainer = ({ style, dataSource }) => {
   const columns = [
@@ -27,6 +29,27 @@ const TableAntdContainer = ({ style, dataSource }) => {
       sorter: (a, b) => a.email.localeCompare(b.email),
     },
     {
+      title: "Account Status",
+      dataIndex: "status",
+      key: "status",
+      render: (status) => {
+        return (
+          <Tag
+            color={status === "CONFIRMED" ? "success" : "processing"}
+            icon={
+              status === "CONFIRMED" ? (
+                <CheckCircleOutlined />
+              ) : (
+                <SyncOutlined spin />
+              )
+            }
+          >
+            {status === "CONFIRMED" ? "Confirmed" : "Pending"}
+          </Tag>
+        );
+      },
+    },
+    {
       title: "Phone Number",
       dataIndex: "number",
       key: "number",
@@ -39,9 +62,9 @@ const TableAntdContainer = ({ style, dataSource }) => {
       sorter: (a, b) => a.email.localeCompare(b.email),
     },
     {
-      title:'Updated',
-      dataIndex:'updatedAt',
-      key:'updatedAt',
+      title: "Updated",
+      dataIndex: "updatedAt",
+      key: "updatedAt",
       sorter: (a, b) => new Date(a.updatedAt) - new Date(b.updatedAt),
     },
 
@@ -72,13 +95,13 @@ const TableActions = ({ data }) => {
 
   return (
     <Space size="middle">
-      <a  role="button" onClick={() => showDrawer(TableView.VIEW)}>
+      <a role="button" onClick={() => showDrawer(TableView.VIEW)}>
         View
       </a>
-      <a  role="button" onClick={() => showDrawer(TableView.EDIT)}>
+      <a role="button" onClick={() => showDrawer(TableView.EDIT)}>
         Edit
       </a>
-      <a  role="button" onClick={() => showDrawer(TableView.DELETE)}>
+      <a role="button" onClick={() => showDrawer(TableView.DELETE)}>
         Delete
       </a>
       {open && type === TableView.VIEW && (
@@ -116,8 +139,9 @@ const TableContainer = () => {
           number: item.phoneNumber,
           permissions: item.permissions,
           role: item.role,
+          status: item.status,
           createdAt: item.createdAt,
-          updatedAt: dayjs(item.updatedAt).format('MMMM D, YYYY'),
+          updatedAt: dayjs(item.updatedAt).format("MMMM D, YYYY"),
         };
       });
   }

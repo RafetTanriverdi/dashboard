@@ -1,8 +1,8 @@
 import { ENDPOINTS } from "@rt/network/endpoints";
-import { axiosInstance } from "@rt/network/httpRequester";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Drawer } from "antd";
 import ViewUserPanel from "../panels/ViewUserPanel";
+import axiosInstance from "@rt/network/httpRequester";
 
 const ViewUserDrawer = ({ onClose, open, inheritedData }) => {
   const { key, name } = inheritedData;

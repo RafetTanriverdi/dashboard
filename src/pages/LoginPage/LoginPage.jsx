@@ -25,7 +25,6 @@ const LoginPageContainer = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { setUserData } = useUserDataStore();
-  const { setIsAuthenticated } = useAuthStore();
 
   const handleSignIn = async () => {
     try {
@@ -34,14 +33,16 @@ const LoginPageContainer = () => {
         password,
       });
 
-      if (nextStep.signInStep === "CONFIRM_SIGN_IN_WITH_NEW_PASSWORD_REQUIRED") {
-        navigate(getRoutePath(ROUTES_ID.forceChangePassword) + `?email=${email}`);
+      if (
+        nextStep.signInStep === "CONFIRM_SIGN_IN_WITH_NEW_PASSWORD_REQUIRED"
+      ) {
+        navigate(
+          getRoutePath(ROUTES_ID.forceChangePassword) + `?email=${email}`
+        );
       } else {
         const user = await getCurrentUser();
         setUserData(user);
 
-        const status = checkUserAuthentication();
-        setIsAuthenticated(status);
         navigate(getRoutePath(ROUTES_ID.dashboard));
       }
     } catch (e) {

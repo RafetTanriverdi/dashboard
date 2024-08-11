@@ -2,7 +2,7 @@ import { Drawer } from "antd";
 import NewProductPanel from "./NewProductPanel";
 import { RTButton } from "@rt/components/RTButton";
 import { useState } from "react";
-import { axiosInstance } from "@rt/network/httpRequester";
+import axiosInstance from "@rt/network/httpRequester";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ENDPOINTS } from "@rt/network/endpoints";
 import Notification from "@rt/components/RTFeedback/Notification/Notification";

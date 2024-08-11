@@ -1,5 +1,5 @@
 import { ENDPOINTS } from "@rt/network/endpoints";
-import { axiosInstance } from "@rt/network/httpRequester";
+import axiosInstance from "@rt/network/httpRequester";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Drawer } from "antd";
 import ViewProductPanel from "../panels/ViewProductPanel";

@@ -19,6 +19,8 @@ function App() {
   const { theme, setTheme } = useThemeChangeStore();
   const { setUserData } = useUserDataStore();
   const [cookies, setCookie] = useCookies(["theme"]);
+
+
   useEffect(() => {
     const savedTheme = cookies.theme === "dark" ? false : true;
     setTheme(savedTheme);
@@ -36,8 +38,10 @@ function App() {
 
   useEffect(() => {
     // Tema değiştiğinde çerezde güncelle
+
     setCookie("theme", theme ? "light" : "dark", { path: "/" });
   }, [theme]);
+
 
   return (
     <ConfigProvider theme={theme ? lightTheme : darkTheme}>

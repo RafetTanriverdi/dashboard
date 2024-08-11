@@ -14,12 +14,8 @@ export const getToken = () => {
   const RefreshToken = localStorage.getItem(
     `CognitoIdentityServiceProvider.${poolIdFromEnv}.${userId}.refreshToken`
   );
-  return { AccessToken, IdToken,RefreshToken };
+  return { AccessToken, IdToken, RefreshToken };
 };
 export function checkUserAuthentication() {
-  const { RefreshToken } = getToken();
-  if (RefreshToken) {
-    return true;
-  }
-  return false;
+  return getToken().AccessToken !== null;
 }
