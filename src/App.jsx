@@ -13,6 +13,7 @@ import { useCookies } from "react-cookie";
 import { Amplify } from "aws-amplify";
 import awsmobile from "./aws-exports";
 
+
 Amplify.configure(awsmobile);
 
 function App() {

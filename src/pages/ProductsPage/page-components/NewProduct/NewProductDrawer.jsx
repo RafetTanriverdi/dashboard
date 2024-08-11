@@ -8,21 +8,20 @@ import { ENDPOINTS } from "@rt/network/endpoints";
 import Notification from "@rt/components/RTFeedback/Notification/Notification";
 import { Form } from "antd";
 
-export const NewProductDrawer = ({ onClose, open ,categories}) => {
+export const NewProductDrawer = ({ onClose, open, categories }) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState();
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [stock, setStock] = useState(0);
+  const [shared, setShared] = useState(true);
 
   const queryClient = useQueryClient();
 
   const { context, openNotification } = Notification();
 
   const [form] = Form.useForm();
-
-
 
   const handleForm = async () => {
     form
@@ -68,6 +67,7 @@ export const NewProductDrawer = ({ onClose, open ,categories}) => {
     description: description,
     categoryId: category,
     stock: stock,
+    sharedStatus: shared,
   };
 
   const mutation = useMutation({
@@ -88,7 +88,7 @@ export const NewProductDrawer = ({ onClose, open ,categories}) => {
       });
     },
     onError: (error) => {
-      const Error = error.response?.data?.message ;
+      const Error = error.response?.data?.message;
       openNotification({
         type: "error",
         message: `Error: ${Error}`,
@@ -96,7 +96,7 @@ export const NewProductDrawer = ({ onClose, open ,categories}) => {
       });
     },
   });
-  console.log(postBody)
+  console.log(postBody);
 
   return (
     <>
@@ -130,6 +130,8 @@ export const NewProductDrawer = ({ onClose, open ,categories}) => {
           setImageFile={setImageFile}
           stock={stock}
           setStock={setStock}
+          setStatus={setShared}
+          status={shared}
         />
       </Drawer>
     </>

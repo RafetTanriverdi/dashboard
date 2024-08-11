@@ -1,7 +1,5 @@
-import { checkUserAuthentication } from "@rt/authentication/auth-utils";
 import { RTButton } from "@rt/components/RTButton";
 import { RTInput } from "@rt/components/RTInput";
-import { useAuthStore } from "@rt/data/Auth/UseAuthStore";
 import LoginLayout from "@rt/layout/LoginLayout/LoginLayout";
 import { getRoutePath } from "@rt/routing/routes";
 import { ROUTES_ID } from "@rt/routing/routes-id";
@@ -14,7 +12,6 @@ import { useSearchParams } from "react-router-dom";
 
 const ForceChangePasswordPageContainer = () => {
   const [newPassword, setNewPassword] = useState("");
-  const { setIsAuthenticated } = useAuthStore();
 
   async function handlePasswordChange() {
     try {
@@ -24,8 +21,6 @@ const ForceChangePasswordPageContainer = () => {
           autoSignIn: true
         }
       })
-      const status = checkUserAuthentication();
-      setIsAuthenticated(status);
 
       if (isSignedIn) {
         Navigate(getRoutePath(ROUTES_ID.dashboard));

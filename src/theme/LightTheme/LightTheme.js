@@ -7,13 +7,14 @@ export const lightTheme = {
   },
   components: {
     Layout: {
-      headerBg: "rgb(245,245,245)",
-      siderBg: "rgb(245,245,245)",
+      headerBg: "#fefefe",
+      siderBg: "#fefefe",
       algorithm: true,
-      bodyBg:'#fffff'
+      headerHeight: 76,
     },
     Menu: {
-      itemBg: "rgb(245,245,245)",
+      itemBg: "#fefefe",
+      fontSize: 16,
     },
   },
   algorithm: theme.defaultAlgorithm,

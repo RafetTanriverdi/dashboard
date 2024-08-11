@@ -122,6 +122,7 @@ const TableContainer = () => {
     queryKey: ["users"],
     queryFn: () =>
       axiosInstance.get(ENDPOINTS.USER.LIST).then((res) => res.data),
+    staleTime: 0,
   });
 
   let tableData = [];

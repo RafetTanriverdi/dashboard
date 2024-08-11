@@ -3,6 +3,7 @@ import { RTInput } from "@rt/components/RTInput";
 import RTSelect from "@rt/components/RTSelect/RTSelect";
 import { Form } from "antd";
 import { dollarFormatter, dollarParser } from "../utils/dollarParser";
+import RTSwitch from "@rt/components/RTSwitch/RTSwitch";
 
 const NewProductPanel = ({
   name,
@@ -18,6 +19,8 @@ const NewProductPanel = ({
   categories,
   stock,
   setStock,
+  status,
+  setStatus,
 }) => {
   const [imageList, setImageList] = useState([]);
 
@@ -73,6 +76,13 @@ const NewProductPanel = ({
         onChange={(e) => setStock(e)}
         value={stock}
         required
+      />
+      <RTSwitch
+      label={"Share Product"}
+      name={"Share Product"}
+      onChange={(value) => setStatus(value)}
+      defaultChecked={status}
+
       />
       <RTSelect
         label={"Category"}

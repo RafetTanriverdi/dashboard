@@ -12,7 +12,6 @@ const queryClient = useQueryClient();
         // Oturum kapatma işlemini burada gerçekleştir
         localStorage.clear();
         queryClient.clear();
-        alert("10 dakika boyunca etkin olmadığınız için oturumunuz kapatıldı.");
         window.location.href = "/login";
       }, timeout);
     };

@@ -15,15 +15,14 @@ const RTSider = () => {
   const queryClient = useQueryClient();
 
   const handleSignOut = async () => {
-    try {
-      await signOut(); // Sign out from AWS Amplify
-      localStorage.clear(); // Clear local storage
-      sessionStorage.clear()
-      queryClient.clear(); // Clear cache asynchronously
-      navigate(getRoutePath(ROUTES_ID.login)); // Navigate to login page
-    } catch (error) {
-      console.error("Error during sign out:", error);
-    }
+    await signOut()
+      .then(() => {
+        navigate(getRoutePath(ROUTES_ID.login));
+        queryClient.clear();
+      })
+      .catch((err) => {
+        console.error("Error signing out:", err);
+      });
   };
 
   const SignOut = () => {
@@ -52,7 +51,7 @@ const RTSider = () => {
       selectedKeys={[getRouteId(window.location.pathname)]}
       mode="inline"
       items={combinedMenu}
-      style={{ flex: 1, minWidth: 0 }}
+      style={{ flex: 1, minWidth: 0, height: "100%" }}
     />
   );
 };

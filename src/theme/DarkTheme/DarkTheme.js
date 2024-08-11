@@ -4,6 +4,16 @@ export const darkTheme = {
   token: {
     colorPrimary: "#ef0000",
     colorInfo: "#ef0000",
+    Layout: {
+      headerBg: "#141414",
+      headerHeight: 76,
+    },
+    Menu: {
+
+      itemBg: "#141414",
+      itemSelectedColor: "#e42a25",
+      fontSize: 16,
+    },
   },
   algorithm: theme.darkAlgorithm,
 };

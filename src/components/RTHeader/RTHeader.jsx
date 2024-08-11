@@ -1,17 +1,20 @@
+/* eslint-disable no-unused-vars */
 import { MoonOutlined, SunOutlined } from "@ant-design/icons";
-import { UserContext } from "@rt/context/UserContext/UserContext";
+import { getToken } from "@rt/authentication/auth-utils";
 import { useThemeChangeStore } from "@rt/data/Theme/Theme";
 import { Button, Space } from "antd";
 import { Typography } from "antd";
-import { useContext } from "react";
+import { jwtDecode } from "jwt-decode";
 
 import { useCookies } from "react-cookie";
 
 const RTHeader = () => {
-  const {userData}=useContext(UserContext);
   const { theme, setTheme } = useThemeChangeStore();
-  // eslint-disable-next-line no-unused-vars
   const [cookies, setCookie] = useCookies(["theme"]);
+  
+  const token=getToken().IdToken;
+  const decodedToken =jwtDecode(token)
+  console.log(decodedToken,'decodedToken');
 
 
 
@@ -24,7 +27,7 @@ const RTHeader = () => {
   return (
     <>
       <Space style={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography.Title level={5}>Welcome {userData?.name}</Typography.Title>
+        <Typography.Title level={5}>Welcome {decodedToken?.name}</Typography.Title>
         <Button
           type="link"
           onClick={handleTheme}

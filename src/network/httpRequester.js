@@ -1,19 +1,21 @@
 import { getToken } from "@rt/authentication/auth-utils";
 import axios from "axios";
 
-const { IdToken } = getToken();
 
-const axiosInstance = axios.create({
+
+
+ const axiosInstance = axios.create({
   baseURL: "https://4jroc6urcl.execute-api.us-east-1.amazonaws.com/dev",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
+
   },
 });
 
 axiosInstance.interceptors.request.use(
   function (config) {
-    config.headers["Authorization"] = "Bearer " + IdToken;
+    config.headers["Authorization"] = "Bearer " + getToken().IdToken;
     return config;
   },
   function (err) {
@@ -33,6 +35,5 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(err);
   }
 );
-
 
 export default axiosInstance;

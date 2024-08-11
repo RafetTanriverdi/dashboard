@@ -14,8 +14,6 @@ import { getRoutePath } from "../../routing/routes";
 import { RTButton } from "@rt/components/RTButton";
 import { useUserDataStore } from "@rt/data/User/UserData";
 import { ROUTES_ID } from "@rt/routing/routes-id";
-import { useAuthStore } from "@rt/data/Auth/UseAuthStore";
-import { checkUserAuthentication } from "@rt/authentication/auth-utils";
 import awsmobile from "@rt/aws-exports";
 
 Amplify.configure(awsmobile);
