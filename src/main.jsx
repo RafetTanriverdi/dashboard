@@ -7,18 +7,26 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { routes } from "./routing/routes";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ContextApiProvider from "./context/index.jsx";
+import { AbilityContext } from "./authorization/can.js";
+import { buildAbilityFor } from "./authorization/ability.js";
+import { getAuthItems } from "./utils/permission-util.js";
 
 const queryClient = new QueryClient();
+
+const ability=buildAbilityFor(getAuthItems())
+console.log(getAuthItems(),'getAuthItems');
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter routes={routes}>
-      <QueryClientProvider client={queryClient}>
-        <ContextApiProvider>
-          <App />
-        </ContextApiProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
+      <AbilityContext.Provider value={ability}>
+        <QueryClientProvider client={queryClient}>
+          <ContextApiProvider>
+            <App />
+          </ContextApiProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </AbilityContext.Provider>
     </BrowserRouter>
   </React.StrictMode>
 );

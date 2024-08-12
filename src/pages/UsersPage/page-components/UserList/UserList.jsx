@@ -13,6 +13,8 @@ import { ENDPOINTS } from "@rt/network/endpoints";
 import dayjs from "dayjs";
 import { Tag } from "antd";
 import { CheckCircleOutlined, SyncOutlined } from "@ant-design/icons";
+import { Can } from "@rt/authorization/can";
+import { Permissions } from "@rt/utils/permission-util";
 
 const TableAntdContainer = ({ style, dataSource }) => {
   const columns = [
@@ -100,10 +102,12 @@ const TableActions = ({ data }) => {
       </a>
       <a role="button" onClick={() => showDrawer(TableView.EDIT)}>
         Edit
-      </a>
-      <a role="button" onClick={() => showDrawer(TableView.DELETE)}>
-        Delete
-      </a>
+      </a>{" "}
+      <Can do={Permissions.users.acitons.delete} on={Permissions.users.subject}>
+        <a role="button" onClick={() => showDrawer(TableView.DELETE)}>
+          Delete
+        </a>
+      </Can>
       {open && type === TableView.VIEW && (
         <ViewUserDrawer onClose={onClose} open={open} inheritedData={data} />
       )}

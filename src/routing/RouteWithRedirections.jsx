@@ -4,7 +4,6 @@ import { ROUTES_ID } from "./routes-id";
 import { getRoutePath } from "./routes";
 import { checkUserAuthentication } from "@rt/authentication/auth-utils";
 import { useWebSocketConnection } from "@rt/authentication/WebSocketsConnections";
-import useAutoLogoutOnInactivity from "@rt/authentication/useAutoLogoutOnInactivity ";
 
 const isOutsidePage = (path) => {
   const outsidePages = [
@@ -18,7 +17,6 @@ const isOutsidePage = (path) => {
 
 export function RouteWithRedirections({ ...props }) {
   const isAuthenticated = checkUserAuthentication();
-  useAutoLogoutOnInactivity();
   useWebSocketConnection();
 
   if (isAuthenticated) {

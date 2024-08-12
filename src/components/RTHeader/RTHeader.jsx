@@ -31,7 +31,7 @@ const RTHeader = () => {
         <Button
           type="link"
           onClick={handleTheme}
-          icon={theme ? <MoonOutlined /> : <SunOutlined />}
+          icon={!theme ? <MoonOutlined /> : <SunOutlined />}
         />
       </Space>
     </>
