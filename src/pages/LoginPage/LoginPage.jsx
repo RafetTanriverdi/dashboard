@@ -15,6 +15,11 @@ import { RTButton } from "@rt/components/RTButton";
 import { useUserDataStore } from "@rt/data/User/UserData";
 import { ROUTES_ID } from "@rt/routing/routes-id";
 import awsmobile from "@rt/aws-exports";
+import { useMutation } from "@tanstack/react-query";
+import { updateAbilityFor } from "@rt/authorization/ability";
+import { useContext } from "react";
+import { AbilityContext } from "@rt/authorization/can";
+import { getAuthItems } from "@rt/utils/permission-util";
 
 Amplify.configure(awsmobile);
 
@@ -24,6 +29,7 @@ const LoginPageContainer = () => {
   const navigate = useNavigate();
   const { setUserData } = useUserDataStore();
 
+  const ability = useContext(AbilityContext);
   const handleSignIn = async () => {
     try {
       const { nextStep } = await signIn({
@@ -43,6 +49,7 @@ const LoginPageContainer = () => {
 
         navigate(getRoutePath(ROUTES_ID.dashboard));
       }
+      updateAbilityFor(ability, getAuthItems());
     } catch (e) {
       console.error("error in login ", e);
     }
@@ -55,8 +62,17 @@ const LoginPageContainer = () => {
     }
   };
 
+  const mutation = useMutation({
+    mutationKey: "signIn",
+    mutationFn: handleSignIn,
+  });
+
   return (
-    <Form className="login-container" layout="vertical" onFinish={handleSignIn}>
+    <Form
+      className="login-container"
+      layout="vertical"
+      onFinish={mutation.mutate}
+    >
       <Card className="card-container" title="Login">
         <RTInput.text
           label="E-mail"
@@ -75,7 +91,7 @@ const LoginPageContainer = () => {
           onKeyDown={handleKeyDown}
         />
         <Space>
-          <RTButton.login text="Login" />
+          <RTButton.login text="Login" loading={mutation.isPending} />
           <RTButton.register
             onClick={() => navigate(getRoutePath(ROUTES_ID.register))}
             text="Register"

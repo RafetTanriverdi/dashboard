@@ -5,7 +5,7 @@ import { Drawer } from "antd";
 import ViewProductPanel from "../panels/ViewProductPanel";
 
 const ViewProductDrawer = ({ onClose, open, inheritedData }) => {
-  const { key, title } = inheritedData;
+  const { key, name } = inheritedData;
 
   const queryClient = useQueryClient();
 
@@ -25,7 +25,7 @@ const ViewProductDrawer = ({ onClose, open, inheritedData }) => {
     <Drawer
       onClose={handleCloseDrawer}
       open={open}
-      title={"View Product: " + title}
+      title={"View Product: " + name}
       placement="right"
       size="large"
     >

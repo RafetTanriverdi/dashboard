@@ -11,6 +11,8 @@ import RTSkeleton from "@rt/components/RTSkeleton/RTSkeleton";
 import axiosInstance from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
 import dayjs from "dayjs";
+import { Can } from "@rt/authorization/can";
+import { Permissions } from "@rt/utils/permission-util";
 
 const TableAntdContainer = ({ style, dataSource }) => {
   const columns = [
@@ -73,15 +75,25 @@ const TableActions = ({ data }) => {
 
   return (
     <Space size="middle">
-      <a  role="button" onClick={() => showDrawer(TableView.VIEW)}>
+      <a role="button" onClick={() => showDrawer(TableView.VIEW)}>
         View
       </a>
-      <a  role="button" onClick={() => showDrawer(TableView.EDIT)}>
-        Edit
-      </a>
-      <a  role="button" onClick={() => showDrawer(TableView.DELETE)}>
-        Delete
-      </a>
+      <Can
+        do={Permissions.categories.actions.update}
+        on={Permissions.categories.subject}
+      >
+        <a role="button" onClick={() => showDrawer(TableView.EDIT)}>
+          Edit
+        </a>
+      </Can>
+      <Can
+        do={Permissions.categories.actions.delete}
+        on={Permissions.categories.subject}
+      >
+        <a role="button" onClick={() => showDrawer(TableView.DELETE)}>
+          Delete
+        </a>
+      </Can>
       {open && type === TableView.VIEW && (
         <ViewCategoryDrawer
           onClose={onClose}

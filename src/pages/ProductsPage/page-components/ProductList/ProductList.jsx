@@ -12,6 +12,8 @@ import axiosInstance from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
 import dayjs from "dayjs";
 import { Badge } from "antd";
+import { Can } from "@rt/authorization/can";
+import { Permissions } from "@rt/utils/permission-util";
 
 const TableAntdContainer = ({ style, dataSource, categoriesData }) => {
   // Create Category Filters
@@ -112,15 +114,25 @@ const TableActions = ({ data, categoriesData }) => {
 
   return (
     <Space size="middle">
-      <a  role="button" onClick={() => showDrawer(TableView.VIEW)}>
+      <a role="button" onClick={() => showDrawer(TableView.VIEW)}>
         View
       </a>
-      <a  role="button" onClick={() => showDrawer(TableView.EDIT)}>
-        Edit
-      </a>
-      <a  role="button" onClick={() => showDrawer(TableView.DELETE)}>
-        Delete
-      </a>
+      <Can
+        do={Permissions.products.actions.update}
+        on={Permissions.products.subject}
+      >
+        <a role="button" onClick={() => showDrawer(TableView.EDIT)}>
+          Edit
+        </a>
+      </Can>
+      <Can
+        do={Permissions.products.actions.delete}
+        on={Permissions.products.subject}
+      >
+        <a role="button" onClick={() => showDrawer(TableView.DELETE)}>
+          Delete
+        </a>
+      </Can>
       {open && type === TableView.VIEW && (
         <ViewProductDrawer onClose={onClose} open={open} inheritedData={data} />
       )}

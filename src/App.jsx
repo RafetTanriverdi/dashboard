@@ -12,7 +12,7 @@ import { getCurrentUser } from "aws-amplify/auth";
 import { useCookies } from "react-cookie";
 import { Amplify } from "aws-amplify";
 import awsmobile from "./aws-exports";
-
+import { useQueryClient } from "@tanstack/react-query";
 
 Amplify.configure(awsmobile);
 
@@ -21,10 +21,12 @@ function App() {
   const { setUserData } = useUserDataStore();
   const [cookies, setCookie] = useCookies(["theme"]);
 
+  const querClient = useQueryClient();
 
   useEffect(() => {
     const savedTheme = cookies.theme === "dark" ? false : true;
     setTheme(savedTheme);
+    querClient.resetQueries();
 
     const user = async () => {
       try {
@@ -42,7 +44,6 @@ function App() {
 
     setCookie("theme", theme ? "light" : "dark", { path: "/" });
   }, [theme]);
-
 
   return (
     <ConfigProvider theme={theme ? lightTheme : darkTheme}>

@@ -8,6 +8,8 @@ import { NewProductButton } from "./page-components/NewProduct/NewProductButton"
 import axiosInstance from "@rt/network/httpRequester";
 import { useQuery } from "@tanstack/react-query";
 import { ENDPOINTS } from "@rt/network/endpoints";
+import RTAuthContainer from "@rt/components/RTAuthContainer/RTAuthContainer";
+import { Permissions } from "@rt/utils/permission-util";
 
 const ProductsPageContainer = () => {
   const { data: categories } = useQuery({
@@ -28,7 +30,12 @@ const ProductsPageContainer = () => {
           <NewProductButton categories={categories} />
         </Space>
       </div>
-      <ProductList className="product-list" categoriesData={categories}/>
+      <RTAuthContainer
+        action={Permissions.products.actions.read}
+        subject={Permissions.products.subject}
+      >
+        <ProductList className="product-list" categoriesData={categories} />
+      </RTAuthContainer>
     </div>
   );
 };

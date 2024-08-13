@@ -55,7 +55,7 @@ const EditUserDrawer = ({ onClose, open, inheritedData }) => {
       );
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["customers"] });
+      queryClient.invalidateQueries({ queryKey: ["users"] });
       openNotification({
         key: key,
         type: "success",

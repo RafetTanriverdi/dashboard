@@ -5,19 +5,24 @@ import { Typography } from "antd";
 import { NewCategoryButton } from "./page-components/NewCategory/NewCategoryButton";
 import CategoryList from "./page-components/CategoryList/CategoryList";
 import "./CategoriesPage.scss";
+import RTAuthContainer from "@rt/components/RTAuthContainer/RTAuthContainer";
+import { Permissions } from "@rt/utils/permission-util";
 
 const CategoriesPageContainer = () => {
   return (
     <div className="category-list-container">
-      <div className="category-list-header"
-        
-      >
+      <div className="category-list-header">
         <Typography.Title level={3}>Categories</Typography.Title>
         <Space>
           <NewCategoryButton />
         </Space>
       </div>
-      <CategoryList  className='category-list'/>
+      <RTAuthContainer
+        action={Permissions.categories.actions.read}
+        subject={Permissions.categories.subject}
+      >
+        <CategoryList className="category-list" />
+      </RTAuthContainer>
     </div>
   );
 };

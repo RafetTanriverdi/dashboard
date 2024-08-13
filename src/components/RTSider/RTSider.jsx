@@ -5,7 +5,7 @@ import { Amplify } from "aws-amplify";
 import { getRouteId, getRoutePath, routes } from "../../routing/routes";
 import { ROUTES_ID } from "../../routing/routes-id";
 import awsmobile from "@rt/aws-exports";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { signOut } from "aws-amplify/auth";
 
 Amplify.configure(awsmobile);
@@ -19,14 +19,19 @@ const RTSider = () => {
       .then(() => {
         navigate(getRoutePath(ROUTES_ID.login));
         queryClient.clear();
+        window.location.reload();
       })
       .catch((err) => {
         console.error("Error signing out:", err);
       });
   };
 
+  const mutation = useMutation({
+    mutationKey: "signOut",
+    mutationFn: handleSignOut,
+  });
   const SignOut = () => {
-    return <Button onClick={handleSignOut}>Sign Out</Button>;
+    return <Button onClick={mutation.mutate} loading={mutation.isPending}>Sign Out</Button>;
   };
 
   const menu = routes

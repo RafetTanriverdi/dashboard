@@ -100,10 +100,12 @@ const TableActions = ({ data }) => {
       <a role="button" onClick={() => showDrawer(TableView.VIEW)}>
         View
       </a>
-      <a role="button" onClick={() => showDrawer(TableView.EDIT)}>
-        Edit
-      </a>{" "}
-      <Can do={Permissions.users.acitons.delete} on={Permissions.users.subject}>
+      <Can do={Permissions.users.actions.update} on={Permissions.users.subject}>
+        <a role="button" onClick={() => showDrawer(TableView.EDIT)}>
+          Edit
+        </a>
+      </Can>
+      <Can do={Permissions.users.actions.delete} on={Permissions.users.subject}>
         <a role="button" onClick={() => showDrawer(TableView.DELETE)}>
           Delete
         </a>

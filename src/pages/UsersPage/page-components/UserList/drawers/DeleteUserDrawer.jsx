@@ -21,7 +21,7 @@ const DeleteCategoryDrawer = ({ open, onClose, inheritedData }) => {
       );
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["customers"] });
+      queryClient.invalidateQueries({ queryKey: ["users"] });
       openNotification({
         type: "success",
         message: "User Deleted Successfully",

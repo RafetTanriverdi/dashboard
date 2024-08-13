@@ -3,8 +3,9 @@ import { jwtDecode } from "jwt-decode";
 
 export const getAuthItems = () => {
   const idToken = getToken().IdToken;
+
   if (!idToken) {
-    return [];
+    return [];  
   }
   const permissionKey = "custom:permissions";
   const decodedToken = jwtDecode(idToken);
@@ -14,6 +15,7 @@ export const getAuthItems = () => {
     }
   const permissionsArray = permissions.split(",");
 
+  console.log(permissionsArray, "permissionsArray");
   return permissionsArray.map((permission) => {
     const [subject, action] = permission.split(":");
     return { subject, action };
@@ -23,7 +25,7 @@ export const getAuthItems = () => {
 export const Permissions = {
   users: {
     subject: "User",
-    acitons: {
+    actions: {
       create: "Create",
       read: "Read",
       update: "Update",
@@ -32,7 +34,7 @@ export const Permissions = {
   },
   products: {
     subject: "Product",
-    acitons: {
+    actions: {
       create: "Create",
       read: "Read",
       update: "Update",
@@ -41,7 +43,7 @@ export const Permissions = {
   },
   categories: {
     subject: "Category",
-    acitons: {
+    actions: {
       create: "Create",
       read: "Read",
       update: "Update",

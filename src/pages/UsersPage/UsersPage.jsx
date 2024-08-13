@@ -5,18 +5,26 @@ import { Typography } from "antd";
 import "./UsersPage.scss";
 import UserList from "./page-components/UserList/UserList";
 import { NewUserButton } from "./page-components/NewUser/NewUserButton";
+import { Permissions } from "@rt/utils/permission-util";
+import RTAuthContainer from "@rt/components/RTAuthContainer/RTAuthContainer";
 
 const UsersPageContainer = () => {
-  return(
-
+  return (
     <div className="customer-list-container">
-    <div className="customer-list-header">
-      <Typography.Title level={3}>Users</Typography.Title>
-      <Space> <NewUserButton /></Space>
+      <div className="customer-list-header">
+        <Typography.Title level={3}>Users</Typography.Title>
+        <Space>
+          <NewUserButton />
+        </Space>
+      </div>
+      <RTAuthContainer
+        action={Permissions.users.actions.read}
+        subject={Permissions.users.subject}
+      >
+        <UserList className="customer-list" />
+      </RTAuthContainer>
     </div>
-    <UserList className="customer-list" />
-  </div>
-  )
+  );
 };
 
 const UsersPage = (params) => {
