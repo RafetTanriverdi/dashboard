@@ -39,7 +39,6 @@ const EditCategoryDrawer = ({ onClose, open, inheritedData }) => {
   const postBody = {
     categoryName: newName,
   };
-console.log(postBody)
 
   const mutation = useMutation({
     mutationKey: "updateCategory",

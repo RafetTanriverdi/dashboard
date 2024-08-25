@@ -4,7 +4,6 @@ import RTSelect from "@rt/components/RTSelect/RTSelect";
 import { Form } from "antd";
 import { dollarFormatter, dollarParser } from "../utils/dollarParser";
 import RTSwitch from "@rt/components/RTSwitch/RTSwitch";
-
 const NewProductPanel = ({
   name,
   setName,
@@ -15,7 +14,7 @@ const NewProductPanel = ({
   category,
   setCategory,
   form,
-  setImageFile,
+  setImageFiles, // Çoklu görseller için set fonksiyonu
   categories,
   stock,
   setStock,
@@ -26,11 +25,7 @@ const NewProductPanel = ({
 
   const handleImageChange = (info) => {
     setImageList(info.fileList);
-    if (info.fileList.length > 0) {
-      setImageFile(info.fileList[0].originFileObj);
-    } else {
-      setImageFile(null);
-    }
+    setImageFiles(info.fileList); // Çoklu görselleri burada sakla
   };
 
   const selectedOptions = categories?.map((category) => ({
@@ -78,11 +73,10 @@ const NewProductPanel = ({
         required
       />
       <RTSwitch
-      label={"Share Product"}
-      name={"Share Product"}
-      onChange={(value) => setStatus(value)}
-      defaultChecked={status}
-
+        label={"Share Product"}
+        name={"Share Product"}
+        onChange={(value) => setStatus(value)}
+        defaultChecked={status}
       />
       <RTSelect
         label={"Category"}
@@ -94,11 +88,11 @@ const NewProductPanel = ({
         required={true}
       />
       <RTInput.image
-        label={"Product Image"}
-        name={"Image"}
-        maxCount={1}
+        label={"Product Images"}
+        name={"Images"}
+        maxCount={5} // Birden fazla görsele izin ver
         onChange={handleImageChange}
-        fileList={imageList} // bind fileList state
+        fileList={imageList} // Görsel listesi
         required
       />
     </Form>

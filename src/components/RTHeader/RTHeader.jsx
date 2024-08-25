@@ -14,7 +14,6 @@ const RTHeader = () => {
   
   const token=getToken().IdToken;
   const decodedToken =jwtDecode(token)
-  console.log(decodedToken,'decodedToken');
 
 
 

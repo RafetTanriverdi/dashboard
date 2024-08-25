@@ -12,7 +12,7 @@ const MyProfilePageContainer = () => {
       try {
       await fetchUserAttributes();
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
     handleFetchUserAttributes()

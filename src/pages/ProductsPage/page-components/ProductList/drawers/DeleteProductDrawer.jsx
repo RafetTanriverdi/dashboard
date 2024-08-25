@@ -11,7 +11,6 @@ const DeleteProductDrawer = ({ open, onClose, inheritedData }) => {
 
   const queryClient = useQueryClient();
 
-  console.log(inheritedData);
   const mutation = useMutation({
     mutationFn: () => {
       return axiosInstance.delete(

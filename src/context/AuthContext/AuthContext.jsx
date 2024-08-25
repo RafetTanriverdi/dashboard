@@ -13,9 +13,8 @@ export const AuthProvider = ({ children }) => {
   });
 
   const fetchToken = async () => {
-    const { tokens, credentials, identityId, userSub } =
+    const { tokens } =
       await fetchAuthSession();
-console.log(tokens, credentials, identityId, userSub,'fetchAuthSession');
     const { idToken, accessToken, refreshToken } = tokens;
     setTokens({ idToken, accessToken, refreshToken });
   };

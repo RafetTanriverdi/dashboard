@@ -26,7 +26,7 @@ const ForceChangePasswordPageContainer = () => {
         Navigate(getRoutePath(ROUTES_ID.dashboard));
       } 
     } catch (error) {
-      console.log("Error confirming sign in", error);
+      console.error("Error confirming sign in", error);
     }
   }
 

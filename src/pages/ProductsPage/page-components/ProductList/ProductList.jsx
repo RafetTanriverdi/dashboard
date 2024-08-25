@@ -156,7 +156,6 @@ const TableActions = ({ data, categoriesData }) => {
 };
 
 const TableContainer = ({ categoriesData }) => {
-  console.log(categoriesData);
   const { data, isLoading, error } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
@@ -182,6 +181,7 @@ const TableContainer = ({ categoriesData }) => {
           description: item.description,
           stock: item.stock,
           imageUrl: item.imageUrl,
+          imageUrls: item.imageUrls,
           categoryName: item.categoryName,
           categoryId: item.categoryId,
           updatedAt: dayjs(item.updatedAt).format(longDate),

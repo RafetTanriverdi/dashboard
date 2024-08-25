@@ -10,12 +10,10 @@ import ContextApiProvider from "./context/index.jsx";
 import { AbilityContext } from "./authorization/can.js";
 import { buildAbilityFor } from "./authorization/ability.js";
 import { getAuthItems } from "./utils/permission-util.js";
-import { getToken } from "./authentication/auth-utils.js";
 
 const queryClient = new QueryClient();
 
 const ability=buildAbilityFor(getAuthItems())
-console.log(getToken().IdToken,'idtoken main jsx')
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(

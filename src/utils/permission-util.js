@@ -5,17 +5,16 @@ export const getAuthItems = () => {
   const idToken = getToken().IdToken;
 
   if (!idToken) {
-    return [];  
+    return [];
   }
   const permissionKey = "custom:permissions";
   const decodedToken = jwtDecode(idToken);
   const permissions = decodedToken[permissionKey];
-    if (!permissions) {
-        return [];
-    }
+  if (!permissions) {
+    return [];
+  }
   const permissionsArray = permissions.split(",");
 
-  console.log(permissionsArray, "permissionsArray");
   return permissionsArray.map((permission) => {
     const [subject, action] = permission.split(":");
     return { subject, action };

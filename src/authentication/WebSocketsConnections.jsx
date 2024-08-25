@@ -6,15 +6,12 @@ export const useWebSocketConnection = () => {
     const location =useLocation ();
   useEffect(() => {
     const { IdToken } = getToken();
-    console.log(IdToken, 'IdToken');
   
     const ws = new WebSocket(
       `wss://31zsiurny9.execute-api.us-east-1.amazonaws.com/production/?token=${IdToken}`
     );
   
-    ws.onopen = () => {
-      console.log("WebSocket connected");
-    };
+    
   
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
@@ -25,9 +22,7 @@ export const useWebSocketConnection = () => {
       }
     };
   
-    ws.onclose = () => {
-      console.log("WebSocket disconnected");
-    };
+
   
     return () => {
       ws.close();

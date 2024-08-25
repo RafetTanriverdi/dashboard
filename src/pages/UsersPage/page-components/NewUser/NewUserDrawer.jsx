@@ -45,7 +45,6 @@ export const NewUserDrawer = ({ onClose, open }) => {
     permissions,
   };
 
-  console.log("postBody: ", postBody);
   const mutation = useMutation({
     mutationFn: (newUser) => {
       return axiosInstance.post(ENDPOINTS.USER.ADD, newUser);

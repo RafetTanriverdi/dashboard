@@ -97,8 +97,6 @@ export const LayoutFlow = () => {
         onEdgesChange={onEdgesChange}
         connectionLineType={ConnectionLineType.SmoothStep}
         fitView
-        // onConnect={(params) => console.log("onConnect", params)}
-        // onClick={(e) => console.log("click", e.nativeEvent)}
       >
         <Panel
           style={{

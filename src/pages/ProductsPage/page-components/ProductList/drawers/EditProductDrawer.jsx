@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
 import Notification from "@rt/components/RTFeedback/Notification/Notification";
+import Compressor from "compressorjs";
 
 const EditProductDrawer = ({
   onClose,
@@ -23,7 +24,7 @@ const EditProductDrawer = ({
     categoryId,
     status,
     stock,
-    imageUrl,
+    imageUrls,
   } = inheritedData;
 
   const [newName, setNewName] = useState(name);
@@ -35,34 +36,84 @@ const EditProductDrawer = ({
   });
   const [newStatus, setNewStatus] = useState(status);
   const [newStock, setNewStock] = useState(stock);
-  const [imageFile, setImageFile] = useState(null);
+  const [imageFiles, setImageFiles] = useState([]);
+  const [existingImages, setExistingImages] = useState(
+    imageUrls.map((url, index) => ({
+      uid: index.toString(),
+      name: `image_${index}`,
+      url,
+    }))
+  );
+  const [imageList, setImageList] = useState(existingImages);
 
   const { context, openNotification } = Notification();
 
   const [form] = Form.useForm();
   const queryClient = useQueryClient();
-  const postBody = {
-    productName: newName,
-    price: newPrice,
-    description: newDescription,
-    categoryId: newCategory.value,
-    active: newStatus,
-    stock: newStock,
+
+  const compressImage = (file) => {
+    return new Promise((resolve, reject) => {
+      if (!(file instanceof Blob)) {
+        reject(new Error("Invalid file type"));
+      }
+      new Compressor(file, {
+        quality: 0.6, // Sıkıştırma kalitesi
+        success(result) {
+          resolve(result);
+        },
+        error(err) {
+          reject(err);
+        },
+      });
+    });
   };
+
   const handleEditProduct = async () => {
     form
       .validateFields()
       .then(async () => {
-        if (imageFile) {
-          const base64Image = await convertToBase64(imageFile);
-          mutation.mutate({
-            ...postBody,
-            imageBase64: base64Image,
-            imageMimeType: imageFile.type,
-          });
-        } else {
-          mutation.mutate(postBody);
+        const newImages = [];
+
+        if (imageFiles.length > 0) {
+          const compressedImages = await Promise.all(
+            imageFiles.map((file) => {
+              if (file.originFileObj instanceof File) {
+                return compressImage(file.originFileObj);
+              }
+              return Promise.resolve(file.originFileObj); // Eğer File değilse, sıkıştırma yapma
+            })
+          );
+
+          const validCompressedImages = compressedImages.filter(
+            (file) => file instanceof Blob
+          );
+
+          const base64Images = await Promise.all(
+            validCompressedImages.map((file) => convertToBase64(file))
+          );
+
+          newImages.push(
+            ...base64Images.map((base64, index) => ({
+              imageBase64: base64,
+              imageMimeType: validCompressedImages[index]?.type || "image/jpeg",
+            }))
+          );
         }
+
+        const validImageUrls = imageList
+          .map((e) => e.url)
+          .filter((url) => url && url.trim() !== ""); // Filter out empty or invalid URLs
+
+        mutation.mutate({
+          productName: newName,
+          price: newPrice,
+          description: newDescription,
+          categoryId: newCategory.value,
+          active: newStatus,
+          stock: newStock,
+          imageUrls: validImageUrls, // Only send valid URLs
+          images: newImages, // Yeni eklenecek görsellerin verisi
+        });
       })
       .catch((error) => {
         openNotification({
@@ -76,13 +127,17 @@ const EditProductDrawer = ({
 
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
+      if (!(file instanceof Blob)) {
+        reject(new Error("Invalid file type"));
+        return;
+      }
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => resolve(reader.result.split(",")[1]);
       reader.onerror = (error) => reject(error);
     });
   };
-  console.log(postBody, "postBody");
+
   const mutation = useMutation({
     mutationKey: "updateProduct",
     mutationFn: (updateProduct) => {
@@ -96,7 +151,7 @@ const EditProductDrawer = ({
       openNotification({
         key: id,
         type: "success",
-        message: "Product Edit Successfully",
+        message: "Product Updated Successfully",
         duration: 2,
         onClose: () => {
           onClose();
@@ -104,16 +159,16 @@ const EditProductDrawer = ({
       });
     },
     onError: (error) => {
-      const Error = error.response.data.message;
+      const Error = error.response?.data?.message;
       openNotification({
         type: "error",
-        message: `Error:${Error}`,
+        message: `Error: ${Error}`,
         duration: 2.5,
       });
       console.error("Error: Product could not be updated", error);
     },
   });
-
+  
   return (
     <>
       {context}
@@ -146,13 +201,12 @@ const EditProductDrawer = ({
           newStock={newStock}
           setNewStock={setNewStock}
           categoriesData={categoriesData}
-          imageFile={imageFile}
-          setImageFile={setImageFile}
-          fileList={
-            imageUrl
-              ? [{ uid: "-1", name: "current_image", url: imageUrl }]
-              : []
-          }
+          imageFiles={imageFiles}
+          setImageFiles={setImageFiles}
+          existingImages={existingImages}
+          setExistingImages={setExistingImages}
+          imageList={imageList}
+          setImageList={setImageList}
         />
       </Drawer>
     </>

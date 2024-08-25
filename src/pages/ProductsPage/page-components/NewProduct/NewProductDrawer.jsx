@@ -7,13 +7,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ENDPOINTS } from "@rt/network/endpoints";
 import Notification from "@rt/components/RTFeedback/Notification/Notification";
 import { Form } from "antd";
+import Compressor from "compressorjs";
 
 export const NewProductDrawer = ({ onClose, open, categories }) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState();
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-  const [imageFile, setImageFile] = useState(null);
+  const [imageFiles, setImageFiles] = useState([]); // Çoklu görseller için dizi
   const [stock, setStock] = useState(0);
   const [shared, setShared] = useState(true);
 
@@ -23,21 +24,44 @@ export const NewProductDrawer = ({ onClose, open, categories }) => {
 
   const [form] = Form.useForm();
 
+  const compressImage = (file) => {
+    return new Promise((resolve, reject) => {
+      new Compressor(file, {
+        quality: 0.6, // Sıkıştırma kalitesi (0.0 - 1.0 arası)
+        success(result) {
+          resolve(result);
+        },
+        error(err) {
+          reject(err);
+        },
+      });
+    });
+  };
+
   const handleForm = async () => {
     form
       .validateFields()
       .then(async () => {
-        if (imageFile) {
-          const base64Image = await convertToBase64(imageFile);
+        if (imageFiles.length > 0) {
+          const compressedImages = await Promise.all(
+            imageFiles.map((file) => compressImage(file.originFileObj))
+          );
+
+          const base64Images = await Promise.all(
+            compressedImages.map((file) => convertToBase64(file))
+          );
+
           mutation.mutate({
             ...postBody,
-            imageBase64: base64Image,
-            imageMimeType: imageFile.type,
+            images: base64Images.map((base64, index) => ({
+              imageBase64: base64,
+              imageMimeType: compressedImages[index].type,
+            })),
           });
         } else {
           openNotification({
             type: "error",
-            message: `Error: Please upload an image`,
+            message: `Error: Please upload at least one image`,
             duration: 2.5,
           });
         }
@@ -96,7 +120,6 @@ export const NewProductDrawer = ({ onClose, open, categories }) => {
       });
     },
   });
-  console.log(postBody);
 
   return (
     <>
@@ -126,8 +149,8 @@ export const NewProductDrawer = ({ onClose, open, categories }) => {
           category={category}
           setCategory={setCategory}
           categories={categories}
-          imageFile={imageFile}
-          setImageFile={setImageFile}
+          imageFiles={imageFiles}
+          setImageFiles={setImageFiles} // Çoklu görseller için fonksiyon
           stock={stock}
           setStock={setStock}
           setStatus={setShared}
