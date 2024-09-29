@@ -46,7 +46,7 @@ const LoginPageContainer = () => {
       } else {
         const user = await getCurrentUser();
         setUserData(user);
-
+        console.log("user", user);
         navigate(getRoutePath(ROUTES_ID.dashboard));
       }
       updateAbilityFor(ability, getAuthItems());

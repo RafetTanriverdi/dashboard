@@ -25,7 +25,6 @@ const RTSider = () => {
       .then(() => {
         navigate(getRoutePath(ROUTES_ID.login));
         queryClient.clear();
-        window.location.reload();
       })
       .catch((err) => {
         console.error("Error signing out:", err);
