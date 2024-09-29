@@ -11,7 +11,7 @@ import { getToken } from "@rt/authentication/auth-utils";
 import { jwtDecode } from "jwt-decode";
 
 const { Sider, Content, Header } = Layout;
-const MainLayout = ({ sider, content, title, header }) => {
+const MainLayout = ({ sider, content, title }) => {
   const token=getToken().IdToken;
   const decodedToken =jwtDecode(token)
   return (

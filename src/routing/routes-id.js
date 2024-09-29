@@ -11,4 +11,8 @@ export const ROUTES_ID = {
   feedback: "feedback",
   faq: "faq",
   forceChangePassword: "forceChangePassword",
+  customers: "customers",
+  orders: "orders",
+  orderDetails: "orderDetails",
+  customerDetails: "customerDetails",
 };

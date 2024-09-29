@@ -47,6 +47,41 @@ export const routes = [
     isPublic: false,
   },
   {
+    id: ROUTES_ID.customers,
+    path: "/customers",
+    title: "Customers",
+    modulePath: "CustomersPage/CustomersPage",
+    fileName: "CustomersPageAlias",
+    isPublic: false,
+    children: [
+      {
+        id: ROUTES_ID.customerDetails,
+        path: ":customerId",
+        title: "Customer Details",
+        modulePath: "CustomersPage/CustomerDetailsPage/CustomerDetailsPage",
+        fileName: "CustomerDetailsPageAlias",
+        isStaticPage: true,
+      },
+    ],
+  },
+  {
+    id: ROUTES_ID.orders,
+    path: "/orders",
+    title: "Orders",
+    modulePath: "OrdersPage/OrdersPage",
+    fileName: "OrdersPageAlias",
+    isPublic: false,
+    children: [
+      {
+        id: ROUTES_ID.orderDetails,
+        path: ":orderId",
+        title: "Order Details",
+        modulePath: "OrderDetailsPage/OrderDetailsPage",
+        fileName: "OrderDetailsPageAlias",
+      },
+    ],
+  },
+  {
     id: ROUTES_ID.users,
     path: "/users",
     title: "Users",
@@ -132,3 +167,8 @@ export const getRouteId = (routePath) => {
 };
 
 export const publicRoutes = routes.filter((el) => el.isPublic);
+
+export const isRoutePathChild = (pathName) => {
+  const path = pathName.split("/");
+  return path.length > 2;
+};

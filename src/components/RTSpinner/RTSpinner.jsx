@@ -8,8 +8,13 @@ import LoginLayout from "@rt/layout/LoginLayout/LoginLayout";
 
 const RTSpinner = () => {
   const location = useLocation();
+
   if (publicRoutes.find((e) => e.path === location.pathname)) {
-    return <LoginLayout content={<Spin  className="rt-spiner-layout" size="large" />} />;
+    return (
+      <LoginLayout
+        content={<Spin className="rt-spiner-layout" size="large" />}
+      />
+    );
   } else {
     return (
       <>
