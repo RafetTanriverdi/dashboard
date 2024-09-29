@@ -11,8 +11,10 @@ import { useEffect } from "react";
 import { getCurrentUser } from "aws-amplify/auth";
 import { useCookies } from "react-cookie";
 import { useQueryClient } from "@tanstack/react-query";
+import { Amplify } from "aws-amplify";
+import awsmobile from "./aws-exports";
 
-
+Amplify.configure(awsmobile)
 function App() {
   const { theme, setTheme } = useThemeChangeStore();
   const { setUserData } = useUserDataStore();
