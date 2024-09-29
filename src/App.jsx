@@ -10,11 +10,8 @@ import { lightTheme } from "./theme/LightTheme/LightTheme";
 import { useEffect } from "react";
 import { getCurrentUser } from "aws-amplify/auth";
 import { useCookies } from "react-cookie";
-import { Amplify } from "aws-amplify";
-import awsmobile from "./aws-exports";
 import { useQueryClient } from "@tanstack/react-query";
 
-Amplify.configure(awsmobile);
 
 function App() {
   const { theme, setTheme } = useThemeChangeStore();
