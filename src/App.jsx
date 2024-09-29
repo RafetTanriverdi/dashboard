@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable react-hooks/exhaustive-deps */
 import "./App.css";
 import AppClientRouter from "./AppClientRouter";
@@ -14,12 +15,11 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Amplify } from "aws-amplify";
 import awsmobile from "./aws-exports";
 
-Amplify.configure(awsmobile)
+Amplify.configure(awsmobile);
 function App() {
   const { theme, setTheme } = useThemeChangeStore();
   const { setUserData } = useUserDataStore();
   const [cookies, setCookie] = useCookies(["theme"]);
-
   const querClient = useQueryClient();
 
   useEffect(() => {
@@ -39,8 +39,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // Tema değiştiğinde çerezde güncelle
-
     setCookie("theme", theme ? "light" : "dark", { path: "/" });
   }, [theme]);
 
