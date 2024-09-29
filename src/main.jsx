@@ -18,7 +18,7 @@ const ability=buildAbilityFor(getAuthItems())
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter routes={routes} basename="/">
+    <BrowserRouter routes={routes}>
       <AbilityContext.Provider value={ability}>
         <QueryClientProvider client={queryClient}>
           <ContextApiProvider>
