@@ -1,61 +1,54 @@
 name: Upload Website
 
 on:
- push:
-   branches:
-     - main
-
+  push:
+    branches:
+      - main
 
 jobs:
- Deploy:
-   runs-on: ubuntu-latest
-   strategy:
+  Deploy:
+    runs-on: ubuntu-latest
+    strategy:
       matrix:
         node-version: [18]
-   steps:
-     - name: Git clone the repository
-       uses: actions/checkout@v3
-     #- name: configure aws credentials
-       #uses: aws-actions/configure-aws-credentials@v1.7.0
-       
-     #- name: Setup node
-      # uses: actions/setup-node@v2
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v3
 
-     #- name: Install dependencies
-      # run: pnpm install
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
 
-     #- name: Build static file
-      # run: pnpm run build
-      
-     - uses: pnpm/action-setup@v2
-       with:
-           version: 8
-     - name: Use Node.js ${{ matrix.node-version }}
-       uses: actions/setup-node@v3
-       with:
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-          
-     - name: Install dependencies
-       run: pnpm install
-     
-     - name: Build static file
-       run: pnpm run build
-      
+          cache: "pnpm"
 
-     - name: Configure AWS Credentials
-       uses: aws-actions/configure-aws-credentials@v4
-       with:
-         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-         aws-region: eu-central-1
+      - name: Create .env file
+        run: |
+          echo "VITE_AWS_IDENTITY_POOL_ID=${{ secrets.VITE_AWS_IDENTITY_POOL_ID }}" >> .env
+          echo "VITE_USER_POOL_ID=${{ secrets.VITE_USER_POOL_ID }}" >> .env
+          echo "VITE_AWS_USER_POOL_WEB_CLIENT_ID=${{ secrets.VITE_AWS_USER_POOL_WEB_CLIENT_ID }}" >> .env
 
-     - name: Deploy static site to S3 bucket
-       run: aws s3 sync ./dist s3://${{ secrets.AWS_S3_BUCKET }}
-     - name: Invalidate CloudFront
-       uses: chetan/invalidate-cloudfront-action@v2
-       env:
-          DISTRIBUTION: 'E24XDKG4KA8D3H'
-          PATHS: "/*" 
+      - name: Install dependencies
+        run: pnpm install
 
-          
+      - name: Build static file
+        run: pnpm run build
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+
+      - name: Deploy static site to S3 bucket
+        run: aws s3 sync ./dist s3://${{ secrets.AWS_S3_BUCKET }}
+
+      - name: Invalidate CloudFront
+        uses: chetan/invalidate-cloudfront-action@v2
+        env:
+          DISTRIBUTION: "E24XDKG4KA8D3H"
+          PATHS: "/*"
