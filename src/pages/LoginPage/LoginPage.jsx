@@ -10,16 +10,16 @@ import { useNavigate } from "react-router-dom";
 import { getCurrentUser, signIn } from "aws-amplify/auth";
 import { useState } from "react";
 import { Amplify } from "aws-amplify";
-import { getRoutePath } from "../../routing/routes";
 import { RTButton } from "@rt/components/RTButton";
 import { useUserDataStore } from "@rt/data/User/UserData";
 import { ROUTES_ID } from "@rt/routing/routes-id";
-import awsmobile from "@rt/aws-exports";
 import { useMutation } from "@tanstack/react-query";
 import { updateAbilityFor } from "@rt/authorization/ability";
 import { useContext } from "react";
 import { AbilityContext } from "@rt/authorization/can";
 import { getAuthItems } from "@rt/utils/permission-util";
+import awsmobile from "@rt/aws-exports";
+import { getRoutePath } from "@rt/routing/routes";
 
 Amplify.configure(awsmobile);
 
