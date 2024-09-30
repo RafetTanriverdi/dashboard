@@ -12,7 +12,6 @@ import EditCustomerStatusPanel from "../panels/EditCustomerStatusPanel";
 const EditCustomerStatusDrawer = ({ open, onClose, inheritedData }) => {
   const { key, name, status, email } = inheritedData;
 
-  console.log("inheritedData", inheritedData);
 
   const [newStatus, setNewStatus] = useState(status);
 

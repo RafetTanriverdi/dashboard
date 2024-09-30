@@ -21,9 +21,7 @@ function App() {
   const { setUserData } = useUserDataStore();
   const [cookies, setCookie] = useCookies(["theme"]);
   const querClient = useQueryClient();
-
-  console.log(import.meta.env, "env");
-  console.log(awsmobile.aws_cognito_identity_pool_id, "env");
+  
   useEffect(() => {
     const savedTheme = cookies.theme === "dark" ? false : true;
     setTheme(savedTheme);

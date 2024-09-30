@@ -19,7 +19,6 @@ export function RouteWithRedirections({ ...props }) {
   const isAuthenticated = checkUserAuthentication();
   useWebSocketConnection();
 
-  console.log('props.routeData', props.routeData);
 
   if (isAuthenticated) {
     if (isOutsidePage(props?.routeData?.path)) {

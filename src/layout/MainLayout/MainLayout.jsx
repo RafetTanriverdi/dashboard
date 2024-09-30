@@ -12,8 +12,8 @@ import { jwtDecode } from "jwt-decode";
 
 const { Sider, Content, Header } = Layout;
 const MainLayout = ({ sider, content, title }) => {
-  const token=getToken().IdToken;
-  const decodedToken =jwtDecode(token)
+  const token = getToken().IdToken;
+  const decodedToken = jwtDecode(token);
   return (
     <>
       <Helmet>
@@ -21,12 +21,12 @@ const MainLayout = ({ sider, content, title }) => {
         <title>{title && `${title} | ${decodedToken?.name}`}</title>
       </Helmet>
 
-      <Layout className="container">  <Header className="header">
-            <RTHeader />
-          </Header>
-     
+      <Layout className="container">
+        <Header className="header">
+          <RTHeader />
+        </Header>
         <Layout className="main-layout">
-        <Sider className="sidebar">{sider}</Sider>
+          <Sider className="sidebar">{sider}</Sider>
           <Content className="content">{content}</Content>
         </Layout>
       </Layout>
