@@ -5,13 +5,12 @@ import { Routes } from "react-router-dom";
 import NotFound404Page from "./pages/NotFound404Page/NotFound404Page";
 import { ErrorBoundaryPage } from "./pages/ErrorPage/ErrorBoundaryPage";
 import RTSpinner from "./components/RTSpinner/RTSpinner";
+import { lazy } from "react";
 
 const AppClientRouter = ({ routes, ...props }) => {
+  const pages = import.meta.glob('./pages/**/*.jsx');
   const renderRoute = (el) => {
-    const PageComp = React.lazy(() =>
-      import(`./pages/AliasPath/${el.fileName}.jsx`)
-    );
-
+    const PageComp = lazy(pages[`./pages/${el.modulePath}.jsx`]);
     //404, Privacy, Support Ananymous and Login User see at the same time..
     const extendedProps = { routeData: el, ...props };
     return (
