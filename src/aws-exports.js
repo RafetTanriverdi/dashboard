@@ -3,15 +3,30 @@
 
 const awsmobile = {
     "aws_project_region": "us-east-1",
-    "aws_cognito_identity_pool_id": import.meta.env.VITE_AWS_IDENTITY_POOL_ID,
+    "aws_cognito_identity_pool_id": "us-east-1:dc1fb806-6b3e-4c6e-80ad-08ef86316c71",
     "aws_cognito_region": "us-east-1",
-    "aws_user_pools_id": import.meta.env.VITE_AWS_USER_POOL_ID,
-    "aws_user_pools_web_client_id": import.meta.env.VITE_AWS_USER_POOL_WEB_CLIENT_ID,
-    "oauth": {},
+    "aws_user_pools_id": "us-east-1_aGkZLpxYC",
+    "aws_user_pools_web_client_id": "13ifndkmoo2onltce9bqtq6j38",
+    "oauth": {
+        "domain": "reactdashboardappaabfbded-aabfbded-dev.auth.us-east-1.amazoncognito.com",
+        "scope": [
+            "phone",
+            "email",
+            "openid",
+            "profile",
+            "aws.cognito.signin.user.admin"
+        ],
+        "redirectSignIn": "http://localhost:5173/,https://d3o0qmvpbmut8f.cloudfront.net/",
+        "redirectSignOut": "http://localhost:5173/,https://d3o0qmvpbmut8f.cloudfront.net/",
+        "responseType": "code"
+    },
+    "federationTarget": "COGNITO_USER_POOLS",
     "aws_cognito_username_attributes": [
         "EMAIL"
     ],
-    "aws_cognito_social_providers": [],
+    "aws_cognito_social_providers": [
+        "GOOGLE"
+    ],
     "aws_cognito_signup_attributes": [
         "EMAIL",
         "NAME"

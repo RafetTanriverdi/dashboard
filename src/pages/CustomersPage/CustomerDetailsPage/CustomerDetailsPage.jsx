@@ -80,7 +80,7 @@ const CustomerDetailsPageContainer = ({ data, error, isLoading }) => {
     .map((item) => {
       return {
         key: item.id,
-        amount: "$ " + (item.amount / 100).toFixed(2),
+        amount:'$ '+ (item.amount/100).toFixed(2),
         status: item.status,
         createdAt: dayjs.unix(item.created).format("MMMM,DD YYYY"),
         orderedProducts: JSON.parse(item.metadata.orderItems).length,
@@ -88,10 +88,11 @@ const CustomerDetailsPageContainer = ({ data, error, isLoading }) => {
     });
 
   return (
-    <div style={{ padding: "10px" }}>
+    <div style={{padding:'10px'}}>
       <Descriptions title="Customer Overview" items={items} bordered />
       <Row gutter={16}>
         <Col span={16}>
+          
           <Table
             columns={columns}
             dataSource={tableData}
@@ -101,7 +102,7 @@ const CustomerDetailsPageContainer = ({ data, error, isLoading }) => {
                 cursor: "pointer",
                 backgroundColor:
                   selectedCharge?.key === record.key ? "#e6f7ff" : "",
-                hover: { backgroundColor: "#f0f0f0" },
+                  hover: {backgroundColor:'#f0f0f0'}
               },
             })}
           />

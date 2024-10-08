@@ -20,6 +20,7 @@ import { AbilityContext } from "@rt/authorization/can";
 import { getAuthItems } from "@rt/utils/permission-util";
 import awsmobile from "@rt/aws-exports";
 import { getRoutePath } from "@rt/routing/routes";
+import GoogleSignIn from "./GoogleSignIn/GoogleSignIn";
 
 Amplify.configure(awsmobile);
 
@@ -72,7 +73,9 @@ const LoginPageContainer = () => {
       layout="vertical"
       onFinish={mutation.mutate}
     >
+
       <Card className="card-container" title="Login">
+        <GoogleSignIn text={"Google Sign In"}/>
         <RTInput.text
           label="E-mail"
           name="email"
