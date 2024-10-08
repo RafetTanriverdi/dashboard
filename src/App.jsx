@@ -14,8 +14,13 @@ import { useCookies } from "react-cookie";
 import { useQueryClient } from "@tanstack/react-query";
 import { Amplify } from "aws-amplify";
 import awsmobile from "./aws-exports";
+import {cognitoUserPoolsTokenProvider} from 'aws-amplify/auth/cognito'
+import { defaultStorage } from "aws-amplify/utils";
+
 
 Amplify.configure(awsmobile);
+
+cognitoUserPoolsTokenProvider.setKeyValueStorage(defaultStorage);
 function App() {
   const { theme, setTheme } = useThemeChangeStore();
   const { setUserData } = useUserDataStore();

@@ -14,8 +14,13 @@ import { useUserDataStore } from "@rt/data/User/UserData";
 import { RTButton } from "@rt/components/RTButton";
 import { GoogleOutlined } from "@ant-design/icons";
 import awsmobile from "@rt/aws-exports";
+import {cognitoUserPoolsTokenProvider} from 'aws-amplify/auth/cognito'
+import { defaultStorage } from "aws-amplify/utils";
+
 
 Amplify.configure(awsmobile);
+
+cognitoUserPoolsTokenProvider.setKeyValueStorage(defaultStorage);
 
 const GoogleSignIn = ({ text }) => {
   const [error, setError] = useState(null);

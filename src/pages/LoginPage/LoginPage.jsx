@@ -21,9 +21,13 @@ import { getAuthItems } from "@rt/utils/permission-util";
 import awsmobile from "@rt/aws-exports";
 import { getRoutePath } from "@rt/routing/routes";
 import GoogleSignIn from "./GoogleSignIn/GoogleSignIn";
+import {cognitoUserPoolsTokenProvider} from 'aws-amplify/auth/cognito'
+import { defaultStorage } from "aws-amplify/utils";
+
 
 Amplify.configure(awsmobile);
 
+cognitoUserPoolsTokenProvider.setKeyValueStorage(defaultStorage);
 const LoginPageContainer = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
