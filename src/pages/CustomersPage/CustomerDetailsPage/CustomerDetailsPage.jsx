@@ -9,6 +9,10 @@ import { Descriptions } from "antd";
 import dayjs from "dayjs";
 import ReactJson from "react-json-view";
 import { useParams } from "react-router-dom";
+import { Avatar } from "antd";
+import { Space } from "antd";
+import { Typography } from "antd";
+import "./CustomerDetailsPage.scss";
 
 const CustomerDetailsPageContainer = ({ data, error, isLoading }) => {
   const [selectedCharge, setSelectedCharge] = useState(null);
@@ -80,31 +84,52 @@ const CustomerDetailsPageContainer = ({ data, error, isLoading }) => {
     .map((item) => {
       return {
         key: item.id,
-        amount:'$ '+ (item.amount/100).toFixed(2),
+        amount: "$ " + (item.amount / 100).toFixed(2),
         status: item.status,
         createdAt: dayjs.unix(item.created).format("MMMM,DD YYYY"),
         orderedProducts: JSON.parse(item.metadata.orderItems).length,
       };
     });
+  console.log(data?.profilePictureUrl);
 
   return (
-    <div style={{padding:'10px'}}>
-      <Descriptions title="Customer Overview" items={items} bordered />
+    <div style={{ padding: "10px" }}>
+      <Space
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          paddingBottom: "5px",
+        }}
+      >
+        <Typography.Title level={3}>Customer Overview</Typography.Title>
+      </Space>
+
+      <Row gutter={16} align="top">
+        <Col span={2}>
+          <Avatar src={data?.profilePictureUrl} shape="square" size={100} />
+        </Col>
+        <Col span={22}>
+          <Descriptions bordered  layout="horizontal" items={items} />
+        </Col>
+      </Row>
+
       <Row gutter={16}>
         <Col span={16}>
-          
           <Table
             columns={columns}
             dataSource={tableData}
-            onRow={(record) => ({
-              onClick: () => setSelectedCharge(record),
-              style: {
-                cursor: "pointer",
-                backgroundColor:
-                  selectedCharge?.key === record.key ? "#e6f7ff" : "",
-                  hover: {backgroundColor:'#f0f0f0'}
-              },
-            })}
+            onRow={(record) => {
+              return {
+                onClick: () => {
+                  setSelectedCharge(record);
+                },
+              };
+            }}
+            rowSelection={{
+              type: "radio",
+              onSelect: (record) => setSelectedCharge(record),
+              selectedRowKeys: [selectedCharge?.key],
+            }}
           />
         </Col>
         <Col span={8}>
