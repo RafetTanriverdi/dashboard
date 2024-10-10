@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 import ReactJson from "react-json-view";
 import { useParams } from "react-router-dom";
 import { Avatar } from "antd";
+import { Space } from "antd";
 import { Typography } from "antd";
 import "./CustomerDetailsPage.scss";
 
@@ -93,34 +94,64 @@ const CustomerDetailsPageContainer = ({ data, error, isLoading }) => {
 
   return (
     <div style={{ padding: "10px" }}>
-      <Typography.Title level={4}>Customer Overview</Typography.Title>
+      <Space
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          paddingBottom: "5px",
+        }}
+      >
+        <Typography.Title level={4}>Customer Overview</Typography.Title>
+      </Space>
 
-      <Row gutter={16} align="middle">
-        {/* Avatar */}
-        <Col xs={24} sm={6} md={4} lg={2}>
+      <Row gutter={16} align="top" style={{ marginBottom: "5px" }}>
+        <Col span={2}>
           <Avatar src={data?.profilePictureUrl} shape="square" size={100} />
         </Col>
+        <Col span={22}>
+          <Descriptions bordered layout="horizontal" items={items} />
+        </Col>
+      </Row>
 
-        {/* Descriptions */}
-        <Col xs={24} sm={18} md={20} lg={22}>
-          <Descriptions
-            items={items}
-            bordered
-            layout="horizontal"
-            column={{ xs: 1, sm: 1, md: 2, lg: 2 }}
+      <Row gutter={16}>
+        <Col span={16}>
+          <Table
+            columns={columns}
+            dataSource={tableData}
+            onRow={(record) => {
+              return {
+                onClick: () => {
+                  setSelectedCharge(record);
+                },
+              };
+            }}
+            rowSelection={{
+              type: "radio",
+              onSelect: (record) => setSelectedCharge(record),
+              selectedRowKeys: [selectedCharge?.key],
+            }}
           />
         </Col>
-      </Row>
-
-      <Row gutter={16} style={{ marginTop: "20px" }}>
-        <Col xs={24} md={16}>
-          <Table columns={columns} dataSource={tableData} />
+        <Col span={8}>
+          {selectedCharge && (
+            <Card title="Selected Charge Details">
+              <p>
+                <strong>Amount:</strong> {selectedCharge.amount}
+              </p>
+              <p>
+                <strong>Status:</strong> {selectedCharge.status}
+              </p>
+              <p>
+                <strong>Ordered Products:</strong>{" "}
+                {selectedCharge.orderedProducts}
+              </p>
+              <p>
+                <strong>Created At:</strong> {selectedCharge.createdAt}
+              </p>
+            </Card>
+          )}
         </Col>
-        <Col xs={24} md={8}>
-          <Card title="Selected Charge Details">...</Card>
-        </Col>
       </Row>
-
       <ReactJson src={data} />
     </div>
   );
