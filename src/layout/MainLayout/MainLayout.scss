@@ -7,3 +7,9 @@
         overflow-x: auto;
     }
 }
+@media screen and (max-width: 768px){
+    .ant-layout-header{
+        padding: 0 15px;
+    }
+    
+}

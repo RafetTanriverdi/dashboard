@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Breadcrumb, Layout } from "antd";
 import "./MainLayout.scss";
 import { Helmet } from "react-helmet";
@@ -27,7 +28,7 @@ const MainLayout = ({ sider, content, title }) => {
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
-    handleResize(); // Initial check on mount
+    handleResize();
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -52,9 +53,9 @@ const MainLayout = ({ sider, content, title }) => {
             collapsed={collapsed}
             onCollapse={() => setCollapsed(!collapsed)}
             breakpoint="lg"
-            collapsedWidth={isMobile ? 0 : 80}
+            collapsedWidth={isMobile ? 0 : 50}
             width={250}
-            trigger={isMobile && null }
+            trigger={isMobile && null}
             style={{ height: "100vh" }}
           >
             {sider}

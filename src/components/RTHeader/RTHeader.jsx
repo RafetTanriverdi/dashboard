@@ -5,6 +5,7 @@ import { useThemeChangeStore } from "@rt/data/Theme/Theme";
 import { Button, Space } from "antd";
 import { Typography } from "antd";
 import { jwtDecode } from "jwt-decode";
+import './RTHeader.scss';
 
 import { useCookies } from "react-cookie";
 
@@ -21,13 +22,12 @@ const RTHeader = ({ open, setOpen, isMobile }) => {
   };
 
   return (
-    <>
-      <Space style={{ display: "flex", justifyContent: "space-between" }}>
+      <Space className="header-container">
         <Typography.Title level={5}>
           Welcome {decodedToken?.name}
         </Typography.Title>
 
-        <Space>
+        <Space className="header-right-container">
           {isMobile && (
             <Button
               type="link"
@@ -42,7 +42,6 @@ const RTHeader = ({ open, setOpen, isMobile }) => {
           />
         </Space>
       </Space>
-    </>
   );
 };
 
