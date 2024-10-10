@@ -1,12 +1,20 @@
-import { Button, Menu } from "antd";
-import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Menu } from "antd";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Amplify } from "aws-amplify";
 import {
-  getRouteId,
-  getRoutePath,
-  routes,
-} from "../../routing/routes";
+  UserOutlined,
+  LogoutOutlined,
+  DashboardOutlined,
+  TruckOutlined,
+  ProductOutlined,
+  ApartmentOutlined,
+  TeamOutlined,
+  CalendarOutlined,
+  IdcardOutlined,
+  NotificationOutlined,
+  QuestionOutlined,
+} from "@ant-design/icons";
+import { getRouteId, getRoutePath } from "../../routing/routes";
 import { ROUTES_ID } from "../../routing/routes-id";
 import awsmobile from "@rt/aws-exports";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -35,31 +43,93 @@ const RTSider = () => {
     mutationKey: "signOut",
     mutationFn: handleSignOut,
   });
+
   const SignOut = () => {
     return (
-      <Button onClick={mutation.mutate} loading={mutation.isPending}>
+      <div onClick={mutation.mutate} type="text">
         Sign Out
-      </Button>
+      </div>
     );
   };
 
-  const menu = routes
-    .filter((e) => e.path !== "/" && e.isPublic === false)
-    .map((e) => {
-      return {
-        key: e.id,
-        label: <NavLink to={e.path}>{e.title}</NavLink>,
-      };
-    });
-
-  const signOutd = [
+  const menuItems = [
     {
-      key: "signOut",
-      label: <SignOut />,
+      key: "dashboard",
+      icon: <DashboardOutlined  />,
+      label: (
+        <NavLink to={getRoutePath(ROUTES_ID.dashboard)}>Dashboard</NavLink>
+      ),
+    },
+    {
+      key: "customers",
+      icon: <UserOutlined />,
+      label: (
+        <NavLink to={getRoutePath(ROUTES_ID.customers)}>Customers</NavLink>
+      ),
+    },
+    {
+      key: "orders",
+      icon: <TruckOutlined />,
+      label: <NavLink to={getRoutePath(ROUTES_ID.orders)}>Orders</NavLink>,
+    },
+    {
+      key: "products",
+      icon: <ProductOutlined />,
+      label: <NavLink to={getRoutePath(ROUTES_ID.products)}>Products</NavLink>,
+    },
+    {
+      key: "users",
+      icon: <TeamOutlined />,
+      label: <NavLink to={getRoutePath(ROUTES_ID.users)}>Users</NavLink>,
+    },
+    {
+      key: "categories",
+      icon: <TruckOutlined />,
+      label: (
+        <NavLink to={getRoutePath(ROUTES_ID.categories)}>Categories</NavLink>
+      ),
+    },
+    {
+      key: "myProfilePage",
+      icon: <IdcardOutlined />,
+      label: (
+        <NavLink to={getRoutePath(ROUTES_ID.myProfilePage)}>My Profile</NavLink>
+      ),
+    },
+    {
+      key: "manageTeamMembers",
+      icon: <ApartmentOutlined />,
+      label: (
+        <NavLink to={getRoutePath(ROUTES_ID.manageTeamMembers)}>
+          Manage Team Members
+        </NavLink>
+      ),
+    },
+    {
+      key: "calender",
+      icon: <CalendarOutlined />,
+      label: <NavLink to={getRoutePath(ROUTES_ID.calendar)}>Calender</NavLink>,
+    },
+    {
+      key: "feedback",
+      icon: <NotificationOutlined />,
+      label: <NavLink to={getRoutePath(ROUTES_ID.feedback)}>Feedback</NavLink>,
+    },
+    {
+      key: "faq",
+      icon: <QuestionOutlined />,
+      label: <NavLink to={getRoutePath(ROUTES_ID.faq)}>FAQ</NavLink>,
     },
   ];
 
-  const combinedMenu = [...menu, ...signOutd];
+  const signOutItem = {
+    key: "signOut",
+    icon: <LogoutOutlined onClick={mutation.mutate} />,
+    label: <SignOut />,
+  };
+
+  const combinedMenu = [...menuItems, signOutItem];
+
   return (
     <Menu
       selectedKeys={[getRouteId(fixedLocation)]}

@@ -1,33 +1,75 @@
-/* eslint-disable no-unused-vars */
-import { Layout } from "antd";
-import React from "react";
+import { Breadcrumb, Layout } from "antd";
 import "./MainLayout.scss";
 import { Helmet } from "react-helmet";
 import RTHeader from "@rt/components/RTHeader/RTHeader";
-import { useUserDataStore } from "@rt/data/User/UserData";
-import { useContext } from "react";
-import { UserContext } from "@rt/context/UserContext/UserContext";
-import { getToken } from "@rt/authentication/auth-utils";
-import { jwtDecode } from "jwt-decode";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const { Sider, Content, Header } = Layout;
+
 const MainLayout = ({ sider, content, title }) => {
-  const token = getToken().IdToken;
-  const decodedToken = jwtDecode(token);
+  const [collapsed, setCollapsed] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  const handleResize = () => {
+    if (window.innerWidth < 768) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>{title && `${title} | ${decodedToken?.name}`}</title>
+        <title>{title}</title>
       </Helmet>
 
       <Layout className="container">
         <Header className="header">
-          <RTHeader />
+          <RTHeader
+            open={collapsed}
+            setOpen={setCollapsed}
+            isMobile={isMobile}
+          />
         </Header>
-        <Layout className="main-layout">
-          <Sider className="sidebar">{sider}</Sider>
-          <Content className="content">{content}</Content>
+        <Layout>
+          <Sider
+            collapsible
+            collapsed={collapsed}
+            onCollapse={() => setCollapsed(!collapsed)}
+            breakpoint="lg"
+            collapsedWidth={isMobile ? 0 : 50}
+            width={250}
+            trigger={isMobile && null}
+            style={{ height: "100vh" }}
+          >
+            {sider}
+          </Sider>
+          <Content className="content" style={{ padding: "20px" }}>
+            {isMobile && (
+              <Breadcrumb
+                items={[
+                  {
+                    href: "/",
+                    title: "Home",
+                  },
+                  {
+                    title: title,
+                  },
+                ]}
+              />
+            )}
+
+            {content}
+          </Content>
         </Layout>
       </Layout>
     </>
