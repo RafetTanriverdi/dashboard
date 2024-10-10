@@ -31,7 +31,8 @@ const RTHeader = ({ open, setOpen, isMobile }) => {
           {isMobile && (
             <Button
               type="link"
-              icon={<MenuOutlined onClick={() => setOpen(!open)} />}
+              icon={<MenuOutlined  />}
+              onClick={() => setOpen(!open)}
             />
           )}
           <Button

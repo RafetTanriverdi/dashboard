@@ -7,9 +7,11 @@ export const darkTheme = {
     Layout: {
       headerBg: "#141414",
       headerHeight: 76,
+
+      triggerBg: "#282828",
+      triggerColor: "#fff",
     },
     Menu: {
-
       itemBg: "#141414",
       itemSelectedColor: "#e42a25",
       fontSize: 16,

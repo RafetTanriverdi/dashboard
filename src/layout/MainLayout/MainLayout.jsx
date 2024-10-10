@@ -4,12 +4,16 @@ import { Helmet } from "react-helmet";
 import RTHeader from "@rt/components/RTHeader/RTHeader";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const { Sider, Content, Header } = Layout;
 
 const MainLayout = ({ sider, content, title }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const location=useLocation()
+  const splitLocation=location.pathname.split("/")
+  console.log(splitLocation)
 
   const handleResize = () => {
     if (window.innerWidth < 768) {
@@ -54,7 +58,7 @@ const MainLayout = ({ sider, content, title }) => {
             {sider}
           </Sider>
           <Content className="content" style={{ padding: "20px" }}>
-            {isMobile && (
+            {(isMobile && splitLocation.length===2)&& (
               <Breadcrumb
                 items={[
                   {

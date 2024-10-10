@@ -106,9 +106,9 @@ const RTSider = () => {
       ),
     },
     {
-      key: "calender",
+      key: "calendar",
       icon: <CalendarOutlined />,
-      label: <NavLink to={getRoutePath(ROUTES_ID.calendar)}>Calender</NavLink>,
+      label: <NavLink to={getRoutePath(ROUTES_ID.calendar)}>Calendar</NavLink>,
     },
     {
       key: "feedback",
