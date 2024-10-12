@@ -9,14 +9,16 @@ import { useLocation } from "react-router-dom";
 const { Sider, Content, Header } = Layout;
 
 const MainLayout = ({ sider, content, title }) => {
-  const [collapsed, setCollapsed] = useState(window.innerWidth < 768);
+  const initialSiderCollapsed =
+    localStorage.getItem("siderCollapsed") || window.innerWidth < 768;
+
+  const [collapsed, setCollapsed] = useState(initialSiderCollapsed);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
 
   const handleResize = () => {
     const isNowMobile = window.innerWidth < 768;
-
     setIsMobile(isNowMobile);
 
     if (isNowMobile && !collapsed) {
@@ -27,10 +29,20 @@ const MainLayout = ({ sider, content, title }) => {
   };
 
   useEffect(() => {
+    const savedCollapsed = localStorage.getItem("siderCollapsed");
+    setCollapsed(savedCollapsed);
+  }, []);
+
+  useEffect(() => {
     window.addEventListener("resize", handleResize);
-    handleResize();
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const handleCollapse = () => {
+    const newCollapsedState = !collapsed;
+    setCollapsed(newCollapsedState);
+    localStorage.setItem("siderCollapsed", newCollapsedState); // Durumu localStorage'a yazıyoruz
+  };
 
   return (
     <>
@@ -43,7 +55,7 @@ const MainLayout = ({ sider, content, title }) => {
         <Header className="header">
           <RTHeader
             open={collapsed}
-            setOpen={setCollapsed}
+            setOpen={handleCollapse}
             isMobile={isMobile}
           />
         </Header>
@@ -51,7 +63,7 @@ const MainLayout = ({ sider, content, title }) => {
           <Sider
             collapsible
             collapsed={collapsed}
-            onCollapse={() => setCollapsed(!collapsed)}
+            onCollapse={handleCollapse}
             breakpoint="lg"
             collapsedWidth={isMobile ? 0 : 50}
             width={250}

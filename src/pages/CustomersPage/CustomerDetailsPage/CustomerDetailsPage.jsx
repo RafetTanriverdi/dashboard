@@ -13,6 +13,10 @@ import { Avatar } from "antd";
 import { Space } from "antd";
 import { Typography } from "antd";
 import "./CustomerDetailsPage.scss";
+import { Statistic } from "antd";
+import { ArrowUpOutlined } from "@ant-design/icons";
+import CountUp from "react-countup";
+import { RTCharts } from "@rt/components/RTCharts";
 
 const CustomerDetailsPageContainer = ({ data, error, isLoading }) => {
   const [selectedCharge, setSelectedCharge] = useState(null);
@@ -104,17 +108,21 @@ const CustomerDetailsPageContainer = ({ data, error, isLoading }) => {
         <Typography.Title level={4}>Customer Overview</Typography.Title>
       </Space>
 
-      <Row gutter={16} align="top" style={{ marginBottom: "5px" }}>
-        <Col span={2}>
+      <Row
+        gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
+        align="top"
+        style={{ marginBottom: "5px" }}
+      >
+        <Col xs={24} sm={6} md={4} lg={2}>
           <Avatar src={data?.profilePictureUrl} shape="square" size={100} />
         </Col>
-        <Col span={22}>
+        <Col xs={24} sm={18} md={20} lg={22}>
           <Descriptions bordered layout="horizontal" items={items} />
         </Col>
       </Row>
 
-      <Row gutter={16}>
-        <Col span={16}>
+      <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+        <Col xs={24} md={16}>
           <Table
             columns={columns}
             dataSource={tableData}
@@ -130,9 +138,12 @@ const CustomerDetailsPageContainer = ({ data, error, isLoading }) => {
               onSelect: (record) => setSelectedCharge(record),
               selectedRowKeys: [selectedCharge?.key],
             }}
+            scroll={{
+              x: 'max-content',
+            }}
           />
         </Col>
-        <Col span={8}>
+        <Col xs={24} md={8}>
           {selectedCharge && (
             <Card title="Selected Charge Details">
               <p>
@@ -150,6 +161,50 @@ const CustomerDetailsPageContainer = ({ data, error, isLoading }) => {
               </p>
             </Card>
           )}
+        </Col>
+      </Row>
+
+      <Row gutter={{ xs: 8, sm: 12, md: 24, lg: 32 }}>
+        <Col xs={24} lg={12}>
+          <Card style={{ height: "50%" }}>
+            <Statistic
+              title="Cost"
+              value={11.28}
+              precision={2}
+              valueStyle={{ color: "#3f8600" }}
+              prefix={<ArrowUpOutlined />}
+              suffix="%"
+              formatter={(value) => (
+                <CountUp end={value} decimals={2} suffix="%" />
+              )}
+            />
+          </Card>
+
+          <Card style={{ height: "50%" }}>
+            <Statistic
+              title="Cost"
+              value={11.28}
+              precision={2}
+              valueStyle={{ color: "#3f8600" }}
+              prefix={<ArrowUpOutlined />}
+              suffix="%"
+              formatter={(value) => (
+                <CountUp end={value} decimals={2} suffix="%" />
+              )}
+            />
+          </Card>
+        </Col>
+        <Col
+          xs={24}
+          lg={12}
+          style={{ width: "100%", height: "650px", display: "flex" }}
+        >
+          <Card
+            className="pie-container"
+            style={{ width: "100%", height: "100%" }}
+          >
+            <RTCharts.Pie />
+          </Card>
         </Col>
       </Row>
       <ReactJson src={data} />
