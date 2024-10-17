@@ -9,39 +9,33 @@ import { useLocation } from "react-router-dom";
 const { Sider, Content, Header } = Layout;
 
 const MainLayout = ({ sider, content, title }) => {
-  const initialSiderCollapsed =
-    localStorage.getItem("siderCollapsed") || window.innerWidth < 768;
-
-  const [collapsed, setCollapsed] = useState(initialSiderCollapsed);
+  const initialState = localStorage.getItem("collapse") === "true";
+  const [collapsed, setCollapsed] = useState(initialState);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
 
-  const handleResize = () => {
-    const isNowMobile = window.innerWidth < 768;
-    setIsMobile(isNowMobile);
-
-    if (isNowMobile && !collapsed) {
-      setCollapsed(true);
-    } else if (!isNowMobile && collapsed) {
+  useEffect(() => {
+    if (initialState) {
+      setCollapsed(initialState);
+      localStorage.setItem("collapse", initialState);
+    } else {
       setCollapsed(false);
+      localStorage.setItem("collapse", "false");
     }
-  };
 
-  useEffect(() => {
-    const savedCollapsed = localStorage.getItem("siderCollapsed");
-    setCollapsed(savedCollapsed);
-  }, []);
-
-  useEffect(() => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const handleResize = () => {
+    setIsMobile(window.innerWidth < 768);
+  };
+
   const handleCollapse = () => {
     const newCollapsedState = !collapsed;
     setCollapsed(newCollapsedState);
-    localStorage.setItem("siderCollapsed", newCollapsedState); // Durumu localStorage'a yazıyoruz
+    localStorage.setItem("collapse", newCollapsedState);
   };
 
   return (
@@ -62,8 +56,8 @@ const MainLayout = ({ sider, content, title }) => {
         <Layout>
           <Sider
             collapsible
-            collapsed={collapsed}
-            onCollapse={handleCollapse}
+            collapsed={initialState}
+            onCollapse={() => handleCollapse()}
             breakpoint="lg"
             collapsedWidth={isMobile ? 0 : 50}
             width={250}
