@@ -1,12 +1,12 @@
 import RTSkeleton from "@rt/components/RTSkeleton/RTSkeleton";
 import { ENDPOINTS } from "@rt/network/endpoints";
 import axiosInstance from "@rt/network/httpRequester";
-import { useQuery } from "@tanstack/react-query";
-import { Drawer, Timeline } from "antd";
-import ReactJson from "react-json-view";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Drawer } from "antd";
+import EditOrderPanel from "../panels/EditOrderPanel";
 
 const EditOrderDrawer = ({ onClose, open, data }) => {
-  console.log(data.id);
+  const queryClient = useQueryClient();
   const {
     data: order,
     isLoading,
@@ -19,30 +19,18 @@ const EditOrderDrawer = ({ onClose, open, data }) => {
         .then((res) => res.data),
   });
 
+  const handleClose = () => {
+    onClose();
+    queryClient.removeQueries({ queryKey: ["Order", data.id] });
+  };
+
   return (
-    <Drawer onClose={onClose} open={open} size="large">
+    <Drawer title="Edit Order" onClose={handleClose} open={open} size="large">
       {isLoading && <RTSkeleton />}
       {error && <div>error</div>}
       {order && (
         <>
-          <ReactJson src={order} />
-          <Timeline
-            mode="alternate"
-            items={[
-              {
-                children: "Order created by user",
-                label: "2021-09-01 ",
-              },
-              {
-                children: "Order updated by user",
-                label: "2021-09-01",
-              },
-              {
-                children: "Order deleted by user",
-                label: "2021-09-01 ",
-              },
-            ]}
-          />
+          <EditOrderPanel data={order} />
         </>
       )}
     </Drawer>

@@ -12,6 +12,7 @@ import ViewOrderDrawer from "./drawers/ViewOrderDrawer";
 import EditOrderDrawer from "./drawers/EditOrderDrawer";
 import DeleteOrderDrawer from "./drawers/DeleteOrderDrawer";
 import RefundOrderDrawer from "./drawers/RefundOrderDrawer";
+import './OrdersList.scss';
 
 const OrdersListContainer = () => {
   const columns = [

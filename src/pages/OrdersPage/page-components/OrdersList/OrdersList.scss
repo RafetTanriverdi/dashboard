@@ -1,0 +1,21 @@
+.ant-timeline-item-head {
+    background-color: transparent !important;
+}
+
+.ant-timeline-item-right {
+
+    .ant-timeline-item-label {
+        inset-inline-start: calc(50% + 22px) !important;
+    }
+
+    .ant-timeline-item-content {
+        width: calc(50% - 22px) !important;
+    }
+}
+
+.ant-timeline-item-left {
+
+    .ant-timeline-item-label {
+        width: calc(50% - 22px) !important;
+    }
+}
