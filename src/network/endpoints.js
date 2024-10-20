@@ -26,4 +26,12 @@ export const ENDPOINTS = {
     UPDATE: "customers/:customerId",
     DELETE: "customers/:customerId",
   },
+  ORDERS: {
+    LIST: "orders",
+    GET: "orders/:orderId",
+    ADD: "orders",
+    UPDATE: "orders/:orderId",
+    DELETE: "orders/:orderId",
+    REFUND: "orders/refund",
+  },
 };
