@@ -32,6 +32,12 @@ export const RTHeatMap = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
+    const svgGroup = document.querySelector(
+      ".heat-map-container .ant-card-body g"
+    );
+    if (svgGroup && !isMobile) {
+      svgGroup.setAttribute("transform", "translate(25, -50)");
+    }
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [isMobile]);
@@ -58,21 +64,20 @@ export const RTHeatMap = () => {
           picker="year"
         />
       </Space>
-
       <ResponsiveCalendar
         data={data}
         from={`${year}-06-01`}
         to={`${year}-12-31`}
         emptyColor={theme ? "#eeeeee" : "#333333"}
         colors={theme ? lightColors : darkColors}
-        margin={{ top: 0, right: 10, bottom: 0, left: 25 }}
+        margin={{ top: -50, right: 10, bottom: 0, left: 25 }}
         yearLegendOffset={12}
         monthBorderColor={theme ? "#ffffff" : "#141414"}
         dayBorderWidth={2}
         dayBorderColor={theme ? "#ffffff" : "#141414"}
         legends={[
           {
-            anchor: "bottom-right",
+            anchor: "bottom",
             direction: "row",
             translateY: 36,
             itemCount: 4,

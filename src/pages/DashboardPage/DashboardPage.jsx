@@ -5,8 +5,19 @@ import "./DashboardPage.scss";
 import { RTCharts } from "@rt/components/RTCharts";
 import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 import CountUp from "react-countup";
+import { useRef } from "react";
+import { useEffect } from "react";
 
 const DashboardPageContainer = () => {
+  const scrollContainerRef = useRef(null);
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      container.scrollLeft =
+        (container.scrollWidth - container.clientWidth) / 2;
+    }
+  }, []);
   return (
     <>
       <Row gutter={[16, 16]} style={{ margin: "20px 10px" }}>
@@ -18,7 +29,6 @@ const DashboardPageContainer = () => {
               precision={2}
               valueStyle={{ color: "#3f8600" }}
               suffix={<ArrowUpOutlined />}
-              prefix="$"
               formatter={(value) => (
                 <CountUp end={value} decimals={2} prefix="$" />
               )}
@@ -33,9 +43,8 @@ const DashboardPageContainer = () => {
               precision={2}
               valueStyle={{ color: "#cf1322" }}
               prefix={<ArrowDownOutlined />}
-              suffix="%"
               formatter={(value) => (
-                <CountUp end={value} decimals={2} suffix="%" />
+                <CountUp end={value} decimals={2} prefix="$" />
               )}
             />
           </Card>
@@ -48,9 +57,8 @@ const DashboardPageContainer = () => {
               precision={2}
               valueStyle={{ color: "#3f8600" }}
               prefix={<ArrowUpOutlined />}
-              suffix="%"
               formatter={(value) => (
-                <CountUp end={value} decimals={2} suffix="%" />
+                <CountUp end={value} decimals={2} prefix="$" />
               )}
             />
           </Card>
@@ -58,14 +66,14 @@ const DashboardPageContainer = () => {
         <Col xs={24} sm={12} md={6}>
           <Card>
             <Statistic
-              style={{ textAlign: "center" }}
               title="Total"
               value={9.3}
               precision={2}
               valueStyle={{ color: "#cf1322" }}
               prefix={<ArrowDownOutlined />}
-              suffix="%"
-              formatter={(value) => <CountUp end={value} decimals={2} />}
+              formatter={(value) => (
+                <CountUp end={value} decimals={2} prefix="$" />
+              )}
             />
           </Card>
         </Col>
@@ -78,19 +86,14 @@ const DashboardPageContainer = () => {
           </Card>
         </Col>
         <Col xs={24} md={8}>
-          <Card className="pie-container">
+          <Card className="pie-container" ref={scrollContainerRef}>
             <RTCharts.Pie />
           </Card>
         </Col>
       </Row>
 
-      <Row gutter={[16, 16]} style={{ marginTop: "16px" }}>
-        <Col xs={24} md={8}>
-          <Card className="bar-container">
-            <RTCharts.Funnel />
-          </Card>
-        </Col>
-        <Col xs={24} md={16}>
+      <Row style={{ marginTop: "16px" }}>
+        <Col xs={24} md={24}>
           <Card className="heat-map-container">
             <RTCharts.HeatMap />
           </Card>

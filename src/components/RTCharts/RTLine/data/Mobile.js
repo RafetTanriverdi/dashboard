@@ -7,7 +7,7 @@ export const Mobile = {
     translateY: -36,
     itemsSpacing: 0,
     itemDirection: "left-to-right",
-    itemWidth: 60,
+    itemWidth: 90,
     itemHeight: 20,
     itemOpacity: 0.75,
     symbolSize: 10,
