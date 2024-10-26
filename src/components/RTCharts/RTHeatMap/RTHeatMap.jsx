@@ -29,19 +29,16 @@ const lightColors = [
 export const RTHeatMap = () => {
   const { theme } = useThemeChangeStore();
   const [year, setYear] = useState(2024);
-const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [isMobile]);
 
-useEffect(()=>{
-
-  window.addEventListener('resize', handleResize)
-  return () => window.removeEventListener('resize', handleResize)
-  
-},[isMobile])
-
-const handleResize = () => {
-  setIsMobile(window.innerWidth < 768);
-}
+  const handleResize = () => {
+    setIsMobile(window.innerWidth < 768);
+  };
 
   return (
     <>
@@ -63,7 +60,6 @@ const handleResize = () => {
       </Space>
 
       <ResponsiveCalendar
-        direction={isMobile ? "vertical" : "horizontal"}
         data={data}
         from={`${year}-06-01`}
         to={`${year}-12-31`}

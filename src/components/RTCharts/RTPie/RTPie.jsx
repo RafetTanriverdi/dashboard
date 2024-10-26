@@ -1,76 +1,27 @@
 import { ResponsivePie } from "@nivo/pie";
+import { useDeviceStore } from "@rt/data/Device/mobile";
 import { useThemeChangeStore } from "@rt/data/Theme/Theme";
 import { ChartsDark } from "@rt/theme/DarkTheme/ChartsDarkTheme";
 import { ChartsLight } from "@rt/theme/LightTheme/ChartsLightTheme";
-import { useState } from "react";
 import { useEffect } from "react";
+import { Desktop } from "./data/Desktop";
+import { Mobile } from "./data/Mobile";
 
 const RTPie = () => {
   const { theme } = useThemeChangeStore();
-
-  const [deviceLegend, setDeviceLegend] = useState([]);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const { isMobile, handleResize } = useDeviceStore();
 
   useEffect(() => {
-    if (window.innerWidth < 768) {
-      setDeviceLegend({
-        anchor: "bottom",
-        direction: "row",
-        translateY: 56,
-        itemsSpacing: 2,
-        itemWidth: 80,
-        itemHeight: 18,
-        itemTextColor: "#999",
-        symbolSize: 18,
-        symbolShape: "circle",
-        effects: [
-          {
-            on: "hover",
-            style: {
-              itemTextColor: "#000",
-            },
-          },
-        ],
-      });
-    } else {
-      setDeviceLegend({
-        anchor: "right",
-        direction: "column",
-        justify: false,
-        translateX: 84,
-        translateY: 20,
-        itemsSpacing: 9,
-        itemWidth: 100,
-        itemHeight: 22,
-        itemTextColor: "#999",
-        itemDirection: "left-to-right",
-        itemOpacity: 1,
-        symbolSize: 18,
-        symbolShape: "circle",
-        effects: [
-          {
-            on: "hover",
-            style: {
-              itemTextColor: theme ? "#000" : "#fff"
-            },
-          },
-        ],
-      });
-    }
-
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [isMobile]);
 
-  const handleResize = () => {
-    setIsMobile(window.innerWidth < 768);
-  };
-
+  console.log(isMobile, "isMobile");
   return (
     <ResponsivePie
       data={data}
       theme={theme ? ChartsLight : ChartsDark}
-      margin={{ top: 40, right: 30, bottom: 80, left: 70 }}
+      margin={isMobile ? Mobile.margin : Desktop.margin}
       innerRadius={0.55}
       cornerRadius={1}
       activeOuterRadiusOffset={8}
@@ -159,7 +110,7 @@ const RTPie = () => {
           id: "lines",
         },
       ]}
-      legends={[deviceLegend]}
+      legends={[!isMobile ? Desktop.legend : Mobile.legend]}
     />
   );
 };

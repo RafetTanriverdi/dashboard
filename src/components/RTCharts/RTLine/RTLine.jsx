@@ -1,16 +1,26 @@
 import { ResponsiveLine } from "@nivo/line";
+import { useDeviceStore } from "@rt/data/Device/mobile";
 import { useThemeChangeStore } from "@rt/data/Theme/Theme";
 import { ChartsDark } from "@rt/theme/DarkTheme/ChartsDarkTheme";
 import { ChartsLight } from "@rt/theme/LightTheme/ChartsLightTheme";
-
+import { useEffect } from "react";
+import { Desktop } from "./data/Desktop";
+import { Mobile } from "./data/Mobile";
 
 const RTLine = () => {
   const { theme } = useThemeChangeStore();
+  const { isMobile, handleResize } = useDeviceStore();
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [isMobile]);
+
   return (
     <ResponsiveLine
       theme={theme ? ChartsLight : ChartsDark}
       data={data}
-      margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+      margin={isMobile ? Mobile.margin : Desktop.margin}
       xScale={{ type: "point" }}
       yScale={{
         type: "linear",
@@ -23,7 +33,6 @@ const RTLine = () => {
       curve="natural"
       axisTop={null}
       axisRight={null}
-      
       axisBottom={{
         tickSize: 5,
         tickPadding: 5,
@@ -52,32 +61,7 @@ const RTLine = () => {
       enableArea={true}
       enableTouchCrosshair={true}
       useMesh={true}
-      legends={[
-        {
-          anchor: "bottom-right",
-          direction: "column",
-          justify: false,
-          translateX: 100,
-          translateY: 0,
-          itemsSpacing: 0,
-          itemDirection: "left-to-right",
-          itemWidth: 80,
-          itemHeight: 20,
-          itemOpacity: 0.75,
-          symbolSize: 12,
-          symbolShape: "circle",
-          symbolBorderColor: "rgba(0, 0, 0, .5)",
-          effects: [
-            {
-              on: "hover",
-              style: {
-                itemBackground: "rgba(0, 0, 0, .03)",
-                itemOpacity: 1,
-              },
-            },
-          ],
-        },
-      ]}
+      legends={[isMobile ? Mobile.legend : Desktop.legend]}
     />
   );
 };

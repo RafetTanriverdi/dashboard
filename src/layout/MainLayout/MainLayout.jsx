@@ -68,7 +68,7 @@ const MainLayout = ({ sider, content, title }) => {
             onCollapse={() => handleCollapse()}
             breakpoint="lg"
             collapsedWidth={isMobile ? 0 : 50}
-            width={250}
+            width={isMobile ? '100%' : 250}
             trigger={isMobile && null}
             style={{ height: "100vh" }}
           >

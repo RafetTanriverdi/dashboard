@@ -19,7 +19,9 @@ const DashboardPageContainer = () => {
               valueStyle={{ color: "#3f8600" }}
               suffix={<ArrowUpOutlined />}
               prefix="$"
-              formatter={(value) => <CountUp end={value} decimals={2} prefix="$" />}
+              formatter={(value) => (
+                <CountUp end={value} decimals={2} prefix="$" />
+              )}
             />
           </Card>
         </Col>
@@ -32,7 +34,9 @@ const DashboardPageContainer = () => {
               valueStyle={{ color: "#cf1322" }}
               prefix={<ArrowDownOutlined />}
               suffix="%"
-              formatter={(value) => <CountUp end={value} decimals={2} suffix="%" />}
+              formatter={(value) => (
+                <CountUp end={value} decimals={2} suffix="%" />
+              )}
             />
           </Card>
         </Col>
@@ -45,7 +49,9 @@ const DashboardPageContainer = () => {
               valueStyle={{ color: "#3f8600" }}
               prefix={<ArrowUpOutlined />}
               suffix="%"
-              formatter={(value) => <CountUp end={value} decimals={2} suffix="%" />}
+              formatter={(value) => (
+                <CountUp end={value} decimals={2} suffix="%" />
+              )}
             />
           </Card>
         </Col>
