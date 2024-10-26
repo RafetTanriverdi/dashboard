@@ -9,9 +9,9 @@ import CountUp from "react-countup";
 const DashboardPageContainer = () => {
   return (
     <>
-      <Row gutter={16} style={{ margin: "20px 10px 0px 10px" }}>
-        <Col span={6}>
-          <Card >
+      <Row gutter={[16, 16]} style={{ margin: "20px 10px" }}>
+        <Col xs={24} sm={12} md={6}>
+          <Card>
             <Statistic
               title="Income"
               value={11.28}
@@ -19,14 +19,12 @@ const DashboardPageContainer = () => {
               valueStyle={{ color: "#3f8600" }}
               suffix={<ArrowUpOutlined />}
               prefix="$"
-              formatter={(value) => (
-                <CountUp end={value} decimals={2} prefix="$" />
-              )}
+              formatter={(value) => <CountUp end={value} decimals={2} prefix="$" />}
             />
           </Card>
         </Col>
-        <Col span={6}>
-          <Card >
+        <Col xs={24} sm={12} md={6}>
+          <Card>
             <Statistic
               title="Tax"
               value={9.3}
@@ -34,14 +32,12 @@ const DashboardPageContainer = () => {
               valueStyle={{ color: "#cf1322" }}
               prefix={<ArrowDownOutlined />}
               suffix="%"
-              formatter={(value) => (
-                <CountUp end={value} decimals={2} suffix="%" />
-              )}
+              formatter={(value) => <CountUp end={value} decimals={2} suffix="%" />}
             />
           </Card>
         </Col>
-        <Col span={6}>
-          <Card >
+        <Col xs={24} sm={12} md={6}>
+          <Card>
             <Statistic
               title="Cost"
               value={11.28}
@@ -49,14 +45,12 @@ const DashboardPageContainer = () => {
               valueStyle={{ color: "#3f8600" }}
               prefix={<ArrowUpOutlined />}
               suffix="%"
-              formatter={(value) => (
-                <CountUp end={value} decimals={2} suffix="%" />
-              )}
+              formatter={(value) => <CountUp end={value} decimals={2} suffix="%" />}
             />
           </Card>
         </Col>
-        <Col span={6}>
-          <Card >
+        <Col xs={24} sm={12} md={6}>
+          <Card>
             <Statistic
               style={{ textAlign: "center" }}
               title="Total"
@@ -70,34 +64,32 @@ const DashboardPageContainer = () => {
           </Card>
         </Col>
       </Row>
-      <div style={{ width: "100%", height: "50%", display: "flex" }}>
-        <Card
-          className="line-container"
-          style={{ width: "70%", height: "100%" }}
-        >
-          <RTCharts.Line />
-        </Card>
-        <Card
-          className="pie-container"
-          style={{ width: "27%", height: "100%" }}
-        >
-          <RTCharts.Pie />
-        </Card>
-      </div>
-      <div style={{ width: "100%", height: "30%", display: "flex", marginTop:'10px' }}>
-        <Card
-          className="bar-container"
-          style={{ width: "25%", height: "100%" }}
-        >
-          <RTCharts.Funnel />
-        </Card>
-        <Card
-          className="heat-map-container"
-          style={{ width: "70%", height: "100%" }}
-        >
-          <RTCharts.HeatMap />
-        </Card>
-      </div>
+
+      <Row gutter={[16, 16]} style={{ marginTop: "16px" }}>
+        <Col xs={24} md={16}>
+          <Card className="line-container">
+            <RTCharts.Line />
+          </Card>
+        </Col>
+        <Col xs={24} md={8}>
+          <Card className="pie-container">
+            <RTCharts.Pie />
+          </Card>
+        </Col>
+      </Row>
+
+      <Row gutter={[16, 16]} style={{ marginTop: "16px" }}>
+        <Col xs={24} md={8}>
+          <Card className="bar-container">
+            <RTCharts.Funnel />
+          </Card>
+        </Col>
+        <Col xs={24} md={16}>
+          <Card className="heat-map-container">
+            <RTCharts.HeatMap />
+          </Card>
+        </Col>
+      </Row>
     </>
   );
 };

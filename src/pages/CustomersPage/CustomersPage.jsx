@@ -4,12 +4,14 @@ import CustomersList from "./page-components/CustomersList/CustomersList";
 import AppClientRouter from "@rt/AppClientRouter";
 import { useLocation } from "react-router-dom";
 import { isRoutePathChild } from "@rt/routing/routes";
+import { Typography } from "antd";
 
 const CustomersPageContainer = () => {
   return (
-    <>
+    <div style={{ margin: "0 20px" }}>
+      <Typography.Title level={3}>Customers</Typography.Title>
       <CustomersList />
-    </>
+    </div>
   );
 };
 

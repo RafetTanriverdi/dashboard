@@ -1,11 +1,12 @@
 import { ResponsiveCalendar } from "@nivo/calendar";
 import { useThemeChangeStore } from "@rt/data/Theme/Theme";
-import { heatMapDark } from "@rt/theme/DarkTheme/HeatMapDark";
-import { heatMapLight } from "@rt/theme/LightTheme/HeatMapLight";
+import { ChartsDark } from "@rt/theme/DarkTheme/ChartsDarkTheme";
+import { ChartsLight } from "@rt/theme/LightTheme/ChartsLightTheme";
 import { Typography } from "antd";
 import { Space } from "antd";
 import { DatePicker } from "antd";
 import dayjs from "dayjs";
+import { useEffect } from "react";
 import { useState } from "react";
 
 const darkColors = [
@@ -28,10 +29,29 @@ const lightColors = [
 export const RTHeatMap = () => {
   const { theme } = useThemeChangeStore();
   const [year, setYear] = useState(2024);
+const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+
+useEffect(()=>{
+
+  window.addEventListener('resize', handleResize)
+  return () => window.removeEventListener('resize', handleResize)
+  
+},[isMobile])
+
+const handleResize = () => {
+  setIsMobile(window.innerWidth < 768);
+}
 
   return (
     <>
-      <Space style={{width:'100%', justifyContent:'space-between', marginBottom:'0px'}}>
+      <Space
+        style={{
+          width: "100%",
+          justifyContent: "space-between",
+          marginBottom: "0px",
+        }}
+      >
         <Typography.Title level={5}>Daily Order Quantity</Typography.Title>
         <DatePicker
           style={{ width: "90px" }}
@@ -41,9 +61,11 @@ export const RTHeatMap = () => {
           picker="year"
         />
       </Space>
+
       <ResponsiveCalendar
+        direction={isMobile ? "vertical" : "horizontal"}
         data={data}
-        from={`${year}-01-01`}
+        from={`${year}-06-01`}
         to={`${year}-12-31`}
         emptyColor={theme ? "#eeeeee" : "#333333"}
         colors={theme ? lightColors : darkColors}
@@ -64,7 +86,7 @@ export const RTHeatMap = () => {
             itemDirection: "right-to-left",
           },
         ]}
-        theme={theme ? heatMapLight : heatMapDark}
+        theme={theme ? ChartsLight : ChartsDark}
       />
     </>
   );

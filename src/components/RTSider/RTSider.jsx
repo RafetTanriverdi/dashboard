@@ -42,6 +42,11 @@ const RTSider = () => {
   const mutation = useMutation({
     mutationKey: "signOut",
     mutationFn: handleSignOut,
+    onSuccess: () => {
+      if (window.innerWidth < 768) {
+        localStorage.setItem("collapse", "true");
+      }
+    },
   });
 
   const SignOut = () => {
@@ -55,7 +60,7 @@ const RTSider = () => {
   const menuItems = [
     {
       key: "dashboard",
-      icon: <DashboardOutlined  />,
+      icon: <DashboardOutlined />,
       label: (
         <NavLink to={getRoutePath(ROUTES_ID.dashboard)}>Dashboard</NavLink>
       ),

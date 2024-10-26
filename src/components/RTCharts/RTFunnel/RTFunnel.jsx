@@ -1,8 +1,13 @@
 import { ResponsiveFunnel } from "@nivo/funnel";
+import { useThemeChangeStore } from "@rt/data/Theme/Theme";
+import { ChartsDark } from "@rt/theme/DarkTheme/ChartsDarkTheme";
+import { ChartsLight } from "@rt/theme/LightTheme/ChartsLightTheme";
 
 const RTFunnel = () => {
+  const {theme} = useThemeChangeStore();
   return (
     <ResponsiveFunnel
+    theme={theme ? ChartsLight : ChartsDark}
       data={data}
       margin={{ top: 10, right: 0, bottom: 10, left: 0 }}
       direction="vertical"

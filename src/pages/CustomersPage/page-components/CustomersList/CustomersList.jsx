@@ -144,7 +144,7 @@ const TableContainer = () => {
 
   return (
     <TableAntdContainer
-      style={{ width: "90%", margin: "20px auto" }}
+     
       dataSource={dataSource}
     />
   );

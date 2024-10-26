@@ -15,18 +15,26 @@ const MainLayout = ({ sider, content, title }) => {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
 
+  console.log(isMobile,'isMobile')
+  
   useEffect(() => {
     if (initialState) {
       setCollapsed(initialState);
-      localStorage.setItem("collapse", initialState);
+      localStorage.setItem("collapse", "true");
     } else {
       setCollapsed(false);
       localStorage.setItem("collapse", "false");
     }
+  }, []);
 
+  useEffect(() => {
+    if (isMobile) {
+      setCollapsed(true);
+      localStorage.setItem("collapse", "true");
+    }
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [location.pathname]);
 
   const handleResize = () => {
     setIsMobile(window.innerWidth < 768);
@@ -56,7 +64,7 @@ const MainLayout = ({ sider, content, title }) => {
         <Layout>
           <Sider
             collapsible
-            collapsed={initialState}
+            collapsed={collapsed}
             onCollapse={() => handleCollapse()}
             breakpoint="lg"
             collapsedWidth={isMobile ? 0 : 50}

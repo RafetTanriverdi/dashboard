@@ -1,13 +1,14 @@
 import { ResponsiveLine } from "@nivo/line";
 import { useThemeChangeStore } from "@rt/data/Theme/Theme";
-import { heatMapDark } from "@rt/theme/DarkTheme/HeatMapDark";
-import { heatMapLight } from "@rt/theme/LightTheme/HeatMapLight";
+import { ChartsDark } from "@rt/theme/DarkTheme/ChartsDarkTheme";
+import { ChartsLight } from "@rt/theme/LightTheme/ChartsLightTheme";
+
 
 const RTLine = () => {
   const { theme } = useThemeChangeStore();
   return (
     <ResponsiveLine
-      theme={theme ? heatMapLight : heatMapDark}
+      theme={theme ? ChartsLight : ChartsDark}
       data={data}
       margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
       xScale={{ type: "point" }}
@@ -22,6 +23,7 @@ const RTLine = () => {
       curve="natural"
       axisTop={null}
       axisRight={null}
+      
       axisBottom={{
         tickSize: 5,
         tickPadding: 5,

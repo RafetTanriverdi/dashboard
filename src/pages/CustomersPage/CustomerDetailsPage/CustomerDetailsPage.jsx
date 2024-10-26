@@ -197,7 +197,7 @@ const CustomerDetailsPageContainer = ({ data, error, isLoading }) => {
         <Col
           xs={24}
           lg={12}
-          style={{ width: "100%", height: "650px", display: "flex" }}
+          style={{ width: "100%", height: "450px", display: "flex" }}
         >
           <Card
             className="pie-container"

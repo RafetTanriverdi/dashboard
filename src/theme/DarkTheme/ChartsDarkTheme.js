@@ -1,17 +1,26 @@
-export const heatMapDark = {
+export const ChartsDark = {
   labels: {
     text: {
       fill: "#ffffff",
-      fontSize: 16,
     },
   },
   axis: {
     legend: {
       text: {
         fill: "#ffffff",
-        fontSize: 16,
+        color: "#ffffff",
       },
     },
+    ticks:{
+      text:{
+        fill: "#ffffff",
+      }
+    }
+  },
+  legends:{
+    text:{
+      fill: "#ffffff",
+    }
   },
   tooltip: {
     container: {

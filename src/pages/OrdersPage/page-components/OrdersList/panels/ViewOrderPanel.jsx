@@ -1,7 +1,8 @@
+import ReactJson from "react-json-view"
 
-const ViewOrderPanel = () => {
+const ViewOrderPanel = ({data}) => {
   return (
-    <div>ViewOrderPanel</div>
+   <ReactJson src={data} />
   )
 }
 
