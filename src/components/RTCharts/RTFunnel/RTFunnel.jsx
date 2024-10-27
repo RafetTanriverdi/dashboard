@@ -9,7 +9,7 @@ const RTFunnel = () => {
     <ResponsiveFunnel
     theme={theme ? ChartsLight : ChartsDark}
       data={data}
-      margin={{ top: 10, right: 0, bottom: 10, left: 0 }}
+      margin={{ top: 10, right: -70, bottom: 10, left: -70 }}
       direction="vertical"
       valueFormat=">-.4s"
       colors={{ scheme: "spectral" }}

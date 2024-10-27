@@ -27,7 +27,7 @@ export const Mobile = {
     top: 40,
     right: 15,
     bottom: 45,
-    left: 40,
+    left: 45,
   },
   axisBottom:{
     legend:''

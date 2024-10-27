@@ -20,22 +20,22 @@ const DashboardPageContainer = () => {
   }, []);
   return (
     <>
-      <Row gutter={[16, 16]} style={{ margin: "20px 10px" }}>
-        <Col xs={24} sm={12} md={6}>
+      <Row gutter={[16, 16]}>
+        <Col xs={12} sm={12} md={6}>
           <Card>
             <Statistic
               title="Income"
               value={11.28}
               precision={2}
               valueStyle={{ color: "#3f8600" }}
-              suffix={<ArrowUpOutlined />}
+              prefix={<ArrowUpOutlined />}
               formatter={(value) => (
                 <CountUp end={value} decimals={2} prefix="$" />
               )}
             />
           </Card>
         </Col>
-        <Col xs={24} sm={12} md={6}>
+        <Col xs={12} sm={12} md={6}>
           <Card>
             <Statistic
               title="Tax"
@@ -49,28 +49,28 @@ const DashboardPageContainer = () => {
             />
           </Card>
         </Col>
-        <Col xs={24} sm={12} md={6}>
+        <Col xs={12} sm={12} md={6}>
           <Card>
             <Statistic
-              title="Cost"
+              title="Refund"
               value={11.28}
               precision={2}
-              valueStyle={{ color: "#3f8600" }}
-              prefix={<ArrowUpOutlined />}
+              valueStyle={{ color: "#cf1322" }}
+              prefix={<ArrowDownOutlined />}
               formatter={(value) => (
                 <CountUp end={value} decimals={2} prefix="$" />
               )}
             />
           </Card>
         </Col>
-        <Col xs={24} sm={12} md={6}>
-          <Card>
+        <Col xs={12} sm={12} md={6}>
+          <Card >
             <Statistic
               title="Total"
               value={9.3}
               precision={2}
-              valueStyle={{ color: "#cf1322" }}
-              prefix={<ArrowDownOutlined />}
+              valueStyle={{ color: "#3f8600" }}
+              prefix={<ArrowUpOutlined />}
               formatter={(value) => (
                 <CountUp end={value} decimals={2} prefix="$" />
               )}
@@ -92,8 +92,13 @@ const DashboardPageContainer = () => {
         </Col>
       </Row>
 
-      <Row style={{ marginTop: "16px" }}>
-        <Col xs={24} md={24}>
+      <Row gutter={[16, 16]} style={{ marginTop: "16px" }}>
+        <Col xs={24} md={8}>
+          <Card className="funnel-container" ref={scrollContainerRef}>
+            <RTCharts.Funnel />
+          </Card>
+        </Col>
+        <Col xs={24} md={16}>
           <Card className="heat-map-container">
             <RTCharts.HeatMap />
           </Card>

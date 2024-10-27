@@ -1,8 +1,9 @@
 export const Mobile = {
   legend: {
-    anchor: "right",
-    direction: "column",
-    translateY: 26,
+    anchor: "bottom",
+    direction: "row",
+    translateX:14,
+    translateY:32,
     itemsSpacing: 20,
     itemWidth: 70,
     itemHeight: 12,
@@ -19,7 +20,7 @@ export const Mobile = {
   margin: {
     top: 15,
     right: 0,
-    bottom: 30,
-    left: -30,
+    bottom: 40,
+    left: 0,
   },
 };
