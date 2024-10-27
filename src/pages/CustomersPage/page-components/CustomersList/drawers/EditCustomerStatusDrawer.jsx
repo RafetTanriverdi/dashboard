@@ -14,7 +14,6 @@ const EditCustomerStatusDrawer = ({ open, onClose, inheritedData }) => {
 
   const [newStatus, setNewStatus] = useState(status);
   const { context, openNotification } = Notification();
-  const [form] = Form.useForm();
 
   const queryClient = useQueryClient();
 
@@ -57,7 +56,6 @@ const EditCustomerStatusDrawer = ({ open, onClose, inheritedData }) => {
     queryClient.removeQueries({ queryKey: ["customersEdit", key] });
     onClose();
   };
-  console.log(postBody);
 
   return (
     <>
