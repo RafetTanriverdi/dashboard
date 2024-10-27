@@ -7,9 +7,47 @@ import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 import CountUp from "react-countup";
 import { useRef } from "react";
 import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import axiosInstance from "@rt/network/httpRequester";
+import { ENDPOINTS } from "@rt/network/endpoints";
 
 const DashboardPageContainer = () => {
   const scrollContainerRef = useRef(null);
+
+  const { data: refund } = useQuery({
+    queryKey: ["refund"],
+    queryFn: () => {
+     return axiosInstance.get(ENDPOINTS.STRIPE.REFUNDS).then((res) => res.data.data);
+    },
+  });
+  const { data: transactions } = useQuery({
+    queryKey: ["transactions"],
+    queryFn: () => {
+      const reponse = axiosInstance.get(ENDPOINTS.STRIPE.TRANSACTIONS);
+      return reponse;
+    },
+  });
+
+  const { data: balance } = useQuery({
+    queryKey: ["balance"],
+    queryFn: () => {
+      const reponse = axiosInstance.get(ENDPOINTS.STRIPE.BALANCE);
+      return reponse;
+    },
+  });
+
+  const income =
+    (balance?.data?.available[0].amount + balance?.data?.pending[0].amount) /
+    100;
+
+  const tax = income * 0.09;
+
+  let refundAmount = 0;
+  for (let i = 0; i < 1; i++) {
+    refundAmount += refund[i].amount / 100;
+  }
+  console.log(transactions);
+  console.log(refund);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -25,7 +63,7 @@ const DashboardPageContainer = () => {
           <Card>
             <Statistic
               title="Income"
-              value={11.28}
+              value={income}
               precision={2}
               valueStyle={{ color: "#3f8600" }}
               prefix={<ArrowUpOutlined />}
@@ -39,7 +77,7 @@ const DashboardPageContainer = () => {
           <Card>
             <Statistic
               title="Tax"
-              value={9.3}
+              value={tax}
               precision={2}
               valueStyle={{ color: "#cf1322" }}
               prefix={<ArrowDownOutlined />}
@@ -53,7 +91,7 @@ const DashboardPageContainer = () => {
           <Card>
             <Statistic
               title="Refund"
-              value={11.28}
+              value={refundAmount}
               precision={2}
               valueStyle={{ color: "#cf1322" }}
               prefix={<ArrowDownOutlined />}
@@ -64,10 +102,10 @@ const DashboardPageContainer = () => {
           </Card>
         </Col>
         <Col xs={12} sm={12} md={6}>
-          <Card >
+          <Card>
             <Statistic
-              title="Total"
-              value={9.3}
+              title="Available Balance"
+              value={balance?.data?.available[0].amount / 100}
               precision={2}
               valueStyle={{ color: "#3f8600" }}
               prefix={<ArrowUpOutlined />}

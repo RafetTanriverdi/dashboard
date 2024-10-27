@@ -25,8 +25,8 @@ export const Desktop = {
   },
   margin: {
     top: 40,
-    right: 100,
-    bottom: 40,
+    right: 130,
+    bottom: 60,
     left: 50,
   },
   axisBottom:{

@@ -34,4 +34,9 @@ export const ENDPOINTS = {
     DELETE: "orders/:orderId",
     REFUND: "orders/refund",
   },
+  STRIPE:{
+    TRANSACTIONS: "stripe/transactions",
+    BALANCE: "stripe/balance",
+    REFUNDS: "stripe/refunds",
+  }
 };

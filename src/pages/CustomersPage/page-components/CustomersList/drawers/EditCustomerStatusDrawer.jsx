@@ -12,17 +12,14 @@ import EditCustomerStatusPanel from "../panels/EditCustomerStatusPanel";
 const EditCustomerStatusDrawer = ({ open, onClose, inheritedData }) => {
   const { key, name, status, email } = inheritedData;
 
-
   const [newStatus, setNewStatus] = useState(status);
-
   const { context, openNotification } = Notification();
-
   const [form] = Form.useForm();
 
   const queryClient = useQueryClient();
 
   const postBody = {
-    status: "active",
+    status: newStatus,
     cognitoUsername: email,
   };
 
@@ -35,14 +32,14 @@ const EditCustomerStatusDrawer = ({ open, onClose, inheritedData }) => {
       );
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["customers"] });
+      queryClient.invalidateQueries({ queryKey: ["Customers"] });
       openNotification({
         key: key,
         type: "success",
         message: "Customer Status Updated Successfully",
         duration: 2,
         onClose: () => {
-          onClose();
+          handleClose();
         },
       });
     },
@@ -56,29 +53,45 @@ const EditCustomerStatusDrawer = ({ open, onClose, inheritedData }) => {
     },
   });
 
+  const handleClose = () => {
+    queryClient.removeQueries({ queryKey: ["customersEdit", key] });
+    onClose();
+  };
+  console.log(postBody);
+
   return (
-    <Drawer
-      title={`Edit Customer Status: ${name}`}
-      size="large"
-      onClose={onClose}
-      open={open}
-      footer={
-        <div
-          style={{
-            textAlign: "right",
-          }}
-        >
-          <Button onClick={onClose} style={{ marginRight: 8 }}>
-            Cancel
-          </Button>
-          <Button onClick={() => mutation.mutate(postBody)} type="primary">
-            Submit
-          </Button>
-        </div>
-      }
-    >
-      <EditCustomerStatusPanel id={key} />
-    </Drawer>
+    <>
+      {context}
+      <Drawer
+        title={`Edit Customer Status: ${name}`}
+        size="large"
+        onClose={handleClose}
+        open={open}
+        footer={
+          <div
+            style={{
+              textAlign: "left",
+            }}
+          >
+            <Button
+              onClick={() => mutation.mutate(postBody)}
+              type="primary"
+              style={{ marginRight: "10px" }}
+              loading={mutation.isPending}
+            >
+              Submit
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </div>
+        }
+      >
+        <EditCustomerStatusPanel
+          id={key}
+          newStatus={newStatus}
+          setNewStatus={setNewStatus}
+        />
+      </Drawer>
+    </>
   );
 };
 
