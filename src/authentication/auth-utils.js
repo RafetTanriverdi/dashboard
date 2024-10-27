@@ -6,7 +6,7 @@ export const getToken = () => {
     `CognitoIdentityServiceProvider.${poolIdFromEnv}.LastAuthUser`
   );
   const AccessToken = localStorage.getItem(
-    `CognitoIdentityServiceProvider.${poolIdFromEnv}.${userId}.refreshToken`
+    `CognitoIdentityServiceProvider.${poolIdFromEnv}.${userId}.accessToken`
   );
   const IdToken = localStorage.getItem(
     `CognitoIdentityServiceProvider.${poolIdFromEnv}.${userId}.idToken`
