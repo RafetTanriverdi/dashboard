@@ -58,7 +58,16 @@ const TableAntdContainer = ({ style, dataSource }) => {
     },
   ];
 
-  return <Table style={style} columns={columns} dataSource={dataSource} />;
+  return (
+    <Table
+      scroll={{
+        x: "max-content",
+      }}
+      style={style}
+      columns={columns}
+      dataSource={dataSource}
+    />
+  );
 };
 
 const TableActions = ({ data }) => {

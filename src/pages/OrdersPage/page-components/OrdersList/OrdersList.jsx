@@ -127,7 +127,9 @@ const TableActions = ({ data }) => {
 };
 
 const OrderListTable = ({ columns, data }) => {
-  return <Table columns={columns} dataSource={data} />;
+  return <Table columns={columns} dataSource={data}  scroll={{
+    x: 'max-content',
+  }}/>;
 };
 
 const OrdersList = () => {
