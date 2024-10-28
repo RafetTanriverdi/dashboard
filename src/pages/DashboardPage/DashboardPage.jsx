@@ -55,13 +55,14 @@ const DashboardPageContainer = () => {
         <Col xs={12} sm={12} md={6}>
           <Card>
             <Statistic
+              className="dashboard-statistic"
               title="Income"
               value={income}
               precision={2}
               valueStyle={{ color: "#3f8600" }}
               prefix={<ArrowUpOutlined />}
               formatter={(value) => (
-                <CountUp end={value} decimals={2} prefix="$" />
+                <CountUp end={value} decimals={2} suffix="$" />
               )}
             />
           </Card>
@@ -69,13 +70,14 @@ const DashboardPageContainer = () => {
         <Col xs={12} sm={12} md={6}>
           <Card>
             <Statistic
+              className="dashboard-statistic"
               title="Tax"
               value={tax}
               precision={2}
               valueStyle={{ color: "#cf1322" }}
               prefix={<ArrowDownOutlined />}
               formatter={(value) => (
-                <CountUp end={value} decimals={2} prefix="$" />
+                <CountUp end={value} decimals={2} suffix="$" />
               )}
             />
           </Card>
@@ -83,13 +85,14 @@ const DashboardPageContainer = () => {
         <Col xs={12} sm={12} md={6}>
           <Card>
             <Statistic
+              className="dashboard-statistic"
               title="Refund"
               value={refundAmount}
               precision={2}
               valueStyle={{ color: "#cf1322" }}
               prefix={<ArrowDownOutlined />}
               formatter={(value) => (
-                <CountUp end={value} decimals={2} prefix="$" />
+                <CountUp end={value} decimals={2} suffix="$" />
               )}
             />
           </Card>
@@ -97,13 +100,14 @@ const DashboardPageContainer = () => {
         <Col xs={12} sm={12} md={6}>
           <Card>
             <Statistic
+              className="dashboard-statistic"
               title="Available Balance"
               value={balance?.data?.available[0]?.amount / 100}
               precision={2}
               valueStyle={{ color: "#3f8600" }}
               prefix={<ArrowUpOutlined />}
               formatter={(value) => (
-                <CountUp end={value} decimals={2} prefix="$" />
+                <CountUp end={value} decimals={2} suffix="$" />
               )}
             />
           </Card>
