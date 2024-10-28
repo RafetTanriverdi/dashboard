@@ -12,7 +12,8 @@ import axiosInstance from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
 
 const DashboardPageContainer = () => {
-  const scrollContainerRef = useRef(null);
+  const funnelChartRef = useRef(null);
+  const pieChartRef = useRef(null);
 
   const { data: refund } = useQuery({
     queryKey: ["refund"],
@@ -43,12 +44,19 @@ const DashboardPageContainer = () => {
   }
 
   useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (container) {
-      container.scrollLeft =
-        (container.scrollWidth - container.clientWidth) / 2;
+    if (pieChartRef.current) {
+      pieChartRef.current.scrollLeft =
+        (pieChartRef.current.scrollWidth - pieChartRef.current.clientWidth) / 2;
+    }
+
+    if (funnelChartRef.current) {
+      funnelChartRef.current.scrollLeft =
+        (funnelChartRef.current.scrollWidth -
+          funnelChartRef.current.clientWidth) /
+        2;
     }
   }, []);
+
   return (
     <>
       <Row gutter={[16, 16]}>
@@ -121,7 +129,7 @@ const DashboardPageContainer = () => {
           </Card>
         </Col>
         <Col xs={24} md={8}>
-          <Card className="pie-container" ref={scrollContainerRef}>
+          <Card className="pie-container" ref={pieChartRef}>
             <RTCharts.Pie />
           </Card>
         </Col>
@@ -129,7 +137,7 @@ const DashboardPageContainer = () => {
 
       <Row gutter={[16, 16]} style={{ marginTop: "16px" }}>
         <Col xs={24} md={8}>
-          <Card className="funnel-container" ref={scrollContainerRef}>
+          <Card className="funnel-container" ref={funnelChartRef}>
             <RTCharts.Funnel />
           </Card>
         </Col>

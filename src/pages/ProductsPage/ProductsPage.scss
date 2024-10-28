@@ -8,6 +8,7 @@
     justify-content: space-between;
     align-items: center;
   }
+
   .product-list {
     width: 100%;
   }
@@ -16,7 +17,13 @@
 @media screen and (max-width: 768px) {
   .product-list-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    padding: 20px 0px 0px 0px;
   }
+
+  .product-list {
+    margin-top: 10px;
+  }
+
+
 }

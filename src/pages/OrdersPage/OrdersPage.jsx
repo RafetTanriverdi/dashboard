@@ -2,10 +2,11 @@ import RTSider from "@rt/components/RTSider/RTSider";
 import MainLayout from "@rt/layout/MainLayout/MainLayout";
 import OrdersList from "./page-components/OrdersList/OrdersList";
 import { Typography } from "antd";
+import './OrdersPage.scss';
 
 const OrdersPageContainer = () => {
   return (
-    <div style={{margin:'0 20px'}}>
+    <div className="orders-list-container">
     <Typography.Title level={3}>Orders</Typography.Title>
       <OrdersList />
     </div>

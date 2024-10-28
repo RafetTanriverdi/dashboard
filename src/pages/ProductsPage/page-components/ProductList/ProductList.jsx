@@ -97,9 +97,16 @@ const TableAntdContainer = ({ style, dataSource, categoriesData }) => {
     },
   ];
 
-  return <Table   scroll={{
-    x: 'max-content',
-  }} style={style} columns={columns} dataSource={dataSource} />;
+  return (
+    <Table
+      scroll={{
+        x: "max-content",
+      }}
+      style={style}
+      columns={columns}
+      dataSource={dataSource}
+    />
+  );
 };
 
 const TableActions = ({ data, categoriesData }) => {
@@ -211,7 +218,11 @@ const TableContainer = ({ categoriesData }) => {
   }
 };
 
-const ProductList = ({ categoriesData }) => {
-  return <TableContainer categoriesData={categoriesData} />;
+const ProductList = ({ categoriesData, className }) => {
+  return (
+    <div className={className}>
+      <TableContainer categoriesData={categoriesData} />
+    </div>
+  );
 };
 export default ProductList;

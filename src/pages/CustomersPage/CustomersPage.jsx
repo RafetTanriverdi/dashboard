@@ -8,9 +8,9 @@ import { Typography } from "antd";
 
 const CustomersPageContainer = () => {
   return (
-    <div style={{ margin: "0 20px" }}>
+    <div className="customer-container">
       <Typography.Title level={3}>Customers</Typography.Title>
-      <CustomersList />
+      <CustomersList  className='customer-list'/>
     </div>
   );
 };

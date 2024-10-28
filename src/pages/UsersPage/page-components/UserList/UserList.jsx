@@ -80,7 +80,16 @@ const TableAntdContainer = ({ style, dataSource }) => {
     },
   ];
 
-  return <Table style={style} columns={columns} dataSource={dataSource} />;
+  return (
+    <Table
+      scroll={{
+        x: "max-content",
+      }}
+      style={style}
+      columns={columns}
+      dataSource={dataSource}
+    />
+  );
 };
 
 const TableActions = ({ data }) => {
@@ -168,7 +177,11 @@ const TableContainer = () => {
   }
 };
 
-const UserList = () => {
-  return <TableContainer />;
+const UserList = ({ className }) => {
+  return (
+    <div className={className}>
+      <TableContainer />
+    </div>
+  );
 };
 export default UserList;

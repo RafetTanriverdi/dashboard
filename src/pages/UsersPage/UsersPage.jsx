@@ -10,8 +10,8 @@ import RTAuthContainer from "@rt/components/RTAuthContainer/RTAuthContainer";
 
 const UsersPageContainer = () => {
   return (
-    <div className="customer-list-container">
-      <div className="customer-list-header">
+    <div className="user-list-container">
+      <div className="user-list-header">
         <Typography.Title level={3}>Users</Typography.Title>
         <Space>
           <NewUserButton />
@@ -21,7 +21,7 @@ const UsersPageContainer = () => {
         action={Permissions.users.actions.read}
         subject={Permissions.users.subject}
       >
-        <UserList className="customer-list" />
+        <UserList className="user-list" />
       </RTAuthContainer>
     </div>
   );

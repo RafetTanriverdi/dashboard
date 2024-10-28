@@ -1,24 +1,23 @@
 import { Menu } from "antd";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Amplify } from "aws-amplify";
-import {
-  UserOutlined,
-  LogoutOutlined,
-  DashboardOutlined,
-  TruckOutlined,
-  ProductOutlined,
-  ApartmentOutlined,
-  TeamOutlined,
-  CalendarOutlined,
-  IdcardOutlined,
-  NotificationOutlined,
-  QuestionOutlined,
-} from "@ant-design/icons";
 import { getRouteId, getRoutePath } from "../../routing/routes";
 import { ROUTES_ID } from "../../routing/routes-id";
 import awsmobile from "@rt/aws-exports";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { signOut } from "aws-amplify/auth";
+import { ChartSpline } from "lucide-react";
+import { Users } from "lucide-react";
+import { UserRoundPlus } from "lucide-react";
+import { Box } from "lucide-react";
+import { Blocks } from "lucide-react";
+import { Truck } from "lucide-react";
+import { SquareUser } from "lucide-react";
+import { Network } from "lucide-react";
+import { CalendarRange } from "lucide-react";
+import { Megaphone } from "lucide-react";
+import { ShieldQuestion } from "lucide-react";
+import { LogOut } from "lucide-react";
 
 Amplify.configure(awsmobile);
 
@@ -60,50 +59,51 @@ const RTSider = () => {
   const menuItems = [
     {
       key: "dashboard",
-      icon: <DashboardOutlined />,
+      icon: <ChartSpline />,
       label: (
         <NavLink to={getRoutePath(ROUTES_ID.dashboard)}>Dashboard</NavLink>
       ),
     },
     {
       key: "customers",
-      icon: <UserOutlined />,
+      icon: <Users />,
       label: (
         <NavLink to={getRoutePath(ROUTES_ID.customers)}>Customers</NavLink>
       ),
     },
     {
       key: "orders",
-      icon: <TruckOutlined />,
+      icon: <Truck />,
       label: <NavLink to={getRoutePath(ROUTES_ID.orders)}>Orders</NavLink>,
     },
     {
       key: "products",
-      icon: <ProductOutlined />,
+      icon: <Box />,
       label: <NavLink to={getRoutePath(ROUTES_ID.products)}>Products</NavLink>,
     },
     {
-      key: "users",
-      icon: <TeamOutlined />,
-      label: <NavLink to={getRoutePath(ROUTES_ID.users)}>Users</NavLink>,
-    },
-    {
       key: "categories",
-      icon: <TruckOutlined />,
+      icon: <Blocks />,
       label: (
         <NavLink to={getRoutePath(ROUTES_ID.categories)}>Categories</NavLink>
       ),
     },
     {
+      key: "users",
+      icon: <UserRoundPlus />,
+      label: <NavLink to={getRoutePath(ROUTES_ID.users)}>Users</NavLink>,
+    },
+
+    {
       key: "myProfilePage",
-      icon: <IdcardOutlined />,
+      icon: <SquareUser />,
       label: (
         <NavLink to={getRoutePath(ROUTES_ID.myProfilePage)}>My Profile</NavLink>
       ),
     },
     {
       key: "manageTeamMembers",
-      icon: <ApartmentOutlined />,
+      icon: <Network />,
       label: (
         <NavLink to={getRoutePath(ROUTES_ID.manageTeamMembers)}>
           Manage Team Members
@@ -112,24 +112,24 @@ const RTSider = () => {
     },
     {
       key: "calendar",
-      icon: <CalendarOutlined />,
+      icon: <CalendarRange />,
       label: <NavLink to={getRoutePath(ROUTES_ID.calendar)}>Calendar</NavLink>,
     },
     {
       key: "feedback",
-      icon: <NotificationOutlined />,
+      icon: <Megaphone />,
       label: <NavLink to={getRoutePath(ROUTES_ID.feedback)}>Feedback</NavLink>,
     },
     {
       key: "faq",
-      icon: <QuestionOutlined />,
+      icon: <ShieldQuestion />,
       label: <NavLink to={getRoutePath(ROUTES_ID.faq)}>FAQ</NavLink>,
     },
   ];
 
   const signOutItem = {
     key: "signOut",
-    icon: <LogoutOutlined onClick={mutation.mutate} />,
+    icon: <LogOut onClick={mutation.mutate} />,
     label: <SignOut />,
   };
 

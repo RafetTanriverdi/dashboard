@@ -170,7 +170,13 @@ const TableContainer = () => {
   }
 };
 
-const CategoryList = () => {
-  return <TableContainer />;
+const CategoryList = ({className}) => {
+  return (
+  <div className={className}>
+
+  <TableContainer />
+  </div>
+
+  );
 };
 export default CategoryList;

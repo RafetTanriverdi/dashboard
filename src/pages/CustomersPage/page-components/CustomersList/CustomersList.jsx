@@ -54,9 +54,9 @@ const TableAntdContainer = ({ style, dataSource }) => {
   ];
   return (
     <Table
-    scroll={{
-      x: 'max-content',
-    }}
+      scroll={{
+        x: "max-content",
+      }}
       style={style}
       columns={columns}
       dataSource={dataSource}
@@ -145,16 +145,11 @@ const TableContainer = () => {
   if (isLoading) return <RTSkeleton />;
   if (error) return <div>Error</div>;
 
-  return (
-    <TableAntdContainer
-     
-      dataSource={dataSource}
-    />
-  );
+  return <TableAntdContainer dataSource={dataSource} />;
 };
 
-const CustomersList = () => {
-  return <TableContainer />;
+const CustomersList = ({ className }) => {
+  return <TableContainer className={className} />;
 };
 
 export default CustomersList;

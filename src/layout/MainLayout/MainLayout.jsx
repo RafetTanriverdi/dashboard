@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet";
 import RTHeader from "@rt/components/RTHeader/RTHeader";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { HomeOutlined } from "@ant-design/icons";
 
 const { Sider, Content, Header } = Layout;
 
@@ -77,10 +78,11 @@ const MainLayout = ({ sider, content, title }) => {
           <Content className="content" style={{ padding: "20px" }}>
             {isMobile && splitLocation.length === 2 && (
               <Breadcrumb
+              style={{marginBottom:"5px"}}
                 items={[
                   {
+                    title:<HomeOutlined />,
                     href: "/",
-                    title: "Home",
                   },
                   {
                     title: title,
