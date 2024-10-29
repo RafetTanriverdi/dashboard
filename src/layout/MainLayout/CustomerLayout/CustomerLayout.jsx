@@ -1,7 +1,7 @@
 import RTSider from "@rt/components/RTSider/RTSider";
 import MainLayout from "../MainLayout";
 import { Breadcrumb, Layout } from "antd";
-import { HomeOutlined, UserOutlined } from "@ant-design/icons";
+import { HomeOutlined } from "@ant-design/icons";
 
 const { Content } = Layout;
 const CustomerLayoutContainer = ({ content, title }) => {
@@ -18,15 +18,13 @@ const CustomerLayoutContainer = ({ content, title }) => {
             href: "/customers",
             title: (
               <>
-                <UserOutlined />
                 <span>Customers</span>
               </>
             ),
           },
           {
-            title: (`Customer: ${title}`),
+            title: `Customer: ${title}`,
           },
-          
         ]}
       />
       <Layout>

@@ -51,8 +51,8 @@ const EditCustomerStatusPanel = ({ id, newStatus, setNewStatus }) => {
             value={newStatus}
             onChange={(e) => setNewStatus(e.target.value)}
           >
-            <Radio value="active">Active</Radio>
-            <Radio value="inactive">Inactive</Radio>
+            <Radio value="Active">Active</Radio>
+            <Radio value="Inactive">Inactive</Radio>
           </Radio.Group>
         </>
       ),

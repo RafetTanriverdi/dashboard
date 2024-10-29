@@ -17,6 +17,7 @@ import { Statistic } from "antd";
 import { ArrowUpOutlined } from "@ant-design/icons";
 import CountUp from "react-countup";
 import { RTCharts } from "@rt/components/RTCharts";
+import { capitalizeFirstLetter } from "@rt/utils/capitalizeFirstLetter";
 
 const CustomerDetailsPageContainer = ({ data, error, isLoading }) => {
   const [selectedCharge, setSelectedCharge] = useState(null);
@@ -45,7 +46,7 @@ const CustomerDetailsPageContainer = ({ data, error, isLoading }) => {
       children: (
         <Badge
           status={data?.status === "active" ? "success" : "error"}
-          text={data?.status}
+          text={capitalizeFirstLetter(data?.status)}
         />
       ),
     },
@@ -89,7 +90,7 @@ const CustomerDetailsPageContainer = ({ data, error, isLoading }) => {
       return {
         key: item.id,
         amount: "$ " + (item.amount / 100).toFixed(2),
-        status: item.status,
+        status: capitalizeFirstLetter(item.status),
         createdAt: dayjs.unix(item.created).format("MMMM,DD YYYY"),
         orderedProducts: JSON.parse(item.metadata.orderItems).length,
       };

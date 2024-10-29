@@ -13,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 import { getRoutePath } from "@rt/routing/routes";
 import { ROUTES_ID } from "@rt/routing/routes-id";
 import { generatePath } from "react-router-dom";
+import { Tag } from "antd";
+import { capitalizeFirstLetter } from "@rt/utils/capitalizeFirstLetter";
 
 const TableAntdContainer = ({ style, dataSource }) => {
   const columns = [
@@ -33,6 +35,16 @@ const TableAntdContainer = ({ style, dataSource }) => {
       dataIndex: "number",
       key: "number",
       sorter: (a, b) => a.number - b.number,
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (status) => (
+        <>
+          <Tag color={status === "Active" ? "green" : "red"}>{status}</Tag>
+        </>
+      ),
     },
     {
       title: "Created ",
@@ -136,7 +148,7 @@ const TableContainer = () => {
         email: item.email,
         number: item.phone,
         addresses: item.addresses,
-        status: item.status,
+        status: capitalizeFirstLetter(item.status),
         createdAt: dayjs(item.createdAt).format("MMMM D, YYYY"),
         updatedAt: dayjs(item.updatedAt).format("MMMM D, YYYY"),
       };
