@@ -13,17 +13,22 @@ import { Space } from "antd";
 
 import { Layout } from "antd";
 import awsmobile from "@rt/aws-exports";
+import { useMutation } from "@tanstack/react-query";
+import { RTButton } from "@rt/components/RTButton";
+import Message from "@rt/components/RTFeedback/Message/Message";
 
 Amplify.configure(awsmobile);
 const RegisterPageContainer = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const { context, openMessage } = Message();
 
   const navigate = useNavigate();
 
-  const handleSignIn = async () => {
-    try {
+  const mutation = useMutation({
+    mutationKey: ["signUp"],
+    mutationFn: async () => {
       await signUp({
         username: email,
         password,
@@ -36,52 +41,71 @@ const RegisterPageContainer = () => {
             "custom:permissions":
               "[Product:Read,Product:Create,Product:Delete,Product:Update,Category:Create,Category:Read,Category:Update,Category:Delete,User:Create,User:Read,User:Update,User:Delete]",
           },
-          // optional
-          autoSignIn: true, // or SignInOptions e.g { authFlowType: "USER_SRP_AUTH" }
+          autoSignIn: true,
         },
       });
-    } catch (error) {
-      console.error("error signing up:", error);
-    }
-  };
+    },
+    onSuccess: () => {
+      openMessage({
+        message:
+          "User Registered Successfully! Please Check your email to verify your account",
+        type: "success",
+        onClose: () => {
+          navigate(getRoutePath(ROUTES_ID.login));
+        },
+      });
+    },
+    onError: (error) => {
+      openMessage({
+        message: error.message,
+        type: "error",
+      });
+    },
+  });
 
   return (
-    <Form layout="vertical" className="register-container">
-      <Card title="Register" className="register-card">
-        <Layout
-          style={{ gap: "10px", background: "none", marginBottom: "20px" }}
-        ></Layout>
-        <RTInput.text
-          label="username"
-          name="username"
-          className="register-input"
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <RTInput.text
-          label="email"
-          name="email"
-          className="register-input"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <RTInput.password
-          label="password"
-          name="password "
-          className="register-input"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Space style={{ display: "flex", justifyContent: "space-between" }}>
-          <Button type="primary" onClick={handleSignIn}>
-            Register{" "}
-          </Button>
-          <Button
-            type="link"
-            onClick={() => navigate(getRoutePath(ROUTES_ID.login))}
-          >
-            Login{" "}
-          </Button>
-        </Space>
-      </Card>
-    </Form>
+    <>
+      {context}
+      <Form
+        layout="vertical"
+        className="register-container"
+        onFinish={() => mutation.mutate()}
+      >
+        <Card title="Register" className="register-card">
+          <Layout
+            style={{ gap: "10px", background: "none", marginBottom: "20px" }}
+          ></Layout>
+          <RTInput.text
+            label="username"
+            name="username"
+            className="register-input"
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <RTInput.text
+            label="email"
+            name="email"
+            className="register-input"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <RTInput.password
+            label="password"
+            name="password "
+            className="register-input"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Space style={{ display: "flex", justifyContent: "space-between" }}>
+            <RTButton.login text={"Register"} loading={mutation.isPending} />
+
+            <Button
+              type="link"
+              onClick={() => navigate(getRoutePath(ROUTES_ID.login))}
+            >
+              Login{" "}
+            </Button>
+          </Space>
+        </Card>
+      </Form>
+    </>
   );
 };
 const RegisterPage = (props) => {

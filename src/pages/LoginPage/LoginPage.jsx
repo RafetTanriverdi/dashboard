@@ -21,9 +21,9 @@ import { getAuthItems } from "@rt/utils/permission-util";
 import awsmobile from "@rt/aws-exports";
 import { getRoutePath } from "@rt/routing/routes";
 import GoogleSignIn from "./GoogleSignIn/GoogleSignIn";
-import {cognitoUserPoolsTokenProvider} from 'aws-amplify/auth/cognito'
+import { cognitoUserPoolsTokenProvider } from "aws-amplify/auth/cognito";
 import { defaultStorage } from "aws-amplify/utils";
-
+import Message from "@rt/components/RTFeedback/Message/Message";
 
 Amplify.configure(awsmobile);
 
@@ -33,10 +33,20 @@ const LoginPageContainer = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { setUserData } = useUserDataStore();
+  const { context, openMessage } = Message();
 
   const ability = useContext(AbilityContext);
-  const handleSignIn = async () => {
-    try {
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      mutation.mutate();
+    }
+  };
+
+  const mutation = useMutation({
+    mutationKey: ["signIn"],
+    mutationFn: async () => {
       const { nextStep } = await signIn({
         username: email,
         password,
@@ -54,57 +64,61 @@ const LoginPageContainer = () => {
         navigate(getRoutePath(ROUTES_ID.dashboard));
       }
       updateAbilityFor(ability, getAuthItems());
-    } catch (e) {
-      console.error("error in login ", e);
-    }
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handleSignIn();
-    }
-  };
-
-  const mutation = useMutation({
-    mutationKey: "signIn",
-    mutationFn: handleSignIn,
+    },
+    onSuccess: () => {
+      openMessage({
+        message: "Login successful",
+        type: "success",
+        duration: 2,
+     
+      });
+    },
+    onError: (error) => {
+      console.error("error in login ", error);
+      openMessage({
+        message: error.message,
+        type: "error",
+        duration: 2,
+      });
+    },
   });
 
   return (
-    <Form
-      className="login-container"
-      layout="vertical"
-      onFinish={mutation.mutate}
-    >
-
-      <Card className="card-container" title="Login">
-        <GoogleSignIn text={"Google Sign In"}/>
-        <RTInput.text
-          label="E-mail"
-          name="email"
-          className="input"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          onKeyDown={handleKeyDown}
-        />
-        <RTInput.password
-          label="Password"
-          name="password"
-          className="input"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          onKeyDown={handleKeyDown}
-        />
-        <Space>
-          <RTButton.login text="Login" loading={mutation.isPending} />
-          <RTButton.register
-            onClick={() => navigate(getRoutePath(ROUTES_ID.register))}
-            text="Register"
+    <>
+      {context}
+      <Form
+        className="login-container"
+        layout="vertical"
+        onFinish={mutation.mutate}
+      >
+        <Card className="card-container" title="Login">
+          <GoogleSignIn text={"Google Sign In"} />
+          <RTInput.text
+            label="E-mail"
+            name="email"
+            className="input"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
-        </Space>
-      </Card>
-    </Form>
+          <RTInput.password
+            label="Password"
+            name="password"
+            className="input"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+          <Space>
+            <RTButton.login text="Login" loading={mutation.isPending} />
+            <RTButton.register
+              onClick={() => navigate(getRoutePath(ROUTES_ID.register))}
+              text="Register"
+            />
+          </Space>
+        </Card>
+      </Form>
+    </>
   );
 };
 
