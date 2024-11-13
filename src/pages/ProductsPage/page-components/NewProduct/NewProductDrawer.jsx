@@ -14,9 +14,10 @@ export const NewProductDrawer = ({ onClose, open, categories }) => {
   const [price, setPrice] = useState();
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-  const [imageFiles, setImageFiles] = useState([]); // Çoklu görseller için dizi
+  const [imageFiles, setImageFiles] = useState([]); 
   const [stock, setStock] = useState(0);
   const [shared, setShared] = useState(true);
+  const [imageList, setImageList] = useState([]);
 
   const queryClient = useQueryClient();
 
@@ -27,7 +28,7 @@ export const NewProductDrawer = ({ onClose, open, categories }) => {
   const compressImage = (file) => {
     return new Promise((resolve, reject) => {
       new Compressor(file, {
-        quality: 0.6, // Sıkıştırma kalitesi (0.0 - 1.0 arası)
+        quality: 1,
         success(result) {
           resolve(result);
         },
@@ -108,6 +109,8 @@ export const NewProductDrawer = ({ onClose, open, categories }) => {
         onClose: () => {
           onClose();
           form.resetFields();
+          setImageFiles([]);
+          setImageList([]);
         },
       });
     },
@@ -120,6 +123,7 @@ export const NewProductDrawer = ({ onClose, open, categories }) => {
       });
     },
   });
+
 
   return (
     <>
@@ -150,11 +154,13 @@ export const NewProductDrawer = ({ onClose, open, categories }) => {
           setCategory={setCategory}
           categories={categories}
           imageFiles={imageFiles}
-          setImageFiles={setImageFiles} // Çoklu görseller için fonksiyon
+          setImageFiles={setImageFiles} 
           stock={stock}
           setStock={setStock}
           setStatus={setShared}
           status={shared}
+          imageList={imageList}
+          setImageList={setImageList}
         />
       </Drawer>
     </>

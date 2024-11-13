@@ -95,7 +95,6 @@ const CustomerDetailsPageContainer = ({ data, error, isLoading }) => {
         orderedProducts: JSON.parse(item.metadata.orderItems).length,
       };
     });
-  console.log(data?.profilePictureUrl);
 
   return (
     <div style={{ padding: "10px" }}>

@@ -7,7 +7,6 @@ import { Tag } from "antd";
 import { Image } from "antd";
 import { Descriptions } from "antd";
 import dayjs from "dayjs";
-import ReactJson from "react-json-view";
 
 const ViewProductPanel = ({ id }) => {
   const { data, isLoading, error } = useQuery({
@@ -33,7 +32,7 @@ const ViewProductPanel = ({ id }) => {
       key: 2,
       label: "Product Description",
       children: data.description,
-      span:2,
+      span: 2,
     },
     {
       key: 3,
@@ -51,6 +50,35 @@ const ViewProductPanel = ({ id }) => {
       children: data.categoryName,
     },
     {
+      key: 9,
+      label: "Status",
+      children: (
+        <Tag color={data.active ? "green" : "red"}>
+          {data.active ? "Active" : "Inactive"}
+        </Tag>
+      ),
+    },
+    {
+      key: 10,
+      label: "Product Images",
+      children: data.imageUrls.map((e) => (
+        <Image
+          loading="lazy"
+          key={e}
+          src={e}
+          width={120}
+          style={{ padding: "0 2px" }}
+        />
+      )),
+      span: 2,
+    },
+
+    {
+      key: 8,
+      label: "Owner",
+      children: data.ownerName,
+    },
+    {
       key: 6,
       label: "Created",
       children: dayjs(data.createdAt).format("MMM,DD YYYY - hh:mm A"),
@@ -60,31 +88,10 @@ const ViewProductPanel = ({ id }) => {
       label: "Updated",
       children: dayjs(data.updatedAt).format("MMM,DD YYYY - hh:mm A"),
     },
-    {
-      key:8,
-      label:"Owner",
-      children:data.ownerName
-    },
-    {
-      key:9,
-      label:'Status',
-      children:(
-        <Tag color={data.active  ? "green" : "red"}>
-          {data.active ? "Active" : "Inactive"}
-        </Tag>
-      )
-    },{
-      key:10,
-      label:"Product Images",
-      children:data.imageUrls.map(e=>(
-        <Image key={e} src={e} width={120}  style={{padding:'0 2px'}} />
-      ))
-    }
   ];
   return (
     <>
       <Descriptions layout="vertical" items={item} bordered />
-      <ReactJson src={data} />
     </>
   );
 };

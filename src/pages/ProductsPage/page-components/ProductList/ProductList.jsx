@@ -12,11 +12,11 @@ import axiosInstance from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
 import dayjs from "dayjs";
 import { Badge } from "antd";
-import { Can } from "@rt/authorization/can";
 import { Permissions } from "@rt/utils/permission-util";
+import { RTButton } from "@rt/components/RTButton";
+import { useSearchParams } from "react-router-dom";
 
 const TableAntdContainer = ({ style, dataSource, categoriesData }) => {
-  // Create Category Filters
   const getCategoryFilters = (data, find) => {
     const categories = new Set(data.map((item) => item[find]));
 
@@ -46,9 +46,9 @@ const TableAntdContainer = ({ style, dataSource, categoriesData }) => {
       title: "Category",
       dataIndex: "categoryName",
       key: "categoryName",
-      sorter: (a, b) => a.category.localeCompare(b.category),
+      sorter: (a, b) => a.categoryName.localeCompare(b.categoryName),
       filters: getCategoryFilters(dataSource, "categoryName"),
-      onFilter: (value, record) => record.category.startsWith(value),
+      onFilter: (value, record) => record.categoryName.startsWith(value),
       filterMode: "tree",
       filterSearch: true,
     },
@@ -126,22 +126,19 @@ const TableActions = ({ data, categoriesData }) => {
       <a role="button" onClick={() => showDrawer(TableView.VIEW)}>
         View
       </a>
-      <Can
-        do={Permissions.products.actions.update}
-        on={Permissions.products.subject}
-      >
-        <a role="button" onClick={() => showDrawer(TableView.EDIT)}>
-          Edit
-        </a>
-      </Can>
-      <Can
-        do={Permissions.products.actions.delete}
-        on={Permissions.products.subject}
-      >
-        <a role="button" onClick={() => showDrawer(TableView.DELETE)}>
-          Delete
-        </a>
-      </Can>
+      <RTButton.action
+        action={Permissions.products.actions.update}
+        subject={Permissions.products.subject}
+        onClick={() => showDrawer(TableView.EDIT)}
+        name="Edit"
+      />
+      <RTButton.action
+        action={Permissions.products.actions.update}
+        subject={Permissions.products.subject}
+        onClick={() => showDrawer(TableView.DELETE)}
+        name="Delete"
+      />
+
       {open && type === TableView.VIEW && (
         <ViewProductDrawer onClose={onClose} open={open} inheritedData={data} />
       )}
@@ -170,12 +167,18 @@ const TableContainer = ({ categoriesData }) => {
     queryFn: () =>
       axiosInstance.get(ENDPOINTS.PRODUCT.LIST).then((res) => res.data),
   });
-  const longDate = "  MMMM DD, YYYY - hh:ss A ";
+  const longDate = "MMMM DD, YYYY - hh:ss A ";
 
   let tableData = [];
 
+  const [searchParams] = useSearchParams();
+
+  const lookingForProduct = searchParams.get("productId");
   if (hasArrayElement(data)) {
     tableData = data
+    .filter((item) => 
+      !lookingForProduct || item.productId === lookingForProduct
+    )
       .sort((a, b) => {
         return new Date(b.updatedAt) - new Date(a.updatedAt);
       })

@@ -57,7 +57,7 @@ const EditProductDrawer = ({
         reject(new Error("Invalid file type"));
       }
       new Compressor(file, {
-        quality: 0.6, // Sıkıştırma kalitesi
+        quality: 1,
         success(result) {
           resolve(result);
         },
@@ -80,7 +80,7 @@ const EditProductDrawer = ({
               if (file.originFileObj instanceof File) {
                 return compressImage(file.originFileObj);
               }
-              return Promise.resolve(file.originFileObj); // Eğer File değilse, sıkıştırma yapma
+              return Promise.resolve(file.originFileObj);
             })
           );
 
@@ -102,7 +102,7 @@ const EditProductDrawer = ({
 
         const validImageUrls = imageList
           .map((e) => e.url)
-          .filter((url) => url && url.trim() !== ""); // Filter out empty or invalid URLs
+          .filter((url) => url && url.trim() !== "");
 
         mutation.mutate({
           productName: newName,
@@ -111,8 +111,8 @@ const EditProductDrawer = ({
           categoryId: newCategory.value,
           active: newStatus,
           stock: newStock,
-          imageUrls: validImageUrls, // Only send valid URLs
-          images: newImages, // Yeni eklenecek görsellerin verisi
+          imageUrls: validImageUrls,
+          images: newImages,
         });
       })
       .catch((error) => {
@@ -168,7 +168,7 @@ const EditProductDrawer = ({
       console.error("Error: Product could not be updated", error);
     },
   });
-  
+
   return (
     <>
       {context}

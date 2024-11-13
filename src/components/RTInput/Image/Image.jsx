@@ -29,7 +29,9 @@ const ImageUpload = ({
         listType="picture-card"
         maxCount={maxCount}
         onChange={onChange}
-        beforeUpload={() => false} // prevent upload as we are managing it in state
+        beforeUpload={() => false} 
+        
+        
       >
         {fileList.length < maxCount && 'Click to Upload'}
       </Upload>

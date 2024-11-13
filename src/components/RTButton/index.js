@@ -1,4 +1,5 @@
 import AddButton from "./AddButton/AddButton";
+import AuthActionButton from "./AuthActionButton/AuthActionButton";
 import AuthAddButton from "./AuthAddButton/AuthAddButton";
 import AuthReloadButton from "./AuthReloadButton/AuthReloadButton";
 import BasicButton from "./BasicButton/BasicButton";
@@ -14,3 +15,4 @@ RTButton.authAdd = AuthAddButton;
 RTButton.basic = BasicButton;
 RTButton.reload = Reloadbutton;
 RTButton.authReload = AuthReloadButton;
+RTButton.action = AuthActionButton;

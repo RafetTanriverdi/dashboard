@@ -4,7 +4,7 @@ import { ENDPOINTS } from "@rt/network/endpoints";
 import axiosInstance from "@rt/network/httpRequester";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Drawer } from "antd";
-import ReactJson from "react-json-view";
+import ViewCategoryPanel from "../panels/ViewCategoryPanel";
 
 const DeleteCategoryDrawer = ({ open, onClose, inheritedData }) => {
   const { context, openNotification } = Notification();
@@ -14,10 +14,7 @@ const DeleteCategoryDrawer = ({ open, onClose, inheritedData }) => {
   const mutation = useMutation({
     mutationFn: () => {
       return axiosInstance.delete(
-        ENDPOINTS.CATEGORIES.DELETE.replace(
-          ":categoryId",
-          inheritedData.key
-        )
+        ENDPOINTS.CATEGORIES.DELETE.replace(":categoryId", inheritedData.key)
       );
     },
     onSuccess: () => {
@@ -53,7 +50,7 @@ const DeleteCategoryDrawer = ({ open, onClose, inheritedData }) => {
         size="large"
         onClose={onClose}
         open={open}
-        extra={
+        footer={
           <RTButton.add
             text="Delete Category"
             onClick={() => mutation.mutate()}
@@ -61,7 +58,7 @@ const DeleteCategoryDrawer = ({ open, onClose, inheritedData }) => {
           />
         }
       >
-        <ReactJson src={inheritedData} />
+        <ViewCategoryPanel categoryId={inheritedData.key} />
       </Drawer>
     </>
   );

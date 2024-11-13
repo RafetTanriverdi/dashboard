@@ -4,7 +4,7 @@ import { ENDPOINTS } from "@rt/network/endpoints";
 import axiosInstance from "@rt/network/httpRequester";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Drawer } from "antd";
-import ReactJson from "react-json-view";
+import ViewProductPanel from "../panels/ViewProductPanel";
 
 const DeleteProductDrawer = ({ open, onClose, inheritedData }) => {
   const { context, openNotification } = Notification();
@@ -50,7 +50,7 @@ const DeleteProductDrawer = ({ open, onClose, inheritedData }) => {
         size="large"
         onClose={onClose}
         open={open}
-        extra={
+        footer={
           <RTButton.add
             text="Delete Product"
             onClick={() => mutation.mutate()}
@@ -58,7 +58,7 @@ const DeleteProductDrawer = ({ open, onClose, inheritedData }) => {
           />
         }
       >
-        <ReactJson src={inheritedData} />
+        <ViewProductPanel id={inheritedData.id} />
       </Drawer>
     </>
   );

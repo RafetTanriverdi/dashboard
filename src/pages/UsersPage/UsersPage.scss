@@ -11,7 +11,11 @@
         width: 100%;
     }
 }
-
+.user_view_tree{
+    :where(.css-dev-only-do-not-override-1y91f9s).ant-tree {
+        background:transparent !important;
+    }
+}
 @media screen and (max-width: 768px) {
     .user-list-container {
         display: flex;

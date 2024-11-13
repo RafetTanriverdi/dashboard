@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { RTInput } from "@rt/components/RTInput";
 import RTSelect from "@rt/components/RTSelect/RTSelect";
 import { Form } from "antd";
@@ -14,18 +13,18 @@ const NewProductPanel = ({
   category,
   setCategory,
   form,
-  setImageFiles, // Çoklu görseller için set fonksiyonu
+  setImageFiles,
   categories,
   stock,
   setStock,
   status,
   setStatus,
+  imageList,
+  setImageList,
 }) => {
-  const [imageList, setImageList] = useState([]);
-
   const handleImageChange = (info) => {
     setImageList(info.fileList);
-    setImageFiles(info.fileList); // Çoklu görselleri burada sakla
+    setImageFiles(info.fileList);
   };
 
   const selectedOptions = categories?.map((category) => ({
@@ -90,9 +89,9 @@ const NewProductPanel = ({
       <RTInput.image
         label={"Product Images"}
         name={"Images"}
-        maxCount={5} // Birden fazla görsele izin ver
+        maxCount={5}
         onChange={handleImageChange}
-        fileList={imageList} // Görsel listesi
+        fileList={imageList}
         required
       />
     </Form>

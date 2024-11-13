@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { ResponsivePie } from "@nivo/pie";
 import { useDeviceStore } from "@rt/data/Device/mobile";
 import { useThemeChangeStore } from "@rt/data/Theme/Theme";
@@ -16,7 +17,6 @@ const RTPie = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [isMobile]);
 
-  console.log(isMobile, "isMobile");
   return (
     <ResponsivePie
       data={data}

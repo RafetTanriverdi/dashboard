@@ -16,7 +16,7 @@ export const NewProductButton = ({ categories }) => {
         <RTButton.authReload
           action={Permissions.products.actions.read}
           subject={Permissions.products.subject}
-          onClick={() => window.location.reload()}
+          onClick={()=>window.location.href = "/products"}
         />
         <RTButton.authAdd
           action={Permissions.products.actions.create}
