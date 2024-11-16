@@ -16,7 +16,6 @@ const MainLayout = ({ sider, content, title }) => {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
 
-  console.log(isMobile,'isMobile')
   
   useEffect(() => {
     if (initialState) {
