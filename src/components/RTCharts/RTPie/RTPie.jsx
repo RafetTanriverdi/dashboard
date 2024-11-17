@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { Desktop } from "./data/Desktop";
 import { Mobile } from "./data/Mobile";
 
-const RTPie = () => {
+const RTPie = ({fill,data}) => {
   const { theme } = useThemeChangeStore();
   const { isMobile, handleResize } = useDeviceStore();
 
@@ -60,56 +60,7 @@ const RTPie = () => {
           spacing: 10,
         },
       ]}
-      fill={[
-        {
-          match: {
-            id: "ruby",
-          },
-          id: "dots",
-        },
-        {
-          match: {
-            id: "c",
-          },
-          id: "dots",
-        },
-        {
-          match: {
-            id: "go",
-          },
-          id: "dots",
-        },
-        {
-          match: {
-            id: "python",
-          },
-          id: "dots",
-        },
-        {
-          match: {
-            id: "scala",
-          },
-          id: "lines",
-        },
-        {
-          match: {
-            id: "lisp",
-          },
-          id: "lines",
-        },
-        {
-          match: {
-            id: "elixir",
-          },
-          id: "lines",
-        },
-        {
-          match: {
-            id: "javascript",
-          },
-          id: "lines",
-        },
-      ]}
+      fill={fill}
       legends={[!isMobile ? Desktop.legend : Mobile.legend]}
     />
   );
@@ -117,35 +68,3 @@ const RTPie = () => {
 
 export default RTPie;
 
-const data = [
-  {
-    id: "sass",
-    label: "sass",
-    value: 283,
-    color: "hsl(112, 70%, 50%)",
-  },
-  {
-    id: "rust",
-    label: "rust",
-    value: 326,
-    color: "hsl(305, 70%, 50%)",
-  },
-  {
-    id: "make",
-    label: "make",
-    value: 232,
-    color: "hsl(134, 70%, 50%)",
-  },
-  {
-    id: "javascript",
-    label: "javascript",
-    value: 41,
-    color: "hsl(179, 70%, 50%)",
-  },
-  {
-    id: "java",
-    label: "java",
-    value: 234,
-    color: "hsl(201, 70%, 50%)",
-  },
-];

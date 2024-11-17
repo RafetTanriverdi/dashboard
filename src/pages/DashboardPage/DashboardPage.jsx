@@ -10,7 +10,88 @@ import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
-
+const fill = [
+  {
+    match: {
+      id: "ruby",
+    },
+    id: "dots",
+  },
+  {
+    match: {
+      id: "c",
+    },
+    id: "dots",
+  },
+  {
+    match: {
+      id: "go",
+    },
+    id: "dots",
+  },
+  {
+    match: {
+      id: "python",
+    },
+    id: "dots",
+  },
+  {
+    match: {
+      id: "scala",
+    },
+    id: "lines",
+  },
+  {
+    match: {
+      id: "lisp",
+    },
+    id: "lines",
+  },
+  {
+    match: {
+      id: "elixir",
+    },
+    id: "lines",
+  },
+  {
+    match: {
+      id: "javascript",
+    },
+    id: "lines",
+  },
+];
+const data = [
+  {
+    id: "sass",
+    label: "sass",
+    value: 283,
+    color: "hsl(112, 70%, 50%)",
+  },
+  {
+    id: "rust",
+    label: "rust",
+    value: 326,
+    color: "hsl(305, 70%, 50%)",
+  },
+  {
+    id: "make",
+    label: "make",
+    value: 232,
+    color: "hsl(134, 70%, 50%)",
+  },
+  {
+    id: "javascript",
+    label: "javascript",
+    value: 41,
+    color: "hsl(179, 70%, 50%)",
+  },
+  {
+    id: "java",
+    label: "java",
+    value: 234,
+    color: "hsl(201, 70%, 50%)",
+  },
+];
 const DashboardPageContainer = () => {
   const funnelChartRef = useRef(null);
   const pieChartRef = useRef(null);
@@ -130,7 +211,7 @@ const DashboardPageContainer = () => {
         </Col>
         <Col xs={24} md={8}>
           <Card className="pie-container" ref={pieChartRef}>
-            <RTCharts.Pie />
+            <RTCharts.Pie data={data} fill={fill}/>
           </Card>
         </Col>
       </Row>

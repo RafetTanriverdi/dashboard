@@ -5,8 +5,9 @@ import { ExpandedRowRender } from "./ExpandedList";
 import { Card } from "antd";
 import { capitalizeFirstLetter } from "@rt/utils/capitalizeFirstLetter";
 import dayjs from "dayjs";
+import { Descriptions } from "antd";
 
-export const ChargeList = ({data}) => {
+export const ChargeList = ({ data }) => {
   const [selectedCharge, setSelectedCharge] = useState(null);
   const [expandedRowKey, setExpandedRowKey] = useState(null);
 
@@ -14,20 +15,17 @@ export const ChargeList = ({data}) => {
     if (data?.charges?.length > 0) {
       const firstCharge = {
         key: data.charges[0].id,
+        shipping: data.charges[0].shipping,
         index: 0,
-        amount: data.charges[0].amount,
-        status: data.charges[0].status,
-        createdAt: dayjs.unix(data.charges[0].created).format("MMMM,DD YYYY"),
-        orderedProducts: JSON.parse(data.charges[0].metadata.orderItems).length,
       };
       setSelectedCharge(firstCharge);
-      setExpandedRowKey(data.charges[0].id);
     }
   }, [data]);
 
+  console.log("selectedCharge", selectedCharge);
+
   const handleExpand = (expanded, record) => {
     if (expanded) {
-      setSelectedCharge(record);
       setExpandedRowKey(record.key);
     } else {
       setExpandedRowKey(null);
@@ -35,8 +33,15 @@ export const ChargeList = ({data}) => {
   };
 
   const handleRowSelection = (record) => {
-    setSelectedCharge(record);
-    setExpandedRowKey(record.key);
+    const selectedCharge = data.charges.find(
+      (charge) => charge.id === record.key
+    );
+
+    setSelectedCharge({
+      key: selectedCharge.id,
+      shipping: selectedCharge.shipping,
+      index: record.index,
+    });
   };
 
   const columns = [
@@ -78,13 +83,15 @@ export const ChargeList = ({data}) => {
       index,
       id: item.id,
       amount: (item.amount / 100).toFixed(2),
-      status: capitalizeFirstLetter(item.status),
+      status: item.amount_refunded
+        ? "Refunded"
+        : capitalizeFirstLetter(item.status),
       createdAt: dayjs.unix(item.created).format("MMMM,DD YYYY"),
       orderedProducts: JSON.parse(item.metadata.orderItems).length,
     }));
   return (
     <>
-      <Col xs={24} md={15}>
+      <Col xs={24} md={16}>
         <Table
           pagination={{ pageSize: 4 }}
           expandable={{
@@ -112,22 +119,35 @@ export const ChargeList = ({data}) => {
           }}
         />
       </Col>
-      <Col xs={24} md={9}>
+      <Col xs={24} md={8}>
         {selectedCharge && (
-          <Card title="Selected Charge Details">
-            <p>
-              <strong>Amount:</strong> {selectedCharge.amount}
-            </p>
-            <p>
-              <strong>Status:</strong> {selectedCharge.status}
-            </p>
-            <p>
-              <strong>Ordered Products:</strong>{" "}
-              {selectedCharge.orderedProducts}
-            </p>
-            <p>
-              <strong>Created At:</strong> {selectedCharge.createdAt}
-            </p>
+          <Card title="Selected Order Shipping Details">
+            <Descriptions column={2}>
+              <Descriptions.Item label="Name">
+                {selectedCharge.shipping?.name}
+              </Descriptions.Item>
+              <Descriptions.Item label="Phone">
+                {selectedCharge.shipping?.phone}
+              </Descriptions.Item>
+              <Descriptions.Item label="Address 1">
+                {selectedCharge.shipping?.address.line1}
+              </Descriptions.Item>
+              <Descriptions.Item label="Address 2">
+                {selectedCharge.shipping?.address.line2}
+              </Descriptions.Item>
+              <Descriptions.Item label="State">
+                {selectedCharge.shipping?.address.state}
+              </Descriptions.Item>
+              <Descriptions.Item label="Postal Code">
+                {selectedCharge.shipping?.address.postal_code}
+              </Descriptions.Item>
+              <Descriptions.Item label="City">
+                {selectedCharge.shipping?.address.city}
+              </Descriptions.Item>
+              <Descriptions.Item label="Country">
+                {selectedCharge.shipping?.address.country}
+              </Descriptions.Item>
+            </Descriptions>
           </Card>
         )}
       </Col>
