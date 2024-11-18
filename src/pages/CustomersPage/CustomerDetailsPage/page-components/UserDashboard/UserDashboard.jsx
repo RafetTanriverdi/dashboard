@@ -121,7 +121,7 @@ const UserDashboard = ({ customerId }) => {
               className="bar-container"
               style={{ width: "100%", height: "100%" }}
             >
-              <RTCharts.Bar />
+              <RTCharts.Bump/>
             </Card>
           </Col>
         </Row>

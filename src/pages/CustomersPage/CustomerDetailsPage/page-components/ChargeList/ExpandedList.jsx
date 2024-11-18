@@ -93,7 +93,6 @@ export const ExpandedRowRender = ({ charges, index }) => {
       pagination={false}
       scroll={{
         y: jsonChargeList.length > 4 ? 250 : null,
-        x: 768,
       }}
       size="middle"
     />

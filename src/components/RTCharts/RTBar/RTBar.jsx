@@ -1,4 +1,7 @@
 import { ResponsiveBar } from "@nivo/bar";
+import { useThemeChangeStore } from "@rt/data/Theme/Theme";
+import { ChartsDark } from "@rt/theme/DarkTheme/ChartsDarkTheme";
+import { ChartsLight } from "@rt/theme/LightTheme/ChartsLightTheme";
 const data = [
   {
     product: "Product A",
@@ -18,8 +21,10 @@ const data = [
 ];
 
 const RTBar = () => {
+  const { theme } = useThemeChangeStore();
   return (
     <ResponsiveBar
+      theme={theme ? ChartsLight : ChartsDark}
       data={data}
       keys={["stock", "order"]}
       indexBy="product"

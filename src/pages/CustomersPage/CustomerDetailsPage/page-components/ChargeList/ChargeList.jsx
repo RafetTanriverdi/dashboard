@@ -53,6 +53,7 @@ export const ChargeList = ({ data }) => {
       sorter: (a, b) => a.amount - b.amount,
       render: (amount) => `$ ${amount}`,
     },
+    Table.EXPAND_COLUMN,
     {
       title: "Ordered Products",
       dataIndex: "orderedProducts",
@@ -61,7 +62,6 @@ export const ChargeList = ({ data }) => {
       ellipsis: true,
       sorter: (a, b) => a.orderedProducts - b.orderedProducts,
     },
-    Table.EXPAND_COLUMN,
     {
       title: "Status",
       dataIndex: "status",
