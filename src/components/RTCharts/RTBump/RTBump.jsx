@@ -1,14 +1,82 @@
-import { ResponsiveBump } from '@nivo/bump'
-import { useThemeChangeStore } from '@rt/data/Theme/Theme';
-import { ChartsDark } from '@rt/theme/DarkTheme/ChartsDarkTheme';
-import { ChartsLight } from '@rt/theme/LightTheme/ChartsLightTheme';
+import { ResponsiveBump } from "@nivo/bump";
+import { useThemeChangeStore } from "@rt/data/Theme/Theme";
+import { ChartsDark } from "@rt/theme/DarkTheme/ChartsDarkTheme";
+import { ChartsLight } from "@rt/theme/LightTheme/ChartsLightTheme";
+import dayjs from "dayjs";
 
-const RTBump = () => {
-    const { theme } = useThemeChangeStore();
+const prepareBumpData = (categoryTimeLine) => {
+  const allCategories = [
+    ...new Set(categoryTimeLine.map((item) => item.categoryName)),
+  ];
+
+  const groupedByDate = categoryTimeLine.reduce(
+    (acc, { categoryName, date }) => {
+      if (!acc[date]) acc[date] = {};
+      if (!acc[date][categoryName]) acc[date][categoryName] = 0;
+      acc[date][categoryName] += 1;
+      return acc;
+    },
+    {}
+  );
+
+  const sortedDates = Object.keys(groupedByDate).sort((a, b) =>
+    dayjs(a).isBefore(dayjs(b)) ? -1 : 1
+  );
+
+  const rankings = [];
+  let previousRanking = allCategories.map((category, index) => ({
+    category,
+    rank: index + 1,
+  }));
+
+  for (const date of sortedDates) {
+    const currentDay = groupedByDate[date];
+    const currentRanking = allCategories.map((category) => {
+      const count = currentDay[category] || 0;
+      return { category, count };
+    });
+
+    currentRanking.sort(
+      (a, b) => b.count - a.count || a.category.localeCompare(b.category)
+    );
+
+    const ranked = currentRanking.map((item, index) => ({
+      category: item.category,
+      rank: index + 1,
+    }));
+
+    rankings.push({
+      date:dayjs(date).format('MMM, DD'),
+      rankings: ranked,
+    });
+
+    previousRanking = ranked;
+  }
+
+  const bumpData = allCategories.map((category) => ({
+    id: category,
+    data: rankings.map(({ date, rankings }) => {
+      const categoryRanking = rankings.find((r) => r.category === category);
+      return {
+        x: date,
+        y: categoryRanking
+          ? categoryRanking.rank
+          : previousRanking.find((r) => r.category === category)?.rank,
+      };
+    }),
+  }));
+
+  return bumpData;
+};
+
+const RTBump = ({ categoryTimeLine }) => {
+  const { theme } = useThemeChangeStore();
+  const bumpData = prepareBumpData(categoryTimeLine);
+
   return (
     <ResponsiveBump
-    theme={theme ? ChartsLight : ChartsDark}
-      data={data}
+      theme={theme ? ChartsLight : ChartsDark}
+      data={bumpData}
       colors={{ scheme: "spectral" }}
       lineWidth={3}
       activeLineWidth={6}
@@ -48,239 +116,10 @@ const RTBump = () => {
         legendOffset: -40,
         truncateTickAt: 0,
       }}
-      margin={{ top: 40, right: 90, bottom: 40, left: 60 }}
+      margin={{ top: 40, right: 130, bottom: 40, left: 60 }}
       axisRight={null}
     />
   );
 };
 
 export default RTBump;
-
-const data = [
-  {
-    id: "Serie 1",
-    data: [
-      {
-        x: "July",
-        y: 1,
-      },
-      {
-        x: "August",
-        y: 2,
-      },
-      {
-        x: "September",
-        y: 9,
-      },
-      {
-        x: "October",
-        y: 9,
-      },
-      {
-        x: "November",
-        y: 9,
-      },
-    ],
-  },
-  {
-    id: "Serie 2",
-    data: [
-      {
-        x: "July",
-        y: 2,
-      },
-      {
-        x: "August",
-        y: 8,
-      },
-      {
-        x: "September",
-        y: 7,
-      },
-      {
-        x: "October",
-        y: 2,
-      },
-      {
-        x: "November",
-        y: 9,
-      },
-    ],
-  },
-  {
-    id: "Serie 3",
-    data: [
-      {
-        x: "July",
-        y: 9,
-      },
-      {
-        x: "August",
-        y: 9,
-      },
-      {
-        x: "September",
-        y: 9,
-      },
-      {
-        x: "October",
-        y: 5,
-      },
-      {
-        x: "November",
-        y: 5,
-      },
-    ],
-  },
-  {
-    id: "Serie 4",
-    data: [
-      {
-        x: "July",
-        y: 9,
-      },
-      {
-        x: "August",
-        y: 1,
-      },
-      {
-        x: "September",
-        y: 9,
-      },
-      {
-        x: "October",
-        y: 9,
-      },
-      {
-        x: "November",
-        y: 6,
-      },
-    ],
-  },
-  {
-    id: "Serie 5",
-    data: [
-      {
-        x: "July",
-        y: 9,
-      },
-      {
-        x: "August",
-        y: 9,
-      },
-      {
-        x: "September",
-        y: 9,
-      },
-      {
-        x: "October",
-        y: 3,
-      },
-      {
-        x: "November",
-        y: 2,
-      },
-    ],
-  },
-  {
-    id: "Serie 6",
-    data: [
-      {
-        x: "July",
-        y: 3,
-      },
-      {
-        x: "August",
-        y: 3,
-      },
-      {
-        x: "September",
-        y: 2,
-      },
-      {
-        x: "October",
-        y: 4,
-      },
-      {
-        x: "November",
-        y: 3,
-      },
-    ],
-  },
-  {
-    id: "Serie 7",
-    data: [
-      {
-        x: "July",
-        y: 6,
-      },
-      {
-        x: "August",
-        y: 9,
-      },
-      {
-        x: "September",
-        y: 8,
-      },
-      {
-        x: "October",
-        y: 7,
-      },
-      {
-        x: "November",
-        y: 9,
-      },
-    ],
-  },
-  {
-    id: "Serie 8",
-    data: [
-      {
-        x: "July",
-        y: 9,
-      },
-      {
-        x: "August",
-        y: 6,
-      },
-      {
-        x: "September",
-        y: 5,
-      },
-      {
-        x: "October",
-        y: 9,
-      },
-      {
-        x: "November",
-        y: 9,
-      },
-    ],
-  },
-  {
-    id: "Serie 9",
-    data: [
-      {
-        x: "July",
-        y: 5,
-      },
-      {
-        x: "August",
-        y: 7,
-      },
-      {
-        x: "September",
-        y: 4,
-      },
-      {
-        x: "October",
-        y: 9,
-      },
-      {
-        x: "November",
-        y: 4,
-      },
-    ],
-  },
-
-];

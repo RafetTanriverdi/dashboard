@@ -10,6 +10,8 @@ import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
+import { Desktop } from "@rt/components/RTCharts/RTPie/data/Desktop";
+import { Mobile } from "@rt/components/RTCharts/RTPie/data/Mobile";
 const fill = [
   {
     match: {
@@ -211,7 +213,7 @@ const DashboardPageContainer = () => {
         </Col>
         <Col xs={24} md={8}>
           <Card className="pie-container" ref={pieChartRef}>
-            <RTCharts.Pie data={data} fill={fill}/>
+            <RTCharts.Pie data={data} fill={fill} desktop={Desktop} mobile={Mobile} />
           </Card>
         </Col>
       </Row>

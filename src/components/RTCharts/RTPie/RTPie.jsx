@@ -5,10 +5,9 @@ import { useThemeChangeStore } from "@rt/data/Theme/Theme";
 import { ChartsDark } from "@rt/theme/DarkTheme/ChartsDarkTheme";
 import { ChartsLight } from "@rt/theme/LightTheme/ChartsLightTheme";
 import { useEffect } from "react";
-import { Desktop } from "./data/Desktop";
-import { Mobile } from "./data/Mobile";
 
-const RTPie = ({fill,data}) => {
+
+const RTPie = ({fill,data,desktop,mobile}) => {
   const { theme } = useThemeChangeStore();
   const { isMobile, handleResize } = useDeviceStore();
 
@@ -21,7 +20,7 @@ const RTPie = ({fill,data}) => {
     <ResponsivePie
       data={data}
       theme={theme ? ChartsLight : ChartsDark}
-      margin={isMobile ? Mobile.margin : Desktop.margin}
+      margin={isMobile ? mobile.margin : desktop.margin}
       innerRadius={0.55}
       cornerRadius={1}
       activeOuterRadiusOffset={8}
@@ -61,7 +60,7 @@ const RTPie = ({fill,data}) => {
         },
       ]}
       fill={fill}
-      legends={[!isMobile ? Desktop.legend : Mobile.legend]}
+      legends={[!isMobile ? desktop.legend : mobile.legend]}
     />
   );
 };

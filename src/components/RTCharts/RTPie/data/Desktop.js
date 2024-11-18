@@ -3,7 +3,7 @@ export const Desktop = {
     anchor: "right",
     direction: "column",
     justify: false,
-    translateX: 104,
+    translateX: 14,
     translateY: 20,
     itemsSpacing: 9,
     itemWidth: 100,
@@ -24,7 +24,7 @@ export const Desktop = {
   },
   margin: {
     top: 40,
-    right: 80,
+    right: 10,
     bottom: 40,
     left: 0,
   },

@@ -8,7 +8,10 @@ import { useQuery } from "@tanstack/react-query";
 import { Row } from "antd";
 import { Col, Statistic } from "antd";
 import { Card } from "antd";
+import dayjs from "dayjs";
 import CountUp from "react-countup";
+import { Desktop } from "@rt/components/RTCharts/RTPie/data/Desktop";
+import { Mobile } from "@rt/components/RTCharts/RTPie/data/Mobile";
 
 const UserDashboard = ({ customerId }) => {
   const products = useQuery({
@@ -20,9 +23,40 @@ const UserDashboard = ({ customerId }) => {
     queryKey: ["customers", customerId],
   });
 
+  const desktopData = {
+    legend: {
+      ...Desktop.legend,
+      translateX: -54,
+      translateY: 20,
+    },
+    margin: {
+      ...Desktop.margin,
+      left: -40,
+    },
+  };
+  const mobileData = {
+    ...Mobile,
+    legend: {
+      ...Mobile.legend,
+      translateX: -35,
+      translateY: 30,
+      direction: "column",
+      anchor: "bottom-left",
+      symbolShape: "circle",
+      symbolSize: 10,
+      itemHeight: 10,
+      itemWidth: 10,
+    },
+    margin: {
+      ...Mobile.margin,
+      left: 35,
+    },
+  };
+
   let categoryList = [];
   let incomeData = [];
   let refundData = [];
+  let categoryTimeLine = [];
 
   const charges = customer.data?.charges;
 
@@ -35,6 +69,8 @@ const UserDashboard = ({ customerId }) => {
     incomeData.push(income);
     refundData.push(refund);
 
+    const date = dayjs.unix(element.created).format("YYYY-MM-DD");
+
     for (let j = 0; j < orderItems.length; j++) {
       const element = orderItems[j];
 
@@ -46,9 +82,14 @@ const UserDashboard = ({ customerId }) => {
 
       if (filterCategories?.[0]) {
         categoryList.push(filterCategories[0]);
+        categoryTimeLine.push({
+          categoryName: filterCategories[0],
+          date: date,
+        });
       }
     }
   }
+  console.log(categoryTimeLine);
 
   const income = incomeData.reduce((acc, item) => acc + item, 0) / 100;
   const refund = refundData.reduce((acc, item) => acc + item, 0) / 100;
@@ -75,12 +116,17 @@ const UserDashboard = ({ customerId }) => {
       };
     });
 
+  if (!customer.data || !products.data) return <RTSkeleton />;
   if (products.isLoading || customer.isLoading) return <RTSkeleton />;
 
   return (
     <>
       <Col xs={24} lg={12}>
-        <Row>
+        <Row
+          style={{
+            marginBottom: "10px",
+          }}
+        >
           <Col
             xs={12}
             style={{ width: "100%", height: "120px", display: "flex" }}
@@ -121,20 +167,13 @@ const UserDashboard = ({ customerId }) => {
               className="bar-container"
               style={{ width: "100%", height: "100%" }}
             >
-              <RTCharts.Bump/>
+              <RTCharts.Bump categoryTimeLine={categoryTimeLine} />
             </Card>
           </Col>
         </Row>
       </Col>
-      <Col
-        xs={24}
-        lg={12}
-        style={{ width: "100%", height: "450px", display: "flex" }}
-      >
-        <Card
-          className="pie-container"
-          style={{ width: "100%", height: "100%" }}
-        >
+      <Col xs={24} lg={12}>
+        <Card className="pie-container">
           {products.error || customer.error ? (
             <RTAlert
               message={products.error?.message || customer.error?.message}
@@ -142,7 +181,11 @@ const UserDashboard = ({ customerId }) => {
             />
           ) : (
             <div style={{ width: "100%", display: "flex", height: "100%" }}>
-              <RTCharts.Pie data={chartData} />
+              <RTCharts.Pie
+                data={chartData}
+                mobile={mobileData}
+                desktop={desktopData}
+              />
             </div>
           )}
         </Card>

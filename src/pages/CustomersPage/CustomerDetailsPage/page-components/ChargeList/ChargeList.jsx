@@ -6,6 +6,7 @@ import { Card } from "antd";
 import { capitalizeFirstLetter } from "@rt/utils/capitalizeFirstLetter";
 import dayjs from "dayjs";
 import { Descriptions } from "antd";
+import RTSkeleton from "@rt/components/RTSkeleton/RTSkeleton";
 
 export const ChargeList = ({ data }) => {
   const [selectedCharge, setSelectedCharge] = useState(null);
@@ -89,6 +90,9 @@ export const ChargeList = ({ data }) => {
       createdAt: dayjs.unix(item.created).format("MMMM,DD YYYY"),
       orderedProducts: JSON.parse(item.metadata.orderItems).length,
     }));
+
+
+    if (!data || !data.charges || data.charges.length === 0) return <RTSkeleton />;
   return (
     <>
       <Col xs={24} md={16}>
