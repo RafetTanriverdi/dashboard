@@ -3,49 +3,29 @@ import { Breadcrumb, Layout } from "antd";
 import "./MainLayout.scss";
 import { Helmet } from "react-helmet";
 import RTHeader from "@rt/components/RTHeader/RTHeader";
-import { useState, useEffect } from "react";
+import {  useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { HomeOutlined } from "@ant-design/icons";
+import { useSidebarStore } from "@rt/data/Sidebar/Sidebar";
 
 const { Sider, Content, Header } = Layout;
 
 const MainLayout = ({ sider, content, title }) => {
-  const initialState = localStorage.getItem("collapse") === "true";
-  const [collapsed, setCollapsed] = useState(initialState);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const { isCollapsed, isMobile, handleResize, toggleCollapse, setCollapsed } =
+    useSidebarStore();
+
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
 
-  
   useEffect(() => {
-    if (initialState) {
-      setCollapsed(initialState);
-      localStorage.setItem("collapse", "true");
-    } else {
-      setCollapsed(false);
-      localStorage.setItem("collapse", "false");
-    }
+    setCollapsed(localStorage.getItem("collapse") === "true");
   }, []);
 
   useEffect(() => {
-    if (isMobile) {
-      setCollapsed(true);
-      localStorage.setItem("collapse", "true");
-    }
+    // Handle resizing and mobile state
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [location.pathname]);
-
-  const handleResize = () => {
-    setIsMobile(window.innerWidth < 768);
-  };
-
-  const handleCollapse = () => {
-    const newCollapsedState = !collapsed;
-    setCollapsed(newCollapsedState);
-    localStorage.setItem("collapse", newCollapsedState);
-  };
-
   return (
     <>
       <Helmet>
@@ -56,19 +36,19 @@ const MainLayout = ({ sider, content, title }) => {
       <Layout className="container">
         <Header className="header">
           <RTHeader
-            open={collapsed}
-            setOpen={handleCollapse}
+            open={isCollapsed}
+            setOpen={toggleCollapse}
             isMobile={isMobile}
           />
         </Header>
         <Layout>
           <Sider
             collapsible
-            collapsed={collapsed}
-            onCollapse={() => handleCollapse()}
+            collapsed={isCollapsed}
+            onCollapse={toggleCollapse}
             breakpoint="lg"
             collapsedWidth={isMobile ? 0 : 50}
-            width={isMobile ? '100%' : 250}
+            width={isMobile ? "100%" : 250}
             trigger={isMobile && null}
             style={{ height: "100vh" }}
           >
@@ -77,10 +57,10 @@ const MainLayout = ({ sider, content, title }) => {
           <Content className="content" style={{ padding: "20px" }}>
             {isMobile && splitLocation.length === 2 && (
               <Breadcrumb
-              style={{marginBottom:"5px"}}
+                style={{ marginBottom: "5px" }}
                 items={[
                   {
-                    title:<HomeOutlined />,
+                    title: <HomeOutlined />,
                     href: "/",
                   },
                   {

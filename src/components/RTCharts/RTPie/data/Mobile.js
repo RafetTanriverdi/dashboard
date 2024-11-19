@@ -10,10 +10,15 @@ export const Mobile = {
     itemTextColor: "#999",
     symbolSize: 18,
     symbolShape: "square",
+    toggleSerie: true,
     effects: [
       {
         on: "hover",
-     
+        style: {
+          itemBackground: "rgba(0, 0, 0, .03)",
+          itemOpacity: 1,
+          itemTextColor: "#ffff",
+        },
       },
     ],
   },

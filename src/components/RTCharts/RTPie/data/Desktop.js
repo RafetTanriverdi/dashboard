@@ -5,19 +5,20 @@ export const Desktop = {
     justify: false,
     translateX: 14,
     translateY: 20,
-    itemsSpacing: 9,
+    itemsSpacing: 19,
     itemWidth: 100,
     itemHeight: 22,
     itemTextColor: "#999",
-    itemDirection: "left-to-right",
+    itemDirection: "top-to-bottom",
     itemOpacity: 1,
     symbolSize: 18,
+    toggleSerie: true,
     symbolShape: "circle",
     effects: [
       {
         on: "hover",
         style: {
-          itemTextColor: "#000",
+          itemTextColor: "#ffff",
         },
       },
     ],
@@ -26,6 +27,6 @@ export const Desktop = {
     top: 40,
     right: 10,
     bottom: 40,
-    left: 0,
+    left: -70,
   },
 };

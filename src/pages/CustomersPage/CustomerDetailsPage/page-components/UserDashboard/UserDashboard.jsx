@@ -50,6 +50,7 @@ const UserDashboard = ({ customerId }) => {
     margin: {
       ...Mobile.margin,
       left: 35,
+      right:0,
     },
   };
 
@@ -133,6 +134,7 @@ const UserDashboard = ({ customerId }) => {
           >
             <Card style={{ width: "95%", height: "95%" }}>
               <Statistic
+              className="income-statistic"
                 title="Income"
                 value={income}
                 precision={2}
@@ -149,6 +151,7 @@ const UserDashboard = ({ customerId }) => {
           >
             <Card style={{ width: "100%", height: "95%", marginBottom: "5px" }}>
               <Statistic
+              className='refund-statistic'
                 title="Refund"
                 value={refund}
                 precision={2}
@@ -161,11 +164,9 @@ const UserDashboard = ({ customerId }) => {
           </Col>
           <Col
             xs={24}
-            style={{ width: "100%", height: "330px", display: "flex" }}
           >
             <Card
-              className="bar-container"
-              style={{ width: "100%", height: "100%" }}
+              className="bump-container"
             >
               <RTCharts.Bump categoryTimeLine={categoryTimeLine} />
             </Card>

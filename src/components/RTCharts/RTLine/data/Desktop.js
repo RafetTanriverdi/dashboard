@@ -13,14 +13,18 @@ export const Desktop = {
     symbolSize: 12,
     symbolShape: "circle",
     symbolBorderColor: "rgba(0, 0, 0, .5)",
+    toggleSerie: true,
+    onClick: (data) => console.log("data", data),
     effects: [
       {
         on: "hover",
         style: {
           itemBackground: "rgba(0, 0, 0, .03)",
           itemOpacity: 1,
+          itemTextColor: "#ffff",
         },
       },
+     
     ],
   },
   margin: {
@@ -29,10 +33,10 @@ export const Desktop = {
     bottom: 60,
     left: 50,
   },
-  axisBottom:{
-    legend:'transportation'
+  axisBottom: {
+    legend: "transportation",
   },
-  axisLeft:{
-    legend:'count'
-  }
+  axisLeft: {
+    legend: "count",
+  },
 };

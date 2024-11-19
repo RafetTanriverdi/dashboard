@@ -12,88 +12,7 @@ import axiosInstance from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
 import { Desktop } from "@rt/components/RTCharts/RTPie/data/Desktop";
 import { Mobile } from "@rt/components/RTCharts/RTPie/data/Mobile";
-const fill = [
-  {
-    match: {
-      id: "ruby",
-    },
-    id: "dots",
-  },
-  {
-    match: {
-      id: "c",
-    },
-    id: "dots",
-  },
-  {
-    match: {
-      id: "go",
-    },
-    id: "dots",
-  },
-  {
-    match: {
-      id: "python",
-    },
-    id: "dots",
-  },
-  {
-    match: {
-      id: "scala",
-    },
-    id: "lines",
-  },
-  {
-    match: {
-      id: "lisp",
-    },
-    id: "lines",
-  },
-  {
-    match: {
-      id: "elixir",
-    },
-    id: "lines",
-  },
-  {
-    match: {
-      id: "javascript",
-    },
-    id: "lines",
-  },
-];
-const data = [
-  {
-    id: "sass",
-    label: "sass",
-    value: 283,
-    color: "hsl(112, 70%, 50%)",
-  },
-  {
-    id: "rust",
-    label: "rust",
-    value: 326,
-    color: "hsl(305, 70%, 50%)",
-  },
-  {
-    id: "make",
-    label: "make",
-    value: 232,
-    color: "hsl(134, 70%, 50%)",
-  },
-  {
-    id: "javascript",
-    label: "javascript",
-    value: 41,
-    color: "hsl(179, 70%, 50%)",
-  },
-  {
-    id: "java",
-    label: "java",
-    value: 234,
-    color: "hsl(201, 70%, 50%)",
-  },
-];
+
 const DashboardPageContainer = () => {
   const funnelChartRef = useRef(null);
   const pieChartRef = useRef(null);
@@ -115,6 +34,58 @@ const DashboardPageContainer = () => {
     },
   });
 
+  const { data:orders } = useQuery({
+    queryKey: ["Orders List"],
+    queryFn: () =>
+      axiosInstance.get(ENDPOINTS.ORDERS.LIST).then((res) => res.data),
+  });
+  const { data:products } = useQuery({
+    queryKey: ["products"],
+    queryFn: () =>
+      axiosInstance.get(ENDPOINTS.PRODUCT.LIST).then((res) => res.data),
+  });
+console.log(orders, products)
+
+let categoryList = [];
+
+for (let i=0 ; i<orders?.length; i++) {
+  const element =orders[i];
+
+  for (let j=0; j<element?.products.length; j++) {
+    const product = element.products[j];
+
+    const filterCategories = products?.filter((item) => item.productId === product?.productId).map((item) => {
+      return item.categoryName;
+    })
+    if (filterCategories[0]) {
+      categoryList.push(filterCategories[0]);
+    }
+
+  }
+
+
+}
+console.log(categoryList)
+
+const categoryCountList =categoryList?.reduce((acc, category) => {
+  const existingCategory = acc.find((item) => item.name === category);
+  if (existingCategory) {
+    existingCategory.value += 1;
+  } else {
+    acc.push({ name: category, value: 1 });
+  }
+  return acc;
+}, []);
+  
+const chartData = categoryCountList?.map((item) => {
+  return {
+    id: item.name,
+    label: item.name,
+    value: item.value,
+    color: `hsl(${Math.floor(Math.random() * 360)}, 70%, 50%)`,
+    
+  }
+})
   const income =
     (balance?.data?.available[0]?.amount + balance?.data?.pending[0]?.amount) /
     100;
@@ -125,6 +96,8 @@ const DashboardPageContainer = () => {
   for (let i = 0; i < 1; i++) {
     refundAmount += refund?.data[i]?.amount / 100;
   }
+
+
 
   useEffect(() => {
     if (pieChartRef.current) {
@@ -139,6 +112,17 @@ const DashboardPageContainer = () => {
         2;
     }
   }, []);
+
+
+const configuredDesktop = {
+  ...Desktop,
+  legend: {
+    ...Desktop.legend,
+  
+    onClick:(e) => console.log(e)
+  },
+}
+
 
   return (
     <>
@@ -213,7 +197,7 @@ const DashboardPageContainer = () => {
         </Col>
         <Col xs={24} md={8}>
           <Card className="pie-container" ref={pieChartRef}>
-            <RTCharts.Pie data={data} fill={fill} desktop={Desktop} mobile={Mobile} />
+            <RTCharts.Pie data={chartData}  desktop={configuredDesktop} mobile={Mobile} />
           </Card>
         </Col>
       </Row>

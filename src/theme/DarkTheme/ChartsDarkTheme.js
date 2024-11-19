@@ -1,25 +1,30 @@
 export const ChartsDark = {
   labels: {
     text: {
-      fill: "#ffffff",
+      fill: "#999",
     },
   },
   axis: {
     legend: {
       text: {
-        fill: "#ffffff",
-        color: "#ffffff",
+        fill: "#999",
+        color: "#999",
       },
     },
     ticks:{
       text:{
-        fill: "#ffffff",
+        fill: "#999",
       }
     }
   },
   legends:{
     text:{
       fill: "#ffffff",
+    },
+    hidden:{
+      text:{
+        fill: "#999",
+      }
     }
   },
   tooltip: {

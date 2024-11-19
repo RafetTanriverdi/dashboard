@@ -5,9 +5,9 @@ import { useThemeChangeStore } from "@rt/data/Theme/Theme";
 import { ChartsDark } from "@rt/theme/DarkTheme/ChartsDarkTheme";
 import { ChartsLight } from "@rt/theme/LightTheme/ChartsLightTheme";
 import { useEffect } from "react";
+import './RTPie.scss';
 
-
-const RTPie = ({fill,data,desktop,mobile}) => {
+const RTPie = ({ fill, data, desktop, mobile }) => {
   const { theme } = useThemeChangeStore();
   const { isMobile, handleResize } = useDeviceStore();
 
@@ -15,6 +15,7 @@ const RTPie = ({fill,data,desktop,mobile}) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [isMobile]);
+
 
   return (
     <ResponsivePie
@@ -66,4 +67,3 @@ const RTPie = ({fill,data,desktop,mobile}) => {
 };
 
 export default RTPie;
-
