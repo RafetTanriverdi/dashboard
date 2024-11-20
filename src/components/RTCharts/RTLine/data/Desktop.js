@@ -1,35 +1,34 @@
 export const Desktop = {
   legend: {
-    anchor: "bottom-right",
-    direction: "column",
+    anchor: "top",
+    direction: "row",
     justify: false,
-    translateX: 120,
-    translateY: -44,
-    itemsSpacing: 9,
+    translateX: 20,
+    translateY: -34,
+    itemsSpacing: 0,
     itemDirection: "left-to-right",
-    itemWidth: 100,
+    itemWidth: 165,
     itemHeight: 20,
     itemOpacity: 0.75,
-    symbolSize: 12,
-    symbolShape: "circle",
+    symbolSize: 14,
+    symbolShape: "square",
     symbolBorderColor: "rgba(0, 0, 0, .5)",
     toggleSerie: true,
     onClick: (data) => console.log("data", data),
+    
     effects: [
       {
         on: "hover",
         style: {
-          itemBackground: "rgba(0, 0, 0, .03)",
-          itemOpacity: 1,
-          itemTextColor: "#ffff",
+          itemOpacity: 0.6,
         },
       },
      
     ],
   },
   margin: {
-    top: 40,
-    right: 130,
+    top: 50,
+    right:50,
     bottom: 60,
     left: 50,
   },

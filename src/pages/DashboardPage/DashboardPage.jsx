@@ -10,12 +10,12 @@ import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
-import { Desktop } from "@rt/components/RTCharts/RTPie/data/Desktop";
-import { Mobile } from "@rt/components/RTCharts/RTPie/data/Mobile";
+
+import PieChart from "./page-components/PieChart/PieChart";
+import LineChart from "./page-components/LineChart/LineChart";
 
 const DashboardPageContainer = () => {
   const funnelChartRef = useRef(null);
-  const pieChartRef = useRef(null);
 
   const { data: refund } = useQuery({
     queryKey: ["refund"],
@@ -34,58 +34,6 @@ const DashboardPageContainer = () => {
     },
   });
 
-  const { data:orders } = useQuery({
-    queryKey: ["Orders List"],
-    queryFn: () =>
-      axiosInstance.get(ENDPOINTS.ORDERS.LIST).then((res) => res.data),
-  });
-  const { data:products } = useQuery({
-    queryKey: ["products"],
-    queryFn: () =>
-      axiosInstance.get(ENDPOINTS.PRODUCT.LIST).then((res) => res.data),
-  });
-console.log(orders, products)
-
-let categoryList = [];
-
-for (let i=0 ; i<orders?.length; i++) {
-  const element =orders[i];
-
-  for (let j=0; j<element?.products.length; j++) {
-    const product = element.products[j];
-
-    const filterCategories = products?.filter((item) => item.productId === product?.productId).map((item) => {
-      return item.categoryName;
-    })
-    if (filterCategories[0]) {
-      categoryList.push(filterCategories[0]);
-    }
-
-  }
-
-
-}
-console.log(categoryList)
-
-const categoryCountList =categoryList?.reduce((acc, category) => {
-  const existingCategory = acc.find((item) => item.name === category);
-  if (existingCategory) {
-    existingCategory.value += 1;
-  } else {
-    acc.push({ name: category, value: 1 });
-  }
-  return acc;
-}, []);
-  
-const chartData = categoryCountList?.map((item) => {
-  return {
-    id: item.name,
-    label: item.name,
-    value: item.value,
-    color: `hsl(${Math.floor(Math.random() * 360)}, 70%, 50%)`,
-    
-  }
-})
   const income =
     (balance?.data?.available[0]?.amount + balance?.data?.pending[0]?.amount) /
     100;
@@ -97,14 +45,7 @@ const chartData = categoryCountList?.map((item) => {
     refundAmount += refund?.data[i]?.amount / 100;
   }
 
-
-
   useEffect(() => {
-    if (pieChartRef.current) {
-      pieChartRef.current.scrollLeft =
-        (pieChartRef.current.scrollWidth - pieChartRef.current.clientWidth) / 2;
-    }
-
     if (funnelChartRef.current) {
       funnelChartRef.current.scrollLeft =
         (funnelChartRef.current.scrollWidth -
@@ -112,17 +53,6 @@ const chartData = categoryCountList?.map((item) => {
         2;
     }
   }, []);
-
-
-const configuredDesktop = {
-  ...Desktop,
-  legend: {
-    ...Desktop.legend,
-  
-    onClick:(e) => console.log(e)
-  },
-}
-
 
   return (
     <>
@@ -191,21 +121,17 @@ const configuredDesktop = {
 
       <Row gutter={[16, 16]} style={{ marginTop: "16px" }}>
         <Col xs={24} md={16}>
-          <Card className="line-container">
-            <RTCharts.Line />
-          </Card>
+          <LineChart />
         </Col>
         <Col xs={24} md={8}>
-          <Card className="pie-container" ref={pieChartRef}>
-            <RTCharts.Pie data={chartData}  desktop={configuredDesktop} mobile={Mobile} />
-          </Card>
+          <PieChart />
         </Col>
       </Row>
 
       <Row gutter={[16, 16]} style={{ marginTop: "16px" }}>
         <Col xs={24} md={8}>
           <Card className="funnel-container" ref={funnelChartRef}>
-            <RTCharts.Funnel />
+            <RTCharts.Funnel  />
           </Card>
         </Col>
         <Col xs={24} md={16}>

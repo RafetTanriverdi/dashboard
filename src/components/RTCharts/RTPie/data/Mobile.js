@@ -10,6 +10,7 @@ export const Mobile = {
     itemTextColor: "#999",
     symbolSize: 18,
     symbolShape: "square",
+    itemDirection: "top-to-bottom",
     toggleSerie: true,
     effects: [
       {

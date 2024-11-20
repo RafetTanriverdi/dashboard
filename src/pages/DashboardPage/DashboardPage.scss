@@ -54,11 +54,16 @@
 }
 
 .pie-container {
+    .title {
+        text-align: start;
+        margin-bottom: -20px;
+    }
+
 
     .ant-card-body {
         height: 100%;
         width: 100%;
- overflow-y: auto;
+        overflow-y: hidden;
     }
 
     height: 400px;
@@ -70,6 +75,10 @@
     overflow-x: auto;
 
     @media (max-width: 768px) {
+        .title {
+            text-align: center;
+            margin: -5px;
+        }
         height: 410px;
         width: 100%;
         margin: 0px;
@@ -120,14 +129,14 @@
     width: 100%;
     text-align: center;
     overflow-y: hidden;
-    overflow-x: auto;
+    overflow-x: hidden;
 
 
     @media (max-width: 768px) {
         height: 350px;
         width: 100%;
         margin: 0px;
-
+        overflow-x: scroll;
         .ant-card-body {
             width: 750px;
         }

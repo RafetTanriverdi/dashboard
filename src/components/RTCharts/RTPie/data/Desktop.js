@@ -21,10 +21,11 @@ export const Desktop = {
           itemTextColor: "#ffff",
         },
       },
+      
     ],
   },
   margin: {
-    top: 40,
+    top: 30,
     right: 10,
     bottom: 40,
     left: -70,

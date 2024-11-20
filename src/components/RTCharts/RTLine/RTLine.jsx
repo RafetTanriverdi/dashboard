@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { Desktop } from "./data/Desktop";
 import { Mobile } from "./data/Mobile";
 
-const RTLine = () => {
+const RTLine = ({data}) => {
   const { theme } = useThemeChangeStore();
   const { isMobile, handleResize } = useDeviceStore();
 
@@ -15,6 +15,7 @@ const RTLine = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [isMobile]);
+
 
   return (
     <ResponsiveLine
@@ -24,17 +25,15 @@ const RTLine = () => {
       xScale={{ type: "point" }}
       yScale={{
         type: "linear",
-        min: "auto",
+        min: "0",
         max: "auto",
         stacked: true,
         reverse: false,
       }}
-      yFormat=" >-.2f"
-      curve="natural"
-      axisTop={null}
-      axisRight={null}
+      curve="basis"
+ 
       axisBottom={{
-        tickSize: 5,
+        tickSize: 15,
         tickPadding: 5,
         tickRotation: 0,
         legend: "transportation",
@@ -51,12 +50,15 @@ const RTLine = () => {
         legendPosition: "middle",
         truncateTickAt: 0,
       }}
+      
+     
       colors={{ scheme: "red_grey" }}
       pointSize={10}
       pointColor={{ theme: "background" }}
       pointBorderWidth={2}
       pointBorderColor={{ from: "color", modifiers: [] }}
       pointLabel="data.yFormatted"
+      enableSlices='x'
       pointLabelYOffset={-12}
       enableArea={true}
       enableTouchCrosshair={true}
@@ -67,275 +69,3 @@ const RTLine = () => {
 };
 
 export default RTLine;
-const data = [
-  {
-    id: "japan",
-    color: "hsl(159, 70%, 50%)",
-    data: [
-      {
-        x: "plane",
-        y: 65,
-      },
-      {
-        x: "helicopter",
-        y: 73,
-      },
-      {
-        x: "boat",
-        y: 272,
-      },
-      {
-        x: "train",
-        y: 37,
-      },
-      {
-        x: "subway",
-        y: 250,
-      },
-      {
-        x: "bus",
-        y: 138,
-      },
-      {
-        x: "car",
-        y: 212,
-      },
-      {
-        x: "moto",
-        y: 67,
-      },
-      {
-        x: "bicycle",
-        y: 180,
-      },
-      {
-        x: "horse",
-        y: 136,
-      },
-      {
-        x: "skateboard",
-        y: 33,
-      },
-      {
-        x: "others",
-        y: 151,
-      },
-    ],
-  },
-  {
-    id: "france",
-    color: "hsl(324, 70%, 50%)",
-    data: [
-      {
-        x: "plane",
-        y: 109,
-      },
-      {
-        x: "helicopter",
-        y: 257,
-      },
-      {
-        x: "boat",
-        y: 158,
-      },
-      {
-        x: "train",
-        y: 16,
-      },
-      {
-        x: "subway",
-        y: 122,
-      },
-      {
-        x: "bus",
-        y: 191,
-      },
-      {
-        x: "car",
-        y: 145,
-      },
-      {
-        x: "moto",
-        y: 170,
-      },
-      {
-        x: "bicycle",
-        y: 110,
-      },
-      {
-        x: "horse",
-        y: 129,
-      },
-      {
-        x: "skateboard",
-        y: 255,
-      },
-      {
-        x: "others",
-        y: 202,
-      },
-    ],
-  },
-  {
-    id: "us",
-    color: "hsl(230, 70%, 50%)",
-    data: [
-      {
-        x: "plane",
-        y: 26,
-      },
-      {
-        x: "helicopter",
-        y: 299,
-      },
-      {
-        x: "boat",
-        y: 205,
-      },
-      {
-        x: "train",
-        y: 200,
-      },
-      {
-        x: "subway",
-        y: 235,
-      },
-      {
-        x: "bus",
-        y: 199,
-      },
-      {
-        x: "car",
-        y: 151,
-      },
-      {
-        x: "moto",
-        y: 192,
-      },
-      {
-        x: "bicycle",
-        y: 51,
-      },
-      {
-        x: "horse",
-        y: 68,
-      },
-      {
-        x: "skateboard",
-        y: 139,
-      },
-      {
-        x: "others",
-        y: 214,
-      },
-    ],
-  },
-  {
-    id: "germany",
-    color: "hsl(337, 70%, 50%)",
-    data: [
-      {
-        x: "plane",
-        y: 227,
-      },
-      {
-        x: "helicopter",
-        y: 71,
-      },
-      {
-        x: "boat",
-        y: 147,
-      },
-      {
-        x: "train",
-        y: 142,
-      },
-      {
-        x: "subway",
-        y: 207,
-      },
-      {
-        x: "bus",
-        y: 187,
-      },
-      {
-        x: "car",
-        y: 298,
-      },
-      {
-        x: "moto",
-        y: 130,
-      },
-      {
-        x: "bicycle",
-        y: 206,
-      },
-      {
-        x: "horse",
-        y: 68,
-      },
-      {
-        x: "skateboard",
-        y: 248,
-      },
-      {
-        x: "others",
-        y: 227,
-      },
-    ],
-  },
-  {
-    id: "norway",
-    color: "hsl(216, 70%, 50%)",
-    data: [
-      {
-        x: "plane",
-        y: 162,
-      },
-      {
-        x: "helicopter",
-        y: 144,
-      },
-      {
-        x: "boat",
-        y: 294,
-      },
-      {
-        x: "train",
-        y: 195,
-      },
-      {
-        x: "subway",
-        y: 247,
-      },
-      {
-        x: "bus",
-        y: 73,
-      },
-      {
-        x: "car",
-        y: 124,
-      },
-      {
-        x: "moto",
-        y: 29,
-      },
-      {
-        x: "bicycle",
-        y: 137,
-      },
-      {
-        x: "horse",
-        y: 225,
-      },
-      {
-        x: "skateboard",
-        y: 153,
-      },
-      {
-        x: "others",
-        y: 74,
-      },
-    ],
-  },
-];
