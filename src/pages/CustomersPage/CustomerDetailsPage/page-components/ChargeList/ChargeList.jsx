@@ -23,7 +23,6 @@ export const ChargeList = ({ data }) => {
     }
   }, [data]);
 
-  console.log("selectedCharge", selectedCharge);
 
   const handleExpand = (expanded, record) => {
     if (expanded) {

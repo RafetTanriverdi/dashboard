@@ -14,7 +14,6 @@ export const Desktop = {
     symbolShape: "square",
     symbolBorderColor: "rgba(0, 0, 0, .5)",
     toggleSerie: true,
-    onClick: (data) => console.log("data", data),
     
     effects: [
       {
@@ -29,7 +28,7 @@ export const Desktop = {
   margin: {
     top: 50,
     right:50,
-    bottom: 60,
+    bottom: 70,
     left: 50,
   },
   axisBottom: {

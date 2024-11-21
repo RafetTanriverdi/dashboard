@@ -26,10 +26,36 @@ const lightColors = [
   "#0958D9",
 ];
 
+const generateFakeVisitorData = () => {
+  const startDate = new Date("2024-01-01"); 
+  const today = new Date();
+  const data = [];
+
+  let currentDate = startDate;
+  while (currentDate <= today) {
+    const formattedDate = currentDate.toISOString().split("T")[0]; 
+    const randomValue = Math.random() < 0.2 ? 0 : Math.floor(Math.random() * (1000 - 10 + 1)) + 10;
+
+    data.push({
+      day: formattedDate,
+      value: randomValue,
+    });
+
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return data;
+};
+
 export const RTHeatMap = () => {
   const { theme } = useThemeChangeStore();
   const [year, setYear] = useState(2024);
+  const [visitorData, setVisitorData] = useState([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    setVisitorData(generateFakeVisitorData());
+  }, []);
 
   useEffect(() => {
     const svgGroup = document.querySelector(
@@ -55,7 +81,7 @@ export const RTHeatMap = () => {
           marginBottom: "0px",
         }}
       >
-        <Typography.Title level={5}>Daily Order Quantity</Typography.Title>
+        <Typography.Title level={5}>Daily Visitor Data</Typography.Title>
         <DatePicker
           style={{ width: "90px" }}
           inputReadOnly={false}
@@ -65,7 +91,7 @@ export const RTHeatMap = () => {
         />
       </Space>
       <ResponsiveCalendar
-        data={data}
+        data={visitorData}
         from={`${year}-06-01`}
         to={`${year}-12-31`}
         emptyColor={theme ? "#eeeeee" : "#333333"}
@@ -92,150 +118,3 @@ export const RTHeatMap = () => {
     </>
   );
 };
-
-const data = [
-  {
-    value: 65,
-    day: "2024-01-21",
-  },
-  {
-    value: 261,
-    day: "2024-08-31",
-  },
-  {
-    value: 101,
-    day: "2024-03-27",
-  },
-  {
-    value: 386,
-    day: "2024-09-25",
-  },
-  {
-    value: 173,
-    day: "2024-01-16",
-  },
-  {
-    value: 250,
-    day: "2024-07-05",
-  },
-  {
-    value: 229,
-    day: "2024-10-12",
-  },
-  {
-    value: 198,
-    day: "2024-10-02",
-  },
-  {
-    value: 356,
-    day: "2024-11-20",
-  },
-  {
-    value: 100,
-    day: "2024-02-26",
-  },
-  {
-    value: 76,
-    day: "2024-05-26",
-  },
-  {
-    value: 318,
-    day: "2024-10-27",
-  },
-  {
-    value: 388,
-    day: "2024-01-20",
-  },
-  {
-    value: 315,
-    day: "2024-04-11",
-  },
-  {
-    value: 105,
-    day: "2024-02-21",
-  },
-  {
-    value: 94,
-    day: "2024-06-21",
-  },
-  {
-    value: 192,
-    day: "2024-12-24",
-  },
-  {
-    value: 335,
-    day: "2024-04-17",
-  },
-  {
-    value: 284,
-    day: "2024-01-18",
-  },
-  {
-    value: 348,
-    day: "2024-08-22",
-  },
-  {
-    value: 121,
-    day: "2024-10-20",
-  },
-  {
-    value: 133,
-    day: "2024-01-22",
-  },
-  {
-    value: 500,
-    day: "2024-02-23",
-  },
-  {
-    value: 600,
-    day: "2024-09-27",
-  },
-  {
-    value: 800,
-    day: "2024-08-27",
-  },
-  {
-    value: 700,
-    day: "2024-08-26",
-  },
-  {
-    value: 600,
-    day: "2024-08-25",
-  },
-  {
-    value: 500,
-    day: "2024-08-24",
-  },
-  {
-    value: 400,
-    day: "2024-08-23",
-  },
-  {
-    value: 300,
-    day: "2024-08-22",
-  },
-  {
-    value: 200,
-    day: "2024-08-21",
-  },
-  {
-    value: 100,
-    day: "2024-08-20",
-  },
-  {
-    value: 50,
-    day: "2024-08-19",
-  },
-  {
-    value: 10,
-    day: "2024-08-18",
-  },
-  {
-    value: 900,
-    day: "2024-08-17",
-  },
-  {
-    value: 900,
-    day: "2024-08-16",
-  },
-];

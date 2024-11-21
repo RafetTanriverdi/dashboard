@@ -5,18 +5,15 @@ import "./DashboardPage.scss";
 import { RTCharts } from "@rt/components/RTCharts";
 import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 import CountUp from "react-countup";
-import { useRef } from "react";
-import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
 
 import PieChart from "./page-components/PieChart/PieChart";
 import LineChart from "./page-components/LineChart/LineChart";
+import FunnelChart from "./page-components/FunnelChart/FunnelChart";
 
 const DashboardPageContainer = () => {
-  const funnelChartRef = useRef(null);
-
   const { data: refund } = useQuery({
     queryKey: ["refund"],
     queryFn: () => {
@@ -25,6 +22,7 @@ const DashboardPageContainer = () => {
         .then((res) => res.data);
     },
   });
+
 
   const { data: balance } = useQuery({
     queryKey: ["balance"],
@@ -44,15 +42,6 @@ const DashboardPageContainer = () => {
   for (let i = 0; i < 1; i++) {
     refundAmount += refund?.data[i]?.amount / 100;
   }
-
-  useEffect(() => {
-    if (funnelChartRef.current) {
-      funnelChartRef.current.scrollLeft =
-        (funnelChartRef.current.scrollWidth -
-          funnelChartRef.current.clientWidth) /
-        2;
-    }
-  }, []);
 
   return (
     <>
@@ -130,9 +119,7 @@ const DashboardPageContainer = () => {
 
       <Row gutter={[16, 16]} style={{ marginTop: "16px" }}>
         <Col xs={24} md={8}>
-          <Card className="funnel-container" ref={funnelChartRef}>
-            <RTCharts.Funnel  />
-          </Card>
+          <FunnelChart />
         </Col>
         <Col xs={24} md={16}>
           <Card className="heat-map-container">

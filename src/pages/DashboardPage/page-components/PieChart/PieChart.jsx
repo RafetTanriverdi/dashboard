@@ -71,7 +71,7 @@ const PieChartContainer = () => {
     return acc;
   }, []);
 
-  const chartData = categoryCountList?.map((item) => {
+  const chartData = categoryCountList?.sort((a,b)=>b.value-a.value).slice(0,5).map((item) => {
     return {
       id: item.name,
       label: item.name,

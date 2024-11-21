@@ -10,6 +10,10 @@
     overflow-x: auto;
     overflow-y: hidden;
 
+    .title {
+        text-align: start;
+    }
+
     @media (max-width: 768px) {
         height: 350px;
         width: 100%;
@@ -38,13 +42,14 @@
     height: 300px;
     width: 100%;
     text-align: center;
-    overflow-x: auto;
+    overflow-x: hidden;
     overflow-y: hidden;
 
     @media (max-width: 768px) {
         height: 350px;
         width: 100%;
         margin: 0px;
+        overflow-x: auto;
 
         .ant-card-body {
             height: 100%;
@@ -79,6 +84,7 @@
             text-align: center;
             margin: -5px;
         }
+
         height: 410px;
         width: 100%;
         margin: 0px;
@@ -131,12 +137,17 @@
     overflow-y: hidden;
     overflow-x: hidden;
 
+    .title {
+        text-align: start;
+    }
+
 
     @media (max-width: 768px) {
         height: 350px;
         width: 100%;
         margin: 0px;
         overflow-x: scroll;
+
         .ant-card-body {
             width: 750px;
         }

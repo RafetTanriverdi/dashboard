@@ -7,8 +7,8 @@ export const ChartsDark = {
   axis: {
     legend: {
       text: {
-        fill: "#999",
-        color: "#999",
+        fill: "#878787",
+        fontSize: 14,
       },
     },
     ticks:{

@@ -14,7 +14,7 @@ import ChargeList from "./page-components/ChargeList/ChargeList";
 import UserDashboard from "./page-components/UserDashboard/UserDashboard";
 
 const CustomerDetailsPageContainer = ({ data, error, isLoading }) => {
-  if (isLoading||!data) return <RTSkeleton />;
+  if (isLoading || !data) return <RTSkeleton />;
   if (error) return <div>{error.message}</div>;
   return (
     <div style={{ padding: "10px" }}>
@@ -38,14 +38,20 @@ const CustomerDetailsPageContainer = ({ data, error, isLoading }) => {
         <UserDetails data={data} />
       </Row>
 
-      <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}      style={{
+      <Row
+        gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
+        style={{
           marginBottom: "10px",
-        }}>
+        }}
+      >
         <ChargeList data={data} />
       </Row>
 
       <Row gutter={{ xs: 8, sm: 12, md: 24, lg: 32 }}>
-        <UserDashboard customerId={data.customerId} />
+        <UserDashboard
+          customerId={data.customerId}
+          stripeId={data.customerStripeId}
+        />
       </Row>
     </div>
   );

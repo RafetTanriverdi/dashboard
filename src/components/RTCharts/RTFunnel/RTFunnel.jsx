@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { Mobile } from "./data/Mobile";
 import { Desktop } from "./data/Desktop";
 
-const RTFunnel = () => {
+const RTFunnel = ({data}) => {
   const { theme } = useThemeChangeStore();
   const { isMobile, handleResize } = useDeviceStore();
 
@@ -43,30 +43,3 @@ const RTFunnel = () => {
 
 export default RTFunnel;
 
-const data = [
-  {
-    id: "step_sent",
-    value: 3116,
-    label: "Sent",
-  },
-  {
-    id: "step_viewed",
-    value: 1495,
-    label: "Viewed",
-  },
-  {
-    id: "step_clicked",
-    value: 1100,
-    label: "Clicked",
-  },
-  {
-    id: "step_add_to_card",
-    value: 1000,
-    label: "Add To Card",
-  },
-  {
-    id: "step_purchased",
-    value: 300,
-    label: "Purchased",
-  },
-];

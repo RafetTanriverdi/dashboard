@@ -13,7 +13,7 @@ import CountUp from "react-countup";
 import { Desktop } from "@rt/components/RTCharts/RTPie/data/Desktop";
 import { Mobile } from "@rt/components/RTCharts/RTPie/data/Mobile";
 
-const UserDashboard = ({ customerId }) => {
+const UserDashboard = ({ customerId, stripeId }) => {
   const products = useQuery({
     queryKey: ["products"],
     queryFn: () =>
@@ -22,6 +22,21 @@ const UserDashboard = ({ customerId }) => {
   const customer = useQuery({
     queryKey: ["customers", customerId],
   });
+
+  console.log('customerStripeId', stripeId);
+  const customerBalance = useQuery({
+    queryKey: ["charges", stripeId],
+    queryFn: () =>
+      axiosInstance
+        .get(
+          ENDPOINTS.STRIPE.CUSTOMERBALANCE.replace(
+            ":customerId",
+            stripeId
+          )
+        )
+        .then((res) => res.data),
+  });
+  console.log(customerBalance);
 
   const desktopData = {
     legend: {
@@ -50,7 +65,7 @@ const UserDashboard = ({ customerId }) => {
     margin: {
       ...Mobile.margin,
       left: 35,
-      right:0,
+      right: 0,
     },
   };
 
@@ -90,7 +105,6 @@ const UserDashboard = ({ customerId }) => {
       }
     }
   }
-  console.log(categoryTimeLine);
 
   const income = incomeData.reduce((acc, item) => acc + item, 0) / 100;
   const refund = refundData.reduce((acc, item) => acc + item, 0) / 100;
@@ -134,7 +148,7 @@ const UserDashboard = ({ customerId }) => {
           >
             <Card style={{ width: "95%", height: "95%" }}>
               <Statistic
-              className="income-statistic"
+                className="income-statistic"
                 title="Income"
                 value={income}
                 precision={2}
@@ -151,7 +165,7 @@ const UserDashboard = ({ customerId }) => {
           >
             <Card style={{ width: "100%", height: "95%", marginBottom: "5px" }}>
               <Statistic
-              className='refund-statistic'
+                className="refund-statistic"
                 title="Refund"
                 value={refund}
                 precision={2}
@@ -162,12 +176,8 @@ const UserDashboard = ({ customerId }) => {
               />
             </Card>
           </Col>
-          <Col
-            xs={24}
-          >
-            <Card
-              className="bump-container"
-            >
+          <Col xs={24}>
+            <Card className="bump-container">
               <RTCharts.Bump categoryTimeLine={categoryTimeLine} />
             </Card>
           </Col>

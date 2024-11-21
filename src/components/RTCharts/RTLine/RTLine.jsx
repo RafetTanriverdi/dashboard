@@ -27,8 +27,7 @@ const RTLine = ({data}) => {
         type: "linear",
         min: "0",
         max: "auto",
-        stacked: true,
-        reverse: false,
+        stacked: false,
       }}
       curve="basis"
  
@@ -36,8 +35,8 @@ const RTLine = ({data}) => {
         tickSize: 15,
         tickPadding: 5,
         tickRotation: 0,
-        legend: "transportation",
-        legendOffset: 36,
+        legend: "Date",
+        legendOffset: 45,
         legendPosition: "middle",
         truncateTickAt: 0,
       }}
@@ -45,7 +44,7 @@ const RTLine = ({data}) => {
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: "count",
+        legend: "Amount",
         legendOffset: -40,
         legendPosition: "middle",
         truncateTickAt: 0,
