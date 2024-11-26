@@ -19,19 +19,31 @@ const prepareBumpData = (categoryTimeLine) => {
     {}
   );
 
+  const categoryTotals = allCategories.map((category) => {
+    const total = categoryTimeLine.filter(
+      (item) => item.categoryName === category
+    ).length;
+    return { category, total };
+  });
+
+  const topCategories = categoryTotals
+    .sort((a, b) => b.total - a.total)
+    .slice(0, 6)
+    .map((item) => item.category);
+
   const sortedDates = Object.keys(groupedByDate).sort((a, b) =>
     dayjs(a).isBefore(dayjs(b)) ? -1 : 1
   );
 
   const rankings = [];
-  let previousRanking = allCategories.map((category, index) => ({
+  let previousRanking = topCategories.map((category, index) => ({
     category,
     rank: index + 1,
   }));
 
   for (const date of sortedDates) {
     const currentDay = groupedByDate[date];
-    const currentRanking = allCategories.map((category) => {
+    const currentRanking = topCategories.map((category) => {
       const count = currentDay[category] || 0;
       return { category, count };
     });
@@ -46,14 +58,14 @@ const prepareBumpData = (categoryTimeLine) => {
     }));
 
     rankings.push({
-      date:dayjs(date).format('MMM, DD'),
+      date: dayjs(date).format("MMM, DD"),
       rankings: ranked,
     });
 
     previousRanking = ranked;
   }
 
-  const bumpData = allCategories.map((category) => ({
+  const bumpData = topCategories.map((category) => ({
     id: category,
     data: rankings.map(({ date, rankings }) => {
       const categoryRanking = rankings.find((r) => r.category === category);
@@ -68,6 +80,7 @@ const prepareBumpData = (categoryTimeLine) => {
 
   return bumpData;
 };
+
 
 const RTBump = ({ categoryTimeLine }) => {
   const { theme } = useThemeChangeStore();
@@ -94,7 +107,7 @@ const RTBump = ({ categoryTimeLine }) => {
         tickPadding: 5,
         tickRotation: 0,
         legend: "",
-        legendPosition: "middle",
+                legendPosition: "middle",
         legendOffset: -36,
         truncateTickAt: 0,
       }}

@@ -12,6 +12,7 @@ import dayjs from "dayjs";
 import CountUp from "react-countup";
 import { Desktop } from "@rt/components/RTCharts/RTPie/data/Desktop";
 import { Mobile } from "@rt/components/RTCharts/RTPie/data/Mobile";
+import { truncateStr } from "@rt/utils/truncate";
 
 const UserDashboard = ({ customerId, stripeId }) => {
   const products = useQuery({
@@ -22,21 +23,11 @@ const UserDashboard = ({ customerId, stripeId }) => {
   const customer = useQuery({
     queryKey: ["customers", customerId],
   });
+  const customerBalance=useQuery({
+    queryKey:["customerBalance",stripeId],
+    queryFn:()=>axiosInstance.get(ENDPOINTS.STRIPE.CUSTOMERBALANCE.replace(':customerStripeId', stripeId)).then((res)=>res.data)
+  })
 
-  console.log('customerStripeId', stripeId);
-  const customerBalance = useQuery({
-    queryKey: ["charges", stripeId],
-    queryFn: () =>
-      axiosInstance
-        .get(
-          ENDPOINTS.STRIPE.CUSTOMERBALANCE.replace(
-            ":customerId",
-            stripeId
-          )
-        )
-        .then((res) => res.data),
-  });
-  console.log(customerBalance);
 
   const desktopData = {
     legend: {
@@ -53,19 +44,22 @@ const UserDashboard = ({ customerId, stripeId }) => {
     ...Mobile,
     legend: {
       ...Mobile.legend,
+
       translateX: -35,
-      translateY: 30,
+      translateY: 60,
       direction: "column",
-      anchor: "bottom-left",
+      anchor: "row",
       symbolShape: "circle",
+      itemDirection: "left-to-right",
       symbolSize: 10,
       itemHeight: 10,
-      itemWidth: 10,
+      itemWidth: 80,
     },
     margin: {
       ...Mobile.margin,
       left: 35,
       right: 0,
+      bottom: 0,
     },
   };
 
@@ -79,10 +73,8 @@ const UserDashboard = ({ customerId, stripeId }) => {
   for (let i = 0; i < charges?.length; i++) {
     const element = charges[i];
     const orderItems = JSON.parse(element.metadata.orderItems);
-    const income = element.amount_captured;
     const refund = element.amount_refunded;
 
-    incomeData.push(income);
     refundData.push(refund);
 
     const date = dayjs.unix(element.created).format("YYYY-MM-DD");
@@ -106,9 +98,15 @@ const UserDashboard = ({ customerId, stripeId }) => {
     }
   }
 
+  for (let i = 0; i < customerBalance?.data?.length; i++) {
+    const element = customerBalance?.data[i];
+    incomeData.push(element?.net);
+  }
+  
   const income = incomeData.reduce((acc, item) => acc + item, 0) / 100;
   const refund = refundData.reduce((acc, item) => acc + item, 0) / 100;
 
+  const incomeNet=income-refund;
   const categoryCountList = categoryList?.reduce((acc, category) => {
     const existingCategory = acc.find((item) => item.name === category);
     if (existingCategory) {
@@ -121,11 +119,11 @@ const UserDashboard = ({ customerId, stripeId }) => {
 
   const chartData = categoryCountList
     ?.sort((a, b) => b.value - a.value)
-    .slice(0, 7)
+    .slice(0, 5)
     .map((item) => {
       return {
         id: item.name,
-        label: item.name,
+        label: truncateStr(item.name,14),
         value: item.value,
         color: `hsl(${Math.floor(Math.random() * 360)}, 70%, 50%)`,
       };
@@ -150,7 +148,7 @@ const UserDashboard = ({ customerId, stripeId }) => {
               <Statistic
                 className="income-statistic"
                 title="Income"
-                value={income}
+                value={incomeNet}
                 precision={2}
                 valueStyle={{ color: "#3f8600" }}
                 prefix={<ArrowUpOutlined />}

@@ -38,6 +38,6 @@ export const ENDPOINTS = {
     TRANSACTIONS: "stripe/transactions",
     BALANCE: "stripe/balance",
     REFUNDS: "stripe/refunds",
-    CUSTOMERBALANCE:'stripe/balance/:customerId',
+    CUSTOMERBALANCE:'stripe/balance/:customerStripeId',
   }
 };

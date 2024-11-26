@@ -39,7 +39,7 @@ const RegisterPageContainer = () => {
             "custom:role": "Admin",
             "custom:phone_number": "1234567890",
             "custom:permissions":
-              "[Product:Read,Product:Create,Product:Delete,Product:Update,Category:Create,Category:Read,Category:Update,Category:Delete,User:Create,User:Read,User:Update,User:Delete]",
+              "Product:Read,Product:Create,Product:Delete,Product:Update,Category:Create,Category:Read,Category:Update,Category:Delete,User:Create,User:Read,User:Update,User:Delete,Order:Refund,Order:Read,Order:Update,Order:Delete,Customer:Read,Customer:Update,Customer:Delete,Customer:Details",
           },
           autoSignIn: true,
         },

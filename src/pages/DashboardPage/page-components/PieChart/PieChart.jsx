@@ -12,14 +12,6 @@ import { useRef } from "react";
 import { useEffect } from "react";
 
 const PieChartContainer = () => {
-  const pieChartRef = useRef(null);
-
-  useEffect(() => {
-    if (pieChartRef.current) {
-      pieChartRef.current.scrollLeft =
-        (pieChartRef.current.scrollWidth - pieChartRef.current.clientWidth) / 2;
-    }
-  }, []);
 
   const {
     data: orders,
@@ -125,8 +117,17 @@ const PieChartContainer = () => {
 };
 
 const PieChart = () => {
+  const pieChartRef = useRef(null);
+
+  useEffect(() => {
+    if (pieChartRef.current) {
+      pieChartRef.current.scrollLeft =
+        (pieChartRef.current.scrollWidth - pieChartRef.current.clientWidth) / 2;
+    }
+  }, []);
+
   return (
-    <Card className="pie-container">
+    <Card className="pie-container" ref={pieChartRef}>
       <PieChartContainer />
     </Card>
   );

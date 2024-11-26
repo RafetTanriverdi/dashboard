@@ -56,10 +56,14 @@ const FunnelChartContainer = () => {
 
   if (isLoading) return <RTSkeleton />;
   if (error) return <RTAlert message="Error" description={error.message} />;
-  return <>
-  <Typography.Title level={5} className="title">Conversion Funnel </Typography.Title>
-  <RTCharts.Funnel data={datas} />
-  </>
+  return (
+    <>
+      <Typography.Title level={5} className="title">
+        Conversion Funnel{" "}
+      </Typography.Title>
+      <RTCharts.Funnel data={datas} />
+    </>
+  );
 };
 
 const FunnelChart = () => {

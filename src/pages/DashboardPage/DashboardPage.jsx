@@ -23,7 +23,6 @@ const DashboardPageContainer = () => {
     },
   });
 
-
   const { data: balance } = useQuery({
     queryKey: ["balance"],
     queryFn: () => {
@@ -32,11 +31,23 @@ const DashboardPageContainer = () => {
     },
   });
 
+  const { data: transactions } = useQuery({
+    queryKey: ["transactions"],
+    queryFn: () => {
+      return axiosInstance
+        .get(ENDPOINTS.STRIPE.TRANSACTIONS)
+        .then((res) => res.data);
+    },
+  });
+
+  let fee = 0;
+  for (let i = 0; i < transactions?.length; i++) {
+    fee += transactions[i]?.fee / 100;
+  }
+
   const income =
     (balance?.data?.available[0]?.amount + balance?.data?.pending[0]?.amount) /
     100;
-
-  const tax = income * 0.09;
 
   let refundAmount = 0;
   for (let i = 0; i < 1; i++) {
@@ -65,8 +76,8 @@ const DashboardPageContainer = () => {
           <Card>
             <Statistic
               className="dashboard-statistic"
-              title="Tax"
-              value={tax}
+              title="Fee"
+              value={fee}
               precision={2}
               valueStyle={{ color: "#cf1322" }}
               prefix={<ArrowDownOutlined />}
