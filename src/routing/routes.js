@@ -112,6 +112,22 @@ export const routes = [
     modulePath: "MyProfilePage/MyProfilePage",
     fileName: "MyProfilePageAlias",
     isPublic: false,
+    children: [
+      {
+        id: ROUTES_ID.changePassword,
+        title: "Change Password",
+        path: "change-password",
+        modulePath: "MyProfilePage/PasswordChangePage/PasswordChangePage",
+        isStaticPage: true,
+      },
+      {
+        id: ROUTES_ID.myProfileDetailPage,
+        title: "Profile Details",
+        path: "profile-details",
+        modulePath: "MyProfilePage/ProfileDetailsPage/ProfileDetailsPage",
+        isStaticPage: true,
+      },
+    ],
   },
   {
     id: ROUTES_ID.manageTeamMembers,

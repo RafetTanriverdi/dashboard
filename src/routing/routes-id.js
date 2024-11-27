@@ -15,4 +15,6 @@ export const ROUTES_ID = {
   orders: "orders",
   orderDetails: "orderDetails",
   customerDetails: "customerDetails",
+  changePassword:'changePassword',
+  myProfileDetailPage:'myProfileDetailPage',
 };
