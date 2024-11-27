@@ -1,0 +1,12 @@
+.rt-spiner-container{
+
+    height: calc(100vh - 160px);
+    overflow: hidden;
+    .rt-spiner-layout {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        scale: 1.5;
+    }
+}

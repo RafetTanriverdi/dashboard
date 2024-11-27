@@ -4,11 +4,10 @@ import { RouteWithRedirections } from "./routing/RouteWithRedirections";
 import { Routes } from "react-router-dom";
 import NotFound404Page from "./pages/NotFound404Page/NotFound404Page";
 import { ErrorBoundaryPage } from "./pages/ErrorPage/ErrorBoundaryPage";
-import RTSpinner from "./components/RTSpinner/RTSpinner";
 import { lazy } from "react";
 
-const AppClientRouter = ({ routes, ...props }) => {
-  const pages = import.meta.glob('./pages/**/*.jsx');
+const AppClientRouter = ({ loading,routes, ...props }) => {
+  const pages = import.meta.glob("./pages/**/*.jsx");
   const renderRoute = (el) => {
     const PageComp = lazy(pages[`./pages/${el.modulePath}.jsx`]);
     //404, Privacy, Support Ananymous and Login User see at the same time..
@@ -30,7 +29,7 @@ const AppClientRouter = ({ routes, ...props }) => {
 
   return (
     <>
-      <React.Suspense fallback={<RTSpinner {...routes} />}>
+      <React.Suspense fallback={loading}>
         
         <ErrorBoundaryPage fallback={<p> Someting error occoured</p>}>
           <Routes>

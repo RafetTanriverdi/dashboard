@@ -14,9 +14,9 @@ import { useCookies } from "react-cookie";
 import { useQueryClient } from "@tanstack/react-query";
 import { Amplify } from "aws-amplify";
 import awsmobile from "./aws-exports";
-import {cognitoUserPoolsTokenProvider} from 'aws-amplify/auth/cognito'
+import { cognitoUserPoolsTokenProvider } from "aws-amplify/auth/cognito";
 import { defaultStorage } from "aws-amplify/utils";
-
+import RTSpinner from "./components/RTSpinner/RTSpinner";
 
 Amplify.configure(awsmobile);
 
@@ -26,7 +26,7 @@ function App() {
   const { setUserData } = useUserDataStore();
   const [cookies, setCookie] = useCookies(["theme"]);
   const querClient = useQueryClient();
-  
+
   useEffect(() => {
     const savedTheme = cookies.theme === "dark" ? false : true;
     setTheme(savedTheme);
@@ -49,7 +49,7 @@ function App() {
 
   return (
     <ConfigProvider theme={theme ? lightTheme : darkTheme}>
-      <AppClientRouter routes={routes} />
+      <AppClientRouter routes={routes} loading={<RTSpinner {...routes} />} />
     </ConfigProvider>
   );
 }
