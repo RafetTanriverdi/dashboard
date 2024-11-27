@@ -1,3 +1,4 @@
+import React from "react";
 import { getToken } from "@rt/authentication/auth-utils";
 import RTAlert from "@rt/components/RTFeedback/Alert/Alert";
 import Notification from "@rt/components/RTFeedback/Notification/Notification";
@@ -8,6 +9,7 @@ import { ENDPOINTS } from "@rt/network/endpoints";
 import axiosInstance from "@rt/network/httpRequester";
 import { longDateFormat } from "@rt/utils/long-dateFotmat";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { Spin } from "antd";
 import {
   Tree,
   Input,
@@ -232,7 +234,11 @@ const ProfileDetailsPageContainer = () => {
 const ProfileDetailsPage = () => {
   return (
     <ProfileLayout
-      content={<ProfileDetailsPageContainer />}
+      content={
+        <React.Suspense fallback={<Spin />}>
+          <ProfileDetailsPageContainer />
+        </React.Suspense>
+      }
       title="Profile Details"
     />
   );

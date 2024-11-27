@@ -12,7 +12,7 @@ const RTSpinner = () => {
 const aimLocation ='/'+ splitLocation[splitLocation.length - 2];
 const aimLocationHasChildren =routes.find((e)=>e.path===aimLocation)?.children?true:false;
 
-  if (publicRoutes.find((e) => e.path === location.pathname)||aimLocationHasChildren) {
+  if (publicRoutes.find((e) => e.path === location.pathname)) {
     return (
       <LoginLayout
         content={<Spin className="rt-spiner-layout" size="large" />}
