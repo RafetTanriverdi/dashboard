@@ -38,7 +38,6 @@ const ProfileDetailsPageContainer = () => {
     gender: data?.gender,
   });
 
-  console.log(postBody);
   const { context, openNotification } = Notification();
 
   const decodeId = jwtDecode(getToken().IdToken);
@@ -141,7 +140,9 @@ const ProfileDetailsPageContainer = () => {
             label: "Birthday",
             children: (
               <DatePicker
-                defaultValue={dayjs(data?.birthday)}
+                defaultValue={
+                  data?.birthday ? dayjs(data?.birthday) : undefined
+                }
                 onChange={(e) =>
                   setPostBody({
                     ...postBody,
@@ -173,6 +174,12 @@ const ProfileDetailsPageContainer = () => {
                   <Radio value={"Male"}>Male</Radio>
                 </Radio.Group>
                 <Input
+                  defaultValue={
+                    data?.gender !== ("Female" || "Male")
+                      ? data?.gender
+                      :null
+                
+                  }
                   placeholder="Other"
                   onChange={(e) =>
                     setPostBody({
@@ -232,9 +239,7 @@ const ProfileDetailsPageContainer = () => {
 const ProfileDetailsPage = () => {
   return (
     <ProfileLayout
-      content={
-          <ProfileDetailsPageContainer />
-      }
+      content={<ProfileDetailsPageContainer />}
       title="Profile Details"
     />
   );

@@ -5,12 +5,13 @@ import AppClientRouter from "@rt/AppClientRouter";
 import { useLocation } from "react-router-dom";
 import { isRoutePathChild } from "@rt/routing/routes";
 import { Typography } from "antd";
+import "./CustomersPage.scss";
 
 const CustomersPageContainer = () => {
   return (
     <div className="customer-container">
       <Typography.Title level={3}>Customers</Typography.Title>
-      <CustomersList  className='customer-list'/>
+      <CustomersList className="customer-list" />
     </div>
   );
 };
@@ -27,11 +28,7 @@ const CustomersPage = (props) => {
   return (
     <>
       <MainLayout
-        content={
-          <>
-            <CustomersPageContainer {...props} />
-          </>
-        }
+        content={<CustomersPageContainer {...props} />}
         sider={<RTSider />}
         title={title}
       />

@@ -17,7 +17,11 @@ const OrdersPage = (props) => {
   const { title } = props.routeData;
   return (
     <MainLayout
-      content={<OrdersPageContainer />}
+      content={
+      <>
+      <OrdersPageContainer />
+      </>
+    }
       sider={<RTSider />}
       title={title}
     />
