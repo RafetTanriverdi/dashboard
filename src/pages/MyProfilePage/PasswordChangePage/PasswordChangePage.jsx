@@ -1,3 +1,4 @@
+import { getToken } from "@rt/authentication/auth-utils";
 import awsmobile from "@rt/aws-exports";
 import RTAlert from "@rt/components/RTFeedback/Alert/Alert";
 import { useMutation } from "@tanstack/react-query";
@@ -7,6 +8,7 @@ import { Button, Input } from "antd";
 import { Form } from "antd";
 import { Amplify } from "aws-amplify";
 import { updatePassword } from "aws-amplify/auth";
+import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
 
 Amplify.configure(awsmobile);
@@ -45,14 +47,17 @@ const PasswordChangePageContainer = () => {
           new Error("Password must meet the specified conditions.")
         );
   };
+  const emailencoded = jwtDecode(getToken().IdToken)?.email;
+  const findWord = "test";
 
   const mutation = useMutation({
     mutationKey: ["changePassword"],
     mutationFn: async (data) => {
-      await updatePassword({
-        oldPassword: data.oldPassword,
-        newPassword: data.password,
-      });
+      !emailencoded.includes(findWord) &&
+        (await updatePassword({
+          oldPassword: data.oldPassword,
+          newPassword: data.password,
+        }));
     },
     onSuccess: () => {
       form.resetFields();
@@ -198,12 +203,11 @@ const PasswordChangePageContainer = () => {
 
 const PasswordChangePage = () => {
   return (
-  <>
-  <Typography.Title level={3}>Change Password</Typography.Title>
-  <PasswordChangePageContainer />
-  </>
-  )
-}
-
+    <>
+      <Typography.Title level={3}>Change Password</Typography.Title>
+      <PasswordChangePageContainer />
+    </>
+  );
+};
 
 export default PasswordChangePage;

@@ -11,6 +11,9 @@ import dayjs from "dayjs";
 import RTSkeleton from "@rt/components/RTSkeleton/RTSkeleton";
 import RTAlert from "@rt/components/RTFeedback/Alert/Alert";
 import { Tag } from "antd";
+import { useNavigate } from "react-router-dom";
+import { ROUTES_ID } from "@rt/routing/routes-id";
+import { getRoutePath } from "@rt/routing/routes";
 
 const getListData = (value, data, view) => {
   if (view === "year") {
@@ -27,6 +30,8 @@ const getListData = (value, data, view) => {
 const CalendarPageContainer = () => {
   const [open, setOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
+  const [route, setRoute] = useState("");
+  const navigate = useNavigate();
 
   const {
     data: categoryData,
@@ -81,11 +86,12 @@ const CalendarPageContainer = () => {
             color="success"
             onClick={() => {
               setModalContent(
-                `Categories: ${listCategoryData.map(
-                  (item) => item.categoryName
-                )}`
+                `Categories: ${listCategoryData
+                  .map((item) => item.categoryName)
+                  .join(", ")}`
               );
               setOpen(true);
+              setRoute(ROUTES_ID.categories);
             }}
           >
             {`${listCategoryData.length} Added Category`}
@@ -102,6 +108,7 @@ const CalendarPageContainer = () => {
                   .join(", ")}`
               );
               setOpen(true);
+              setRoute(ROUTES_ID.products);
             }}
           >
             {`${listProductData.length} Added Product`}
@@ -115,6 +122,7 @@ const CalendarPageContainer = () => {
                 `Orders: ${listOrderData.map((item) => item.id).join(", ")}`
               );
               setOpen(true);
+              setRoute(ROUTES_ID.orders);
             }}
           >
             {`${listOrderData.length} Added Order`}
@@ -128,6 +136,7 @@ const CalendarPageContainer = () => {
                 `Users: ${listUserData.map((item) => item.name).join(", ")}`
               );
               setOpen(true);
+              setRoute(ROUTES_ID.users);
             }}
           >
             {`${listUserData.length} Added User`}
@@ -143,6 +152,7 @@ const CalendarPageContainer = () => {
                   .join(", ")}`
               );
               setOpen(true);
+              setRoute(ROUTES_ID.customers);
             }}
           >
             {`${listCustomerData.length} Added Customer`}
@@ -160,7 +170,13 @@ const CalendarPageContainer = () => {
     const listCustomerData = getListData(value, customerData || [], "date");
 
     return (
-      <>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          rowGap: "4px",
+        }}
+      >
         {listCategoryData.length > 0 && (
           <Tag
             color="success"
@@ -168,9 +184,10 @@ const CalendarPageContainer = () => {
               setModalContent(
                 `Categories: ${listCategoryData
                   .map((item) => item.categoryName)
-                  }`
+                  .join(", ")}`
               );
               setOpen(true);
+              setRoute(ROUTES_ID.categories);
             }}
           >
             {`${listCategoryData.length} Added Category`}
@@ -182,10 +199,11 @@ const CalendarPageContainer = () => {
             onClick={() => {
               setModalContent(
                 `Products: ${listProductData
-                  .map((item) => item.name)
+                  .map((item) => item.productName)
                   .join(", ")}`
               );
               setOpen(true);
+              setRoute(ROUTES_ID.products);
             }}
           >
             {`${listProductData.length} Added Product`}
@@ -196,9 +214,12 @@ const CalendarPageContainer = () => {
             color="processing"
             onClick={() => {
               setModalContent(
-                `Orders: ${listOrderData.map((item) => item.id).join(", ")}`
+                `Orders: ${listOrderData
+                  .map((item) => item.currentStatus)
+                  .join(", ")}`
               );
               setOpen(true);
+              setRoute(ROUTES_ID.orders);
             }}
           >
             {`${listOrderData.length} Added Order`}
@@ -212,6 +233,7 @@ const CalendarPageContainer = () => {
                 `Users: ${listUserData.map((item) => item.name).join(", ")}`
               );
               setOpen(true);
+              setRoute(ROUTES_ID.users);
             }}
           >
             {`${listUserData.length} Added User`}
@@ -227,12 +249,13 @@ const CalendarPageContainer = () => {
                   .join(", ")}`
               );
               setOpen(true);
+              setRoute(ROUTES_ID.customers);
             }}
           >
             {`${listCustomerData.length} Added Customer`}
           </Tag>
         )}
-      </>
+      </div>
     );
   };
 
@@ -242,7 +265,13 @@ const CalendarPageContainer = () => {
 
   return (
     <div>
-      <Modal open={open} onCancel={() => setOpen(false)} title="Event Details">
+      <Modal
+        open={open}
+        onCancel={() => setOpen(false)}
+        title="Event Details"
+        okText="Go to Details"
+        onOk={() => navigate(getRoutePath(route))}
+      >
         <p>{modalContent}</p>
       </Modal>
       <Calendar
