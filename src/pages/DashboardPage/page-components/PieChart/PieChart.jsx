@@ -94,11 +94,12 @@ const PieChartContainer = () => {
     },
   };
 
+  console.log('errorOrders', errorOrders, 'errorProducts', errorProducts);  
   if (loadingOrders || loadingProducts) return <RTSkeleton />;
   if (errorOrders || errorProducts)
     return (
       <RTAlert
-        message={errorOrders.message || errorProducts.message}
+        message={errorOrders.response.data.message || errorProducts.response.data.message}
         type="error"
       />
     );

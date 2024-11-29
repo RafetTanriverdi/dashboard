@@ -174,12 +174,6 @@ const ProfileDetailsPageContainer = () => {
                   <Radio value={"Male"}>Male</Radio>
                 </Radio.Group>
                 <Input
-                  defaultValue={
-                    data?.gender !== ("Female" || "Male")
-                      ? data?.gender
-                      :null
-                
-                  }
                   placeholder="Other"
                   onChange={(e) =>
                     setPostBody({
@@ -225,7 +219,7 @@ const ProfileDetailsPageContainer = () => {
         ]}
       />
       <Button
-        style={{ marginTop: "20px" }}
+        style={{ marginTop: "20px",width:'350px',maxWidth:'100%' }}
         type="primary"
         onClick={() => mutation.mutate(postBody)}
         loading={mutation.isPending}

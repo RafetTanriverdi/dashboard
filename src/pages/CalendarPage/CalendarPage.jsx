@@ -1,20 +1,21 @@
+import "./CalendarPage.scss";
 import RTHeader from "@rt/components/RTHeader/RTHeader";
 import RTSider from "@rt/components/RTSider/RTSider";
 import MainLayout from "@rt/layout/MainLayout/MainLayout";
-import { Calendar, Modal, Badge } from "antd";
+import { Calendar, Modal } from "antd";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
 import dayjs from "dayjs";
-import { Spin } from "antd";
+import RTSkeleton from "@rt/components/RTSkeleton/RTSkeleton";
+import RTAlert from "@rt/components/RTFeedback/Alert/Alert";
+import { Tag } from "antd";
 
 const getListData = (value, data, view) => {
-  if (view === 'year') {
+  if (view === "year") {
     const month = value.month();
-    return data.filter(
-      (item) => dayjs(item.createdAt).month() === month
-    );
+    return data.filter((item) => dayjs(item.createdAt).month() === month);
   } else {
     const date = value.format("YYYY-MM-DD");
     return data.filter(
@@ -42,94 +43,218 @@ const CalendarPageContainer = () => {
       axiosInstance.get(ENDPOINTS.PRODUCT.LIST).then((res) => res.data),
   });
 
+  const { data: ordersData } = useQuery({
+    queryKey: ["orders"],
+    queryFn: () =>
+      axiosInstance.get(ENDPOINTS.ORDERS.LIST).then((res) => res.data),
+  });
+
+  const { data: usersData } = useQuery({
+    queryKey: ["users"],
+    queryFn: () =>
+      axiosInstance.get(ENDPOINTS.USER.LIST).then((res) => res.data),
+  });
+
+  const { data: customerData } = useQuery({
+    queryKey: ["customers"],
+    queryFn: () =>
+      axiosInstance.get(ENDPOINTS.CUSTOMERS.LIST).then((res) => res.data),
+  });
+
   const monthCellRender = (value) => {
-    const listCategoryData = getListData(value, categoryData || [], 'year');
-    const listProductData = getListData(value, productsData || [], 'year');
+    const listCategoryData = getListData(value, categoryData || [], "year");
+    const listProductData = getListData(value, productsData || [], "year");
+    const listOrderData = getListData(value, ordersData || [], "year");
+    const listUserData = getListData(value, usersData || [], "year");
+    const listCustomerData = getListData(value, customerData || [], "year");
 
     return (
-      <ul className="events" style={{ overflowX: "hidden" }}>
+      <div
+        style={{
+          gap: "4px",
+          rowGap: "4px",
+        }}
+      >
         {listCategoryData.length > 0 && (
-          <li
+          <Tag
+            style={{ width: "max-content" }}
+            color="success"
             onClick={() => {
-              setModalContent(`Categories: ${listCategoryData.map(item => item.categoryName).join(", ")}`);
+              setModalContent(
+                `Categories: ${listCategoryData.map(
+                  (item) => item.categoryName
+                )}`
+              );
               setOpen(true);
             }}
           >
-            <Badge
-              status={"success"}
-              text={`${listCategoryData.length} Added Category`}
-            />
-          </li>
+            {`${listCategoryData.length} Added Category`}
+          </Tag>
         )}
         {listProductData.length > 0 && (
-          <li
+          <Tag
+            style={{ width: "max-content" }}
+            color="purple"
             onClick={() => {
-              setModalContent(`Products: ${listProductData.map(item => item.name).join(", ")}`);
+              setModalContent(
+                `Products: ${listProductData
+                  .map((item) => item.productName)
+                  .join(", ")}`
+              );
               setOpen(true);
             }}
           >
-            <Badge
-              status={"warning"}
-              text={`${listProductData.length} Added Product`}
-            />
-          </li>
+            {`${listProductData.length} Added Product`}
+          </Tag>
         )}
-      </ul>
+        {listOrderData.length > 0 && (
+          <Tag
+            color="processing"
+            onClick={() => {
+              setModalContent(
+                `Orders: ${listOrderData.map((item) => item.id).join(", ")}`
+              );
+              setOpen(true);
+            }}
+          >
+            {`${listOrderData.length} Added Order`}
+          </Tag>
+        )}
+        {listUserData.length > 0 && (
+          <Tag
+            color="cyan"
+            onClick={() => {
+              setModalContent(
+                `Users: ${listUserData.map((item) => item.name).join(", ")}`
+              );
+              setOpen(true);
+            }}
+          >
+            {`${listUserData.length} Added User`}
+          </Tag>
+        )}
+        {listCustomerData.length > 0 && (
+          <Tag
+            color="orange"
+            onClick={() => {
+              setModalContent(
+                `Customers: ${listCustomerData
+                  .map((item) => item.name)
+                  .join(", ")}`
+              );
+              setOpen(true);
+            }}
+          >
+            {`${listCustomerData.length} Added Customer`}
+          </Tag>
+        )}
+      </div>
     );
   };
 
   const dateCellRender = (value) => {
-    const listCategoryData = getListData(value, categoryData || [], 'date');
-    const listProductData = getListData(value, productsData || [], 'date');
+    const listCategoryData = getListData(value, categoryData || [], "date");
+    const listProductData = getListData(value, productsData || [], "date");
+    const listOrderData = getListData(value, ordersData || [], "date");
+    const listUserData = getListData(value, usersData || [], "date");
+    const listCustomerData = getListData(value, customerData || [], "date");
 
     return (
-      <ul className="events" style={{ overflowX: "hidden" }}>
+      <>
         {listCategoryData.length > 0 && (
-          <li
+          <Tag
+            color="success"
             onClick={() => {
-              setModalContent(`Categories: ${listCategoryData.map(item => item.categoryName).join(", ")}`);
+              setModalContent(
+                `Categories: ${listCategoryData
+                  .map((item) => item.categoryName)
+                  }`
+              );
               setOpen(true);
             }}
           >
-            <Badge
-              status={"success"}
-              text={`${listCategoryData.length} Added Category`}
-            />
-          </li>
+            {`${listCategoryData.length} Added Category`}
+          </Tag>
         )}
         {listProductData.length > 0 && (
-          <li
+          <Tag
+            color="purple"
             onClick={() => {
-              setModalContent(`Products: ${listProductData.map(item => item.name).join(", ")}`);
+              setModalContent(
+                `Products: ${listProductData
+                  .map((item) => item.name)
+                  .join(", ")}`
+              );
               setOpen(true);
             }}
           >
-            <Badge
-              status={"warning"}
-              text={`${listProductData.length} Added Product`}
-            />
-          </li>
+            {`${listProductData.length} Added Product`}
+          </Tag>
         )}
-      </ul>
+        {listOrderData.length > 0 && (
+          <Tag
+            color="processing"
+            onClick={() => {
+              setModalContent(
+                `Orders: ${listOrderData.map((item) => item.id).join(", ")}`
+              );
+              setOpen(true);
+            }}
+          >
+            {`${listOrderData.length} Added Order`}
+          </Tag>
+        )}
+        {listUserData.length > 0 && (
+          <Tag
+            color="cyan"
+            onClick={() => {
+              setModalContent(
+                `Users: ${listUserData.map((item) => item.name).join(", ")}`
+              );
+              setOpen(true);
+            }}
+          >
+            {`${listUserData.length} Added User`}
+          </Tag>
+        )}
+        {listCustomerData.length > 0 && (
+          <Tag
+            color="orange"
+            onClick={() => {
+              setModalContent(
+                `Customers: ${listCustomerData
+                  .map((item) => item.name)
+                  .join(", ")}`
+              );
+              setOpen(true);
+            }}
+          >
+            {`${listCustomerData.length} Added Customer`}
+          </Tag>
+        )}
+      </>
     );
   };
 
-  if (isLoading) return <Spin />;
-  if (error) return <div>Error loading data</div>;
+  if (isLoading) return <RTSkeleton />;
+  if (error)
+    return <RTAlert type="error" message={error.response.data.message} />;
 
   return (
-    <>
+    <div>
       <Modal open={open} onCancel={() => setOpen(false)} title="Event Details">
         <p>{modalContent}</p>
       </Modal>
-      <Calendar 
-        locale={"tr"} 
-        dateCellRender={dateCellRender} 
-        monthCellRender={monthCellRender} 
-        
-        fullscreen={true} 
+      <Calendar
+        style={{
+          height: "80vh",
+        }}
+        locale={"tr"}
+        dateCellRender={dateCellRender}
+        monthCellRender={monthCellRender}
+        fullscreen={true}
       />
-    </>
+    </div>
   );
 };
 

@@ -62,7 +62,7 @@ const DashboardPageContainer = () => {
             <Statistic
               className="dashboard-statistic"
               title="Income"
-              value={income}
+              value={income + fee}
               precision={2}
               valueStyle={{ color: "#3f8600" }}
               prefix={<ArrowUpOutlined />}

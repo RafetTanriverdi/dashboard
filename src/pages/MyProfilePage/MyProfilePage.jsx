@@ -40,7 +40,7 @@ const MyProfilePage = (props) => {
                 value: ROUTES_ID.myProfileDetailPage,
               },
               {
-                label: "Password",
+                label: "Change Password",
                 value: ROUTES_ID.changePassword,
               },
             ]}

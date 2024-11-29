@@ -95,7 +95,7 @@ const LineChartContainer = () => {
 
   const top5Products = chartData.slice(0, 5);
   if (isLoading) return <RTSkeleton />;
-  if (error) return <RTAlert type="error" message="Something went wrong" />;
+  if (error) return <RTAlert type="error" message={error.response.data.message} />;
 
   return (
     <>
