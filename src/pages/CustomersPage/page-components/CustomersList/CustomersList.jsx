@@ -15,6 +15,7 @@ import { ROUTES_ID } from "@rt/routing/routes-id";
 import { generatePath } from "react-router-dom";
 import { Tag } from "antd";
 import { capitalizeFirstLetter } from "@rt/utils/capitalizeFirstLetter";
+import { longDateFormat } from "@rt/utils/long-dateFotmat";
 
 const TableAntdContainer = ({ style, dataSource }) => {
   const columns = [
@@ -50,13 +51,17 @@ const TableAntdContainer = ({ style, dataSource }) => {
       title: "Created ",
       dataIndex: "createdAt",
       key: "createdAt",
-      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
+      render: (createdAt) => longDateFormat(createdAt),
+      sorter: (a, b) =>
+        dayjs(a.createdAt).valueOf() - dayjs(b.createdAt).valueOf(),
     },
     {
       title: "Updated",
       dataIndex: "updatedAt",
       key: "updatedAt",
-      sorter: (a, b) => new Date(a.updatedAt) - new Date(b.updatedAt),
+      render: (updatedAt) => longDateFormat (updatedAt),
+      sorter: (a, b) =>
+        dayjs(a.updatedAt).valueOf() - dayjs(b.updatedAt).valueOf(),
     },
     {
       title: "Actions",
@@ -149,8 +154,8 @@ const TableContainer = () => {
         number: item.phone,
         addresses: item.addresses,
         status: capitalizeFirstLetter(item.status),
-        createdAt: dayjs(item.createdAt).format("MMMM D, YYYY"),
-        updatedAt: dayjs(item.updatedAt).format("MMMM D, YYYY"),
+        createdAt: item.createdAt,
+        updatedAt: item.updatedAt,
       };
     });
 

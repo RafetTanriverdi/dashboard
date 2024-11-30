@@ -10,9 +10,10 @@ import DeleteCategoryDrawer from "./drawers/DeleteCategoryDrawer";
 import RTSkeleton from "@rt/components/RTSkeleton/RTSkeleton";
 import axiosInstance from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
-import dayjs from "dayjs";
 import { Permissions } from "@rt/utils/permission-util";
 import { RTButton } from "@rt/components/RTButton";
+import dayjs from "dayjs";
+import { longDateFormat } from "@rt/utils/long-dateFotmat";
 
 const TableAntdContainer = ({ style, dataSource }) => {
   const columns = [
@@ -35,17 +36,20 @@ const TableAntdContainer = ({ style, dataSource }) => {
       sorter: (a, b) => a.ownerName.localeCompare(b.ownerName),
     },
     {
-      title: "Update",
-      dataIndex: "updatedAt",
-      key: "updatedAt",
-      sorter: (a, b) => a._id - b._id,
-    },
-
-    {
-      title: "Create",
+      title: "Created",
       dataIndex: "createdAt",
       key: "createdAt",
-      sorter: (a, b) => a._id - b._id,
+      render: (createdAt) => longDateFormat(createdAt),
+      sorter: (a, b) =>
+        dayjs(a.createdAt).valueOf() - dayjs(b.createdAt).valueOf(),
+    },
+    {
+      title: "Updated",
+      dataIndex: "updatedAt",
+      key: "updatedAt",
+      render: (updatedAt) => longDateFormat(updatedAt),
+      sorter: (a, b) =>
+        dayjs(a.updatedAt).valueOf() - dayjs(b.updatedAt).valueOf(),
     },
 
     {
@@ -145,8 +149,8 @@ const TableContainer = () => {
           name: item.categoryName,
           productAmount: item.productCount,
           ownerName: item.ownerName,
-          createdAt: dayjs(item.createdAt).format(" MMMM DD, YYYY -  hh:mm A"),
-          updatedAt: dayjs(item.updatedAt).format(" MMMM DD, YYYY -  hh:mm A"),
+          createdAt: item.createdAt,
+          updatedAt: item.updatedAt,
         };
       });
   }

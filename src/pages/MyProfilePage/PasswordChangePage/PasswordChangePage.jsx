@@ -27,7 +27,7 @@ const PasswordChangePageContainer = () => {
     minLength: /(?=.{8,})/,
     upperCase: /(?=.*[A-Z])/,
     lowerCase: /(?=.*[a-z])/,
-    specialChar: /(?=.*[!@#$%^&*])/,
+    specialChar: /(?=.*[!@#$%^&*.])/,
     digit: /(?=.*[0-9])/,
   };
 

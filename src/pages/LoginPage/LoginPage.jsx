@@ -47,30 +47,32 @@ const LoginPageContainer = () => {
   const mutation = useMutation({
     mutationKey: ["signIn"],
     mutationFn: async () => {
-      const { nextStep } = await signIn({
+      const res = await signIn({
         username: email,
         password,
       });
-
-      if (
-        nextStep.signInStep === "CONFIRM_SIGN_IN_WITH_NEW_PASSWORD_REQUIRED"
-      ) {
-        navigate(
-          getRoutePath(ROUTES_ID.forceChangePassword) + `?email=${email}`
-        );
-      } else {
-        const user = await getCurrentUser();
-        setUserData(user);
-        navigate(getRoutePath(ROUTES_ID.dashboard));
-      }
-      updateAbilityFor(ability, getAuthItems());
+      return res;
     },
-    onSuccess: () => {
+    onSuccess: (res) => {
+      const { nextStep } = res;
       openMessage({
         message: "Login successful",
         type: "success",
         duration: 2,
-     
+        onClose: async () => {
+          if (
+            nextStep.signInStep === "CONFIRM_SIGN_IN_WITH_NEW_PASSWORD_REQUIRED"
+          ) {
+            navigate(
+              getRoutePath(ROUTES_ID.forceChangePassword) + `?email=${email}`
+            );
+          } else {
+            const user = await getCurrentUser();
+            setUserData(user);
+            navigate(getRoutePath(ROUTES_ID.dashboard));
+          }
+          updateAbilityFor(ability, getAuthItems());
+        },
       });
     },
     onError: (error) => {

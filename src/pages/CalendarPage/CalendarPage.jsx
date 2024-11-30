@@ -36,7 +36,7 @@ const CalendarPageContainer = () => {
   const {
     data: categoryData,
     isLoading,
-    error,
+    error: categoryError,
   } = useQuery({
     queryKey: ["categories"],
     queryFn: () =>
@@ -48,19 +48,19 @@ const CalendarPageContainer = () => {
       axiosInstance.get(ENDPOINTS.PRODUCT.LIST).then((res) => res.data),
   });
 
-  const { data: ordersData } = useQuery({
+  const { data: ordersData, error: ordersError } = useQuery({
     queryKey: ["orders"],
     queryFn: () =>
       axiosInstance.get(ENDPOINTS.ORDERS.LIST).then((res) => res.data),
   });
 
-  const { data: usersData } = useQuery({
+  const { data: usersData, error: usersError } = useQuery({
     queryKey: ["users"],
     queryFn: () =>
       axiosInstance.get(ENDPOINTS.USER.LIST).then((res) => res.data),
   });
 
-  const { data: customerData } = useQuery({
+  const { data: customerData, error: customerError } = useQuery({
     queryKey: ["customers"],
     queryFn: () =>
       axiosInstance.get(ENDPOINTS.CUSTOMERS.LIST).then((res) => res.data),
@@ -260,8 +260,18 @@ const CalendarPageContainer = () => {
   };
 
   if (isLoading) return <RTSkeleton />;
-  if (error)
-    return <RTAlert type="error" message={error.response.data.message} />;
+  if (categoryError && customerError && usersError && ordersError)
+    return (
+      <RTAlert
+        type="error"
+        message={
+          categoryError.response.data.message ||
+          customerError.response.data.message ||
+          usersError.response.data.message ||
+          ordersError.response.data.message
+        }
+      />
+    );
 
   return (
     <div>

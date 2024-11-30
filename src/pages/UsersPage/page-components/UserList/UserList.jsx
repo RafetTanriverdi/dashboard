@@ -15,6 +15,7 @@ import { Tag } from "antd";
 import { CheckCircleOutlined, SyncOutlined } from "@ant-design/icons";
 import { Can } from "@rt/authorization/can";
 import { Permissions } from "@rt/utils/permission-util";
+import { longDateFormat } from "@rt/utils/long-dateFotmat";
 
 const TableAntdContainer = ({ style, dataSource }) => {
   const columns = [
@@ -64,10 +65,20 @@ const TableAntdContainer = ({ style, dataSource }) => {
       sorter: (a, b) => a.email.localeCompare(b.email),
     },
     {
+      title: "Created",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (createdAt) => longDateFormat(createdAt),
+      sorter: (a, b) =>
+        dayjs(a.createdAt).valueOf() - dayjs(b.createdAt).valueOf(),
+    },
+    {
       title: "Updated",
       dataIndex: "updatedAt",
       key: "updatedAt",
-      sorter: (a, b) => new Date(a.updatedAt) - new Date(b.updatedAt),
+      render: (updatedAt) => longDateFormat(updatedAt),
+      sorter: (a, b) =>
+        dayjs(a.updatedAt).valueOf() - dayjs(b.updatedAt).valueOf(),
     },
 
     {
@@ -157,7 +168,7 @@ const TableContainer = () => {
           role: item.role,
           status: item.status,
           createdAt: item.createdAt,
-          updatedAt: dayjs(item.updatedAt).format("MMMM D, YYYY"),
+          updatedAt: item.updatedAt,
         };
       });
   }

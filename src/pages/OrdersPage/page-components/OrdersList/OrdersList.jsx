@@ -5,56 +5,17 @@ import { hasArrayElement } from "@rt/utils/array-utils";
 import { useQuery } from "@tanstack/react-query";
 import { Space } from "antd";
 import { Table } from "antd";
-import dayjs from "dayjs";
 import { useState } from "react";
 import { TableView } from "./OrdersAction";
 import ViewOrderDrawer from "./drawers/ViewOrderDrawer";
 import EditOrderDrawer from "./drawers/EditOrderDrawer";
 import DeleteOrderDrawer from "./drawers/DeleteOrderDrawer";
 import RefundOrderDrawer from "./drawers/RefundOrderDrawer";
-import './OrdersList.scss';
+import "./OrdersList.scss";
+import { longDateFormat } from "@rt/utils/long-dateFotmat";
+import dayjs from "dayjs";
 
 const OrdersListContainer = () => {
-  const columns = [
-    {
-      title: "Customer",
-      dataIndex: "customer",
-      key: "customer",
-    },
-    {
-      title: "Email",
-      dataIndex: "customerEmail",
-      key: "customerEmail",
-    },
-    {
-      title: "Total",
-      dataIndex: "total",
-      key: "total",
-    },
-
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-    },
-    {
-      title: "Products",
-      dataIndex: "products",
-      key: "products",
-    },
-    {
-      title: "Created ",
-      dataIndex: "createdAt",
-      key: "createdAt",
-    },
-    {
-      title: "Actions",
-      dataIndex: "actions",
-      key: "actions",
-      render: (_, record) => <TableActions data={record} />,
-    },
-  ];
-
   const { data, isLoading, error } = useQuery({
     queryKey: ["Orders List"],
     queryFn: () =>
@@ -70,8 +31,8 @@ const OrdersListContainer = () => {
         id: item.orderId,
         customer: item.customerName,
         customerEmail: item.customerEmail,
-        total: `$ ${item.amountTotal / 100}`,
-        createdAt: dayjs(item.createdAt).format("MMMM DD, YYYY"),
+        total: item.amountTotal / 100,
+        createdAt: item.createdAt,
         status: item.currentStatus,
         products: item.products.length,
       };
@@ -87,7 +48,7 @@ const OrdersListContainer = () => {
   if (error) {
     return <div>{error.message}</div>;
   }
-  return <OrderListTable columns={columns} data={tableData} />;
+  return <OrderListTable data={tableData} />;
 };
 
 const TableActions = ({ data }) => {
@@ -126,10 +87,80 @@ const TableActions = ({ data }) => {
   );
 };
 
-const OrderListTable = ({ columns, data }) => {
-  return <Table columns={columns} dataSource={data}  scroll={{
-    x: 'max-content',
-  }}/>;
+const OrderListTable = ({ data }) => {
+  const getOrderFilters = (data, find) => {
+    const orders = new Set(data.map((item) => item[find]));
+
+    return Array.from(orders)
+      .sort((a, b) => a.localeCompare(b))
+      .map((category) => ({
+        text: category,
+        value: category,
+      }));
+  };
+
+  const columns = [
+    {
+      title: "Customer",
+      dataIndex: "customer",
+      key: "customer",
+      sorter: (a, b) => a.customer.localeCompare(b.customer),
+    },
+    {
+      title: "Email",
+      dataIndex: "customerEmail",
+      key: "customerEmail",
+      sorter: (a, b) => a.customerEmail.localeCompare(b.customerEmail),
+    },
+    {
+      title: "Total",
+      dataIndex: "total",
+      key: "total",
+      render: (total) => `$ ${total}`,
+      sorter: (a, b) => a.total - b.total,
+    },
+
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      filters: getOrderFilters(data, "status"),
+      onFilter: (value, record) => record.status.startsWith(value),
+      filterMode: "tree",
+      filterSearch: true,
+    },
+    {
+      title: "Products",
+      dataIndex: "products",
+      key: "products",
+      sorter: (a, b) => a.products - b.products,
+    },
+
+    {
+      title: "Created ",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (createdAt) => longDateFormat(createdAt),
+      sorter: (a, b) =>
+        dayjs(a.createdAt).valueOf() - dayjs(b.createdAt).valueOf(),
+    },
+    {
+      title: "Actions",
+      dataIndex: "actions",
+      key: "actions",
+      render: (_, record) => <TableActions data={record} />,
+    },
+  ];
+
+  return (
+    <Table
+      columns={columns}
+      dataSource={data}
+      scroll={{
+        x: "max-content",
+      }}
+    />
+  );
 };
 
 const OrdersList = () => {

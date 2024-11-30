@@ -15,6 +15,7 @@ import { Badge } from "antd";
 import { Permissions } from "@rt/utils/permission-util";
 import { RTButton } from "@rt/components/RTButton";
 import { useSearchParams } from "react-router-dom";
+import { longDateFormat } from "@rt/utils/long-dateFotmat";
 
 const TableAntdContainer = ({ style, dataSource, categoriesData }) => {
   const getCategoryFilters = (data, find) => {
@@ -76,17 +77,22 @@ const TableAntdContainer = ({ style, dataSource, categoriesData }) => {
       ),
     },
     {
-      title: "Update",
-      dataIndex: "updatedAt",
-      key: "updatedAt",
-      sorter: (a, b) => new Date(a.updatedAt) - new Date(b.updatedAt),
-    },
-    {
-      title: "Create",
+      title: "Created",
       dataIndex: "createdAt",
       key: "createdAt",
-      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
+      render: (createdAt) => longDateFormat(createdAt),
+      sorter: (a, b) =>
+        dayjs(a.createdAt).valueOf() - dayjs(b.createdAt).valueOf(),
     },
+    {
+      title: "Updated",
+      dataIndex: "updatedAt",
+      key: "updatedAt",
+      render: (updatedAt) => longDateFormat(updatedAt),
+      sorter: (a, b) =>
+        dayjs(a.updatedAt).valueOf() - dayjs(b.updatedAt).valueOf(),
+    },
+
     {
       title: "Actions",
       dataIndex: "actions",
@@ -167,7 +173,6 @@ const TableContainer = ({ categoriesData }) => {
     queryFn: () =>
       axiosInstance.get(ENDPOINTS.PRODUCT.LIST).then((res) => res.data),
   });
-  const longDate = "MMMM DD, YYYY - hh:ss A ";
 
   let tableData = [];
 
@@ -176,9 +181,9 @@ const TableContainer = ({ categoriesData }) => {
   const lookingForProduct = searchParams.get("productId");
   if (hasArrayElement(data)) {
     tableData = data
-    .filter((item) => 
-      !lookingForProduct || item.productId === lookingForProduct
-    )
+      .filter(
+        (item) => !lookingForProduct || item.productId === lookingForProduct
+      )
       .sort((a, b) => {
         return new Date(b.updatedAt) - new Date(a.updatedAt);
       })
@@ -196,8 +201,8 @@ const TableContainer = ({ categoriesData }) => {
           imageUrls: item.imageUrls,
           categoryName: item.categoryName,
           categoryId: item.categoryId,
-          updatedAt: dayjs(item.updatedAt).format(longDate),
-          createdAt: dayjs(item.createdAt).format(longDate),
+          updatedAt: item.updatedAt,
+          createdAt: item.createdAt,
         };
       });
   }

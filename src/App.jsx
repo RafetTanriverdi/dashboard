@@ -17,6 +17,7 @@ import awsmobile from "./aws-exports";
 import { cognitoUserPoolsTokenProvider } from "aws-amplify/auth/cognito";
 import { defaultStorage } from "aws-amplify/utils";
 import RTSpinner from "./components/RTSpinner/RTSpinner";
+import Message from "./components/RTFeedback/Message/Message";
 
 Amplify.configure(awsmobile);
 
@@ -26,6 +27,7 @@ function App() {
   const { setUserData } = useUserDataStore();
   const [cookies, setCookie] = useCookies(["theme"]);
   const querClient = useQueryClient();
+  const { context } = Message();
 
   useEffect(() => {
     const savedTheme = cookies.theme === "dark" ? false : true;
@@ -49,6 +51,7 @@ function App() {
 
   return (
     <ConfigProvider theme={theme ? lightTheme : darkTheme}>
+      {context}
       <AppClientRouter routes={routes} loading={<RTSpinner {...routes} />} />
     </ConfigProvider>
   );
