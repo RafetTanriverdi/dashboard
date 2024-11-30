@@ -39,7 +39,20 @@ export const roleOptions = [
     ],
   },
   {
+    name:'Product Creator',
+    permissions: [
+      "Product:Read",
+      "Product:Create",
+      "Category:Create",
+      "Category:Read",
+    ],
+  },
+  {
     name: "Ship Manager",
+    permissions: ["Order:Read", "Order:Update", "Order:Delete", "Order:Refund"],
+  },
+  {
+    name: "Customer Service",
     permissions: [
       "Order:Read",
       "Order:Update",
@@ -52,11 +65,33 @@ export const roleOptions = [
     ],
   },
   {
+    name: "Finance",
+    permissions: [
+      "Order:Read",
+      "Order:Update",
+      "Customer:Details",
+      "Customer:Read",
+    ],
+  },
+
+  {
+    name:'Marketing',
+    permissions: [
+      "Product:Read",
+      "Category:Read",
+      "Order:Read",
+      "Customer:Read",
+      "Customer:Details",
+    ],
+  },
+
+  {
     name: "User",
     permissions: [
       "Product:Read",
       "Category:Read",
       "Order:Read",
+      'User:Read',
       "Customer:Read",
       "Customer:Details",
     ],
@@ -83,10 +118,7 @@ export const permissionsList = [
       "Category:Delete",
     ],
   },
-  {
-    name: "Users",
-    permissions: ["User:Create", "User:Read", "User:Update", "User:Delete"],
-  },
+
   {
     name: "Orders",
     permissions: ["Order:Refund", "Order:Read", "Order:Update", "Order:Delete"],
@@ -99,6 +131,10 @@ export const permissionsList = [
       "Customer:Update",
       "Customer:Delete",
     ],
+  },
+  {
+    name: "Users",
+    permissions: ["User:Create", "User:Read", "User:Update", "User:Delete"],
   },
 ];
 
