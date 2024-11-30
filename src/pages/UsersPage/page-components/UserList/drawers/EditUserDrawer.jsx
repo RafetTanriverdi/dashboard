@@ -43,9 +43,8 @@ const EditUserDrawer = ({ onClose, open, inheritedData }) => {
     name: newName,
     phoneNumber: newNumber,
     role: newRole,
-    permissions: newPermissions,
+    permissions: newPermissions.filter(e=>e.includes(':'))
   };
-
   const mutation = useMutation({
     mutationKey: "updateUser",
     mutationFn: (updateUser) => {

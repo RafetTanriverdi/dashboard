@@ -16,6 +16,7 @@ import { generatePath } from "react-router-dom";
 import { Tag } from "antd";
 import { capitalizeFirstLetter } from "@rt/utils/capitalizeFirstLetter";
 import { longDateFormat } from "@rt/utils/long-dateFotmat";
+import RTAlert from "@rt/components/RTFeedback/Alert/Alert";
 
 const TableAntdContainer = ({ style, dataSource }) => {
   const columns = [
@@ -59,7 +60,7 @@ const TableAntdContainer = ({ style, dataSource }) => {
       title: "Updated",
       dataIndex: "updatedAt",
       key: "updatedAt",
-      render: (updatedAt) => longDateFormat (updatedAt),
+      render: (updatedAt) => longDateFormat(updatedAt),
       sorter: (a, b) =>
         dayjs(a.updatedAt).valueOf() - dayjs(b.updatedAt).valueOf(),
     },
@@ -160,7 +161,8 @@ const TableContainer = () => {
     });
 
   if (isLoading) return <RTSkeleton />;
-  if (error) return <div>Error</div>;
+  if (error)
+    return <RTAlert type="error" message={error.response.data.message} />;
 
   return <TableAntdContainer dataSource={dataSource} />;
 };

@@ -6,12 +6,19 @@ import { useLocation } from "react-router-dom";
 import { isRoutePathChild } from "@rt/routing/routes";
 import { Typography } from "antd";
 import "./CustomersPage.scss";
+import RTAuthContainer from "@rt/components/RTAuthContainer/RTAuthContainer";
+import { Permissions } from "@rt/utils/permission-util";
 
 const CustomersPageContainer = () => {
   return (
     <div className="customer-container">
       <Typography.Title level={3}>Customers</Typography.Title>
-      <CustomersList className="customer-list" />
+      <RTAuthContainer
+        action={Permissions.customers.actions.read}
+        subject={Permissions.customers.subject}
+      >
+        <CustomersList className="customer-list" />
+      </RTAuthContainer>
     </div>
   );
 };

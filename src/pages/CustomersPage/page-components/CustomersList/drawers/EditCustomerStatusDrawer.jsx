@@ -8,6 +8,9 @@ import { Button, Drawer } from "antd";
 import { Form } from "antd";
 import { useState } from "react";
 import EditCustomerStatusPanel from "../panels/EditCustomerStatusPanel";
+import RTAuthContainer from "@rt/components/RTAuthContainer/RTAuthContainer";
+import { RTButton } from "@rt/components/RTButton";
+import { Permissions } from "@rt/utils/permission-util";
 
 const EditCustomerStatusDrawer = ({ open, onClose, inheritedData }) => {
   const { key, name, status, email } = inheritedData;
@@ -71,23 +74,26 @@ const EditCustomerStatusDrawer = ({ open, onClose, inheritedData }) => {
               textAlign: "left",
             }}
           >
-            <Button
+            <RTButton.authAdd
+              action={Permissions.customers.actions.update}
+              subject={Permissions.customers.subject}
               onClick={() => mutation.mutate(postBody)}
               type="primary"
               style={{ marginRight: "10px" }}
               loading={mutation.isPending}
-            >
-              Submit
-            </Button>
+              text={"Submit"}
+            />
             <Button onClick={onClose}>Cancel</Button>
           </div>
         }
       >
-        <EditCustomerStatusPanel
-          id={key}
-          newStatus={newStatus}
-          setNewStatus={setNewStatus}
-        />
+        <RTAuthContainer>
+          <EditCustomerStatusPanel
+            id={key}
+            newStatus={newStatus}
+            setNewStatus={setNewStatus}
+          />
+        </RTAuthContainer>
       </Drawer>
     </>
   );

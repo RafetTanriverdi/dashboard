@@ -12,10 +12,14 @@ import "./CustomerDetailsPage.scss";
 import UserDetails from "./page-components/UserDetails/UserDetails";
 import ChargeList from "./page-components/ChargeList/ChargeList";
 import UserDashboard from "./page-components/UserDashboard/UserDashboard";
+import RTAlert from "@rt/components/RTFeedback/Alert/Alert";
+import RTAuthContainer from "@rt/components/RTAuthContainer/RTAuthContainer";
+import { Permissions } from "@rt/utils/permission-util";
 
 const CustomerDetailsPageContainer = ({ data, error, isLoading }) => {
-  if (isLoading || !data) return <RTSkeleton />;
-  if (error) return <div>{error.message}</div>;
+  if (isLoading) return <RTSkeleton />;
+  if (error)
+    return <RTAlert type="error" message={error.response.data.message} />;
   return (
     <div style={{ padding: "10px" }}>
       <Space
@@ -73,11 +77,16 @@ const CustomerDetailsPage = () => {
     <CustomerLayout
       title={data ? data?.name : "Customer Name"}
       content={
-        <CustomerDetailsPageContainer
-          data={data}
-          error={error}
-          isLoading={isLoading}
-        />
+        <RTAuthContainer
+          action={Permissions.customers.actions.details}
+          subject={Permissions.customers.subject}
+        >
+          <CustomerDetailsPageContainer
+            data={data}
+            error={error}
+            isLoading={isLoading}
+          />
+        </RTAuthContainer>
       }
     />
   );

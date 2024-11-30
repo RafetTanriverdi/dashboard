@@ -1,7 +1,9 @@
+import RTAuthContainer from "@rt/components/RTAuthContainer/RTAuthContainer";
 import RTSkeleton from "@rt/components/RTSkeleton/RTSkeleton";
 import { ENDPOINTS } from "@rt/network/endpoints";
 import axiosInstance from "@rt/network/httpRequester";
 import { capitalizeFirstLetter } from "@rt/utils/capitalizeFirstLetter";
+import { Permissions } from "@rt/utils/permission-util";
 import { useQuery } from "@tanstack/react-query";
 import { Image } from "antd";
 import { Collapse, Descriptions } from "antd";
@@ -121,7 +123,12 @@ const ViewOrderPanel = ({ order }) => {
 
   return (
     <>
-      <Descriptions items={items} bordered layout="vertical" />
+      <RTAuthContainer
+        action={Permissions.orders.actions.read}
+        subject={Permissions.orders.subject}
+      >
+        <Descriptions items={items} bordered layout="vertical" />
+      </RTAuthContainer>
     </>
   );
 };

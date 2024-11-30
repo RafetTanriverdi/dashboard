@@ -49,4 +49,22 @@ export const Permissions = {
       delete: "Delete",
     },
   },
+  orders: {
+    subject: "Order",
+    actions: {
+      refund: "Refund",
+      read: "Read",
+      update: "Update",
+      delete: "Delete",
+    },
+  },
+  customers: {
+    subject: "Customer",
+    actions: {
+      details: "Details",
+      read: "Read",
+      update: "Update",
+      delete: "Delete",
+    },
+  },
 };

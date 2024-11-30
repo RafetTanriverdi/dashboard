@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
 import Notification from "@rt/components/RTFeedback/Notification/Notification";
+import { Permissions } from "@rt/utils/permission-util";
 
 const DeleteOrderDrawer = ({ onClose, open, data }) => {
   const queryClient = useQueryClient();
@@ -45,7 +46,9 @@ const DeleteOrderDrawer = ({ onClose, open, data }) => {
         title="Delete Order"
         footer={
           <>
-            <RTButton.add
+            <RTButton.authAdd
+              action={Permissions.orders.actions.delete}
+              subject={Permissions.orders.subject}
               onClick={mutation.mutate}
               text={"Delete"}
               loading={mutation.isPending}

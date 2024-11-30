@@ -6,6 +6,8 @@ import { Popconfirm } from "antd";
 import { Drawer } from "antd";
 import DeleteCustomerPanel from "../panels/DeleteCustomerPanel";
 import Notification from "@rt/components/RTFeedback/Notification/Notification";
+import { Permissions } from "@rt/utils/permission-util";
+import RTAuthContainer from "@rt/components/RTAuthContainer/RTAuthContainer";
 
 const DeleteCustomerDrawer = ({ open, onClose, inheritedData }) => {
   const { key } = inheritedData;
@@ -65,13 +67,23 @@ const DeleteCustomerDrawer = ({ open, onClose, inheritedData }) => {
               }
               onCancel={onClose}
             >
-              <RTButton.add text={"Delete"} loading={mutation.isPending} />
+              <RTButton.authAdd
+                action={Permissions.customers.actions.delete}
+                subject={Permissions.customers.subject}
+                text={"Delete"}
+                loading={mutation.isPending}
+              />
             </Popconfirm>
           </>
         }
       >
-        <DeleteCustomerPanel inheritedData={inheritedData} />
-      </Drawer>{" "}
+        <RTAuthContainer
+          action={Permissions.customers.actions.delete}
+          subject={Permissions.customers.subject}
+        >
+          <DeleteCustomerPanel inheritedData={inheritedData} />
+        </RTAuthContainer>
+      </Drawer>
     </>
   );
 };

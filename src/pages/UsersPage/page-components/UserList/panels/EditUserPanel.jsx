@@ -35,11 +35,19 @@ const EditUserPanel = ({
       const deleteKey = group.permissions.find((perm) =>
         perm.includes("Delete")
       );
+      const refundKey = group.permissions.find((perm) =>
+        perm.includes("Refund")
+      );
+      const detailsKey = group.permissions.find((perm) =>
+        perm.includes("Details")
+      );
 
       if (
         newCheckedKeys.includes(updateKey) ||
         newCheckedKeys.includes(createKey) ||
-        newCheckedKeys.includes(deleteKey)
+        newCheckedKeys.includes(deleteKey) ||
+        newCheckedKeys.includes(refundKey) ||
+        newCheckedKeys.includes(detailsKey)
       ) {
         if (!newCheckedKeys.includes(readKey)) {
           newCheckedKeys.push(readKey);
@@ -49,10 +57,12 @@ const EditUserPanel = ({
 
     setNewPermissions(newCheckedKeys);
     form.setFieldsValue({ Permissions: newCheckedKeys });
+    console.log(newPermissions, "newPermissions");
   };
 
   const handleRoleChange = (value) => {
     const selectedRole = roleOptions.find((role) => role.name === value);
+
     if (selectedRole) {
       setNewRole(selectedRole.name);
       setNewPermissions(selectedRole.permissions);

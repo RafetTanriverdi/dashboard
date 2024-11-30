@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "@rt/network/httpRequester";
 import { ENDPOINTS } from "@rt/network/endpoints";
 import Notification from "@rt/components/RTFeedback/Notification/Notification";
+import { Permissions } from "@rt/utils/permission-util";
 
 const RefundOrderDrawer = ({ onClose, open, data }) => {
   const queryClient = useQueryClient();
@@ -51,12 +52,18 @@ const RefundOrderDrawer = ({ onClose, open, data }) => {
               onCancel={onClose}
               cancelText="Cancel"
             >
-              <RTButton.add text="Refund" loading={mutation.isPending} />
+              <RTButton.authAdd
+                action={Permissions.orders.actions.refund}
+                subject={Permissions.orders.subject}
+                text="Refund"
+                loading={mutation.isPending}
+              />
             </Popconfirm>
             <RTButton.basic text="Close" onClick={onClose} />
           </Space>
         }
       >
+        
         <ViewOrderPanel order={data} />
       </Drawer>
     </>

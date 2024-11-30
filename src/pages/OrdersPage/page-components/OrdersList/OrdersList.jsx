@@ -14,6 +14,7 @@ import RefundOrderDrawer from "./drawers/RefundOrderDrawer";
 import "./OrdersList.scss";
 import { longDateFormat } from "@rt/utils/long-dateFotmat";
 import dayjs from "dayjs";
+import RTAlert from "@rt/components/RTFeedback/Alert/Alert";
 
 const OrdersListContainer = () => {
   const { data, isLoading, error } = useQuery({
@@ -46,7 +47,7 @@ const OrdersListContainer = () => {
     );
   }
   if (error) {
-    return <div>{error.message}</div>;
+    return <RTAlert type='error' message={error.response.data.message} />;
   }
   return <OrderListTable data={tableData} />;
 };
