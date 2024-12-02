@@ -26,7 +26,7 @@ const ProfileDetailsPageContainer = () => {
     queryKey: ["userAttributes"],
     queryFn: () =>
       axiosInstance
-        .get(ENDPOINTS.USER.GET.replace(":userId", decodeId?.sub))
+        .get(ENDPOINTS.USER.MYPROFILE.GET.replace(":userId", decodeId?.sub))
         .then((res) => res.data),
   });
 
@@ -43,7 +43,7 @@ const ProfileDetailsPageContainer = () => {
   const decodeId = jwtDecode(getToken().IdToken);
   const format = "YYYY-MM-DD";
 
-  const permissionsSlice = data?.permissions?.split(",");
+  const permissionsSlice = data?.permissions;
   const permissionCategory = permissionsSlice?.map((item) => {
     return item.split(":")[0];
   });
@@ -68,7 +68,7 @@ const ProfileDetailsPageContainer = () => {
   const mutation = useMutation({
     mutationFn: (data) =>
       axiosInstance.patch(
-        ENDPOINTS.USER.UPDATE.replace(":userId", decodeId?.sub),
+        ENDPOINTS.USER.MYPROFILE.UPDATE.replace(":userId", decodeId?.sub),
         data
       ),
     onSuccess: () => {

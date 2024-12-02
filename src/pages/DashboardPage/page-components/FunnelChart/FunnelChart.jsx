@@ -54,9 +54,8 @@ const FunnelChartContainer = () => {
     },
   ];
 
-  console.log(error,'error');
   if (isLoading) return <RTSkeleton />;
-  if (error) return <RTAlert type='error' message={error.response.data.message} />;
+  if (error) return <RTAlert type='error' message={error?.response?.data?.message} />;
   return (
     <>
       <Typography.Title level={5} className="title">

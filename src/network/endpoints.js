@@ -5,6 +5,10 @@ export const ENDPOINTS = {
     GET: "users/:userId",
     ADD: "users",
     LIST: "users",
+    MYPROFILE: {
+      GET: "users/:userId/my-profile",
+      UPDATE: "users/:userId/my-profile",
+    },
   },
   PRODUCT: {
     LIST: "products",
@@ -34,10 +38,10 @@ export const ENDPOINTS = {
     DELETE: "orders/:orderId",
     REFUND: "orders/refund",
   },
-  STRIPE:{
+  STRIPE: {
     TRANSACTIONS: "stripe/transactions",
     BALANCE: "stripe/balance",
     REFUNDS: "stripe/refunds",
-    CUSTOMERBALANCE:'stripe/balance/:customerStripeId',
-  }
+    CUSTOMERBALANCE: "stripe/balance/:customerStripeId",
+  },
 };

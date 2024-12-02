@@ -99,7 +99,7 @@ const PieChartContainer = () => {
   if (errorOrders || errorProducts)
     return (
       <RTAlert
-        message={errorOrders.response.data.message || errorProducts.response.data.message}
+        message={errorOrders?.response?.data?.message || errorProducts?.response?.data?.message}
         type="error"
       />
     );

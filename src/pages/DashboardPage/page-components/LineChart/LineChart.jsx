@@ -96,7 +96,7 @@ const LineChartContainer = () => {
 
   if (isLoading) return <RTSkeleton />;
   if (error)
-    return <RTAlert type="error" message={error.response?.data?.message} />;
+    return <RTAlert type="error" message={error?.response?.data?.message} />;
 
   // Process the data
   const groupedData = groupByMonth(data || []);
