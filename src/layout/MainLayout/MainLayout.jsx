@@ -11,19 +11,21 @@ import { useSidebarStore } from "@rt/data/Sidebar/Sidebar";
 const { Sider, Content, Header } = Layout;
 
 const MainLayout = ({ sider, content, title }) => {
-  const { isCollapsed, initialize,isMobile, handleResize, toggleCollapse } =
+  const { isCollapsed, isMobile, handleResize, toggleCollapse, setCollapsed } =
     useSidebarStore();
-
-    useEffect(() => {
-      initialize();
-    }, []);
-  
 
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
 
+  useEffect(() => {
+    setCollapsed(localStorage.getItem("collapse") === "true");
+    console.log('initial collapse', localStorage.getItem("collapse")==="true");
+    console.log('initial isCollapsed', isCollapsed);
+
+  }, []);
 
   useEffect(() => {
+    // Handle resizing and mobile state
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [location.pathname]);
