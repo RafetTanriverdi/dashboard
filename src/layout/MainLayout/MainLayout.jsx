@@ -20,6 +20,7 @@ const MainLayout = ({ sider, content, title }) => {
   useEffect(() => {
     setCollapsed(localStorage.getItem("collapse") === "true");
     console.log('initial collapse', localStorage.getItem("collapse")==="true");
+    console.log('initial collapse',localStorage.getItem("collapse")); 
     console.log('initial isCollapsed', isCollapsed);
 
   }, []);

@@ -13,7 +13,7 @@ export const useSidebarStore = create((set) => ({
       isMobile,
       isCollapsed: isMobile
         ? true
-        : localStorage.getItem("collapse") === "true",
+        : localStorage.getItem("collapse") === "true"?true:false,
     });
   },
   toggleCollapse: () =>
