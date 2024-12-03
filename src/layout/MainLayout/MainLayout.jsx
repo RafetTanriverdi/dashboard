@@ -11,8 +11,13 @@ import { useSidebarStore } from "@rt/data/Sidebar/Sidebar";
 const { Sider, Content, Header } = Layout;
 
 const MainLayout = ({ sider, content, title }) => {
-  const { isCollapsed, isMobile, handleResize, toggleCollapse, setCollapsed } =
+  const { isCollapsed, initialize,isMobile, handleResize, toggleCollapse, setCollapsed } =
     useSidebarStore();
+
+    useEffect(() => {
+      initialize();
+    }, []);
+  
 
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
