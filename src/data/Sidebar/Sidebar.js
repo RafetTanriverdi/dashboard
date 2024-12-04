@@ -1,11 +1,13 @@
 import { create } from "zustand";
 
 export const useSidebarStore = create((set) => ({
-  isCollapsed: false, // Varsayılan değer
+  isCollapsed: localStorage.getItem("collapse") === "true" || false, 
   isMobile: window.innerWidth < 768,
   initialize: () => {
-    const isCollapsed = localStorage.getItem("collapse") === "true";
-    set({ isCollapsed });
+    if (typeof window !== "undefined") {
+      const storedValue = localStorage.getItem("collapse");
+      set({ isCollapsed: storedValue === "true" });
+    }
   },
   setCollapsed: (value) => {
     localStorage.setItem("collapse", value);
@@ -13,9 +15,8 @@ export const useSidebarStore = create((set) => ({
   },
   handleResize: () => {
     const isMobile = window.innerWidth < 768;
-    const isCollapsed = isMobile
-      ? true
-      : localStorage.getItem("collapse") === "true";
+    const storedValue = localStorage.getItem("collapse");
+    const isCollapsed = isMobile ? true : storedValue === "true";
     set({ isMobile, isCollapsed });
   },
   toggleCollapse: () =>

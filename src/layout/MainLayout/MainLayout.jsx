@@ -11,19 +11,13 @@ import { useLocation } from "react-router-dom";
 const { Sider, Content, Header } = Layout;
 
 const MainLayout = ({ sider, content, title }) => {
-  const location =useLocation();
+  const location = useLocation();
   const splitLocation = location.pathname.split("/");
-  const {
-    isCollapsed,
-    isMobile,
-    handleResize,
-    initialize,
-    toggleCollapse,
-  } = useSidebarStore();
+  const { initialize, isCollapsed, isMobile, handleResize, toggleCollapse } =
+    useSidebarStore();
 
   useEffect(() => {
     initialize();
-    console.log("Sidebar initialized:", isCollapsed);
   }, []);
 
   useEffect(() => {
@@ -31,6 +25,11 @@ const MainLayout = ({ sider, content, title }) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    console.log("Sidebar status:", isCollapsed);
+  }, [isCollapsed]);
+
   return (
     <>
       <Helmet>
