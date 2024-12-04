@@ -13,12 +13,10 @@ const { Sider, Content, Header } = Layout;
 const MainLayout = ({ sider, content, title }) => {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
-  const { initialize, isCollapsed, isMobile, handleResize, toggleCollapse } =
+  const {  isCollapsed, isMobile, handleResize, toggleCollapse } =
     useSidebarStore();
 
-  useEffect(() => {
-    initialize();
-  }, []);
+
 
   useEffect(() => {
     handleResize();
