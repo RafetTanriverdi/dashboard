@@ -1,46 +1,37 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
-const getLocalStorageValue = (key, defaultValue) => {
-    if (typeof window !== "undefined" && localStorage.getItem(key)) {
-      return localStorage.getItem(key) === "true";
-    }
-    return defaultValue;
-  };
-  
-
 const initialState = {
-  isCollapsed: getLocalStorageValue("collapse", false), 
+  isCollapsed:
+    typeof window !== "undefined"
+      ? localStorage.getItem("collapse") === "true"
+      : false,
   isMobile: typeof window !== "undefined" ? window.innerWidth < 768 : false,
 };
-
-
 
 const sidebarSlice = createSlice({
   name: "sidebar",
   initialState,
   reducers: {
     initialize: (state) => {
-      state.isCollapsed = getLocalStorageValue("collapse", false);
+      const storedValue = localStorage.getItem("collapse");
+      if (storedValue !== null) {
+        state.isCollapsed = storedValue === "true";
+      }
     },
     toggleCollapse: (state) => {
       state.isCollapsed = !state.isCollapsed;
-      if (typeof window !== "undefined") {
-        localStorage.setItem("collapse", state.isCollapsed);
-      }
+      localStorage.setItem("collapse", state.isCollapsed);
     },
     setCollapsed: (state, action) => {
       state.isCollapsed = action.payload;
-      if (typeof window !== "undefined") {
-        localStorage.setItem("collapse", action.payload);
-      }
+      localStorage.setItem("collapse", action.payload);
     },
     handleResize: (state) => {
       if (typeof window !== "undefined") {
         state.isMobile = window.innerWidth < 768;
-        state.isCollapsed = state.isMobile
-          ? true
-          : getLocalStorageValue("collapse", false);
+        if (state.isMobile) {
+          state.isCollapsed = true;
+        }
       }
     },
   },

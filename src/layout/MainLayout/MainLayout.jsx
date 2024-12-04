@@ -25,6 +25,10 @@ const MainLayout = ({ sider, content, title }) => {
 
   useEffect(() => {
     dispatch(initialize());
+    console.log(
+      "Sidebar initialized with value:",
+      localStorage.getItem("collapse")
+    );
   }, [dispatch]);
 
   useEffect(() => {
@@ -35,6 +39,11 @@ const MainLayout = ({ sider, content, title }) => {
       return () => window.removeEventListener("resize", resizeListener);
     }
   }, [dispatch]);
+
+  useEffect(() => {
+    console.log("Redux isCollapsed state:", isCollapsed);
+    console.log("LocalStorage collapse value:", localStorage.getItem("collapse"));
+  }, [isCollapsed]);
 
   return (
     <>
