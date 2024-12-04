@@ -5,29 +5,30 @@ import { Helmet } from "react-helmet";
 import RTHeader from "@rt/components/RTHeader/RTHeader";
 import { useEffect } from "react";
 import { HomeOutlined } from "@ant-design/icons";
-import { useSidebarStore } from "@rt/data/Sidebar/Sidebar";
 import { useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { handleResize, initialize, toggleCollapse } from "@rt/store/sidebarSlice";
 
 const { Sider, Content, Header } = Layout;
 
 const MainLayout = ({ sider, content, title }) => {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
-  const {  isCollapsed, isMobile, handleResize, toggleCollapse } =
-    useSidebarStore();
 
-
-
-  useEffect(() => {
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const dispatch = useDispatch();
+  const { isCollapsed, isMobile } = useSelector((state) => state.sidebar);
 
   useEffect(() => {
-    console.log("Sidebar status:", isCollapsed);
-  }, [isCollapsed]);
+    dispatch(initialize());
+  }, [dispatch]);
 
+  useEffect(() => {
+    const resizeListener = () => dispatch(handleResize());
+    resizeListener();
+    window.addEventListener("resize", resizeListener);
+    return () => window.removeEventListener("resize", resizeListener);
+  }, [dispatch]);
   return (
     <>
       <Helmet>
@@ -39,7 +40,7 @@ const MainLayout = ({ sider, content, title }) => {
         <Header className="header">
           <RTHeader
             open={isCollapsed}
-            setOpen={toggleCollapse}
+            setOpen={() => dispatch(toggleCollapse())}
             isMobile={isMobile}
           />
         </Header>
@@ -47,7 +48,7 @@ const MainLayout = ({ sider, content, title }) => {
           <Sider
             collapsible
             collapsed={isCollapsed}
-            onCollapse={toggleCollapse}
+            onCollapse={() => dispatch(toggleCollapse())}
             breakpoint="lg"
             collapsedWidth={isMobile ? 0 : 50}
             width={isMobile ? "100%" : 250}
