@@ -23,7 +23,6 @@ const MyProfilePage = (props) => {
   const main = getRoutePath(ROUTES_ID.myProfilePage);
   const checkedRoute = location.pathname.split("/")[2];
   const matchMain = useMatch(main);
-  console.log(matchMain);
   if (matchMain) {
     return <Navigate to={getRoutePath(ROUTES_ID.myProfileDetailPage)} />;
   }

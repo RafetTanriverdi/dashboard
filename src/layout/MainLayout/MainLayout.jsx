@@ -3,48 +3,30 @@ import { Breadcrumb, Layout } from "antd";
 import "./MainLayout.scss";
 import { Helmet } from "react-helmet";
 import RTHeader from "@rt/components/RTHeader/RTHeader";
-import { useEffect } from "react";
-import { HomeOutlined } from "@ant-design/icons";
+import {  useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import {
-  handleResize,
-  initialize,
-  toggleCollapse,
-} from "@rt/store/sidebarSlice";
+import { HomeOutlined } from "@ant-design/icons";
+import { useSidebarStore } from "@rt/data/Sidebar/Sidebar";
 
 const { Sider, Content, Header } = Layout;
 
 const MainLayout = ({ sider, content, title }) => {
+  const { isCollapsed, isMobile, handleResize, toggleCollapse, setCollapsed } =
+    useSidebarStore();
+
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
 
-  const dispatch = useDispatch();
-  const { isCollapsed, isMobile } = useSelector((state) => state.sidebar);
+  useEffect(() => {
+    setCollapsed(localStorage.getItem("collapse") === "true");
+
+  }, []);
 
   useEffect(() => {
-    dispatch(initialize());
-    console.log(
-      "Sidebar initialized with value:",
-      localStorage.getItem("collapse")
-    );
-  }, [dispatch]);
-
-  useEffect(() => {
-    const resizeListener = () => dispatch(handleResize());
-    if (typeof window !== "undefined") {
-      resizeListener();
-      window.addEventListener("resize", resizeListener);
-      return () => window.removeEventListener("resize", resizeListener);
-    }
-  }, [dispatch]);
-
-  useEffect(() => {
-    console.log("Redux isCollapsed state:", isCollapsed);
-    console.log("LocalStorage collapse value:", localStorage.getItem("collapse"));
-  }, [isCollapsed]);
-
+    // Handle resizing and mobile state
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [location.pathname]);
   return (
     <>
       <Helmet>
@@ -56,7 +38,7 @@ const MainLayout = ({ sider, content, title }) => {
         <Header className="header">
           <RTHeader
             open={isCollapsed}
-            setOpen={() => dispatch(toggleCollapse())}
+            setOpen={toggleCollapse}
             isMobile={isMobile}
           />
         </Header>
@@ -64,7 +46,7 @@ const MainLayout = ({ sider, content, title }) => {
           <Sider
             collapsible
             collapsed={isCollapsed}
-            onCollapse={() => dispatch(toggleCollapse())}
+            onCollapse={toggleCollapse}
             breakpoint="lg"
             collapsedWidth={isMobile ? 0 : 50}
             width={isMobile ? "100%" : 250}

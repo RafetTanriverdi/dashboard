@@ -79,7 +79,6 @@ const ProfileDetailsPageContainer = () => {
       });
     },
     onError: (error) => {
-      console.log(error);
       openNotification({
         message: error.response.data.message,
         type: "error",

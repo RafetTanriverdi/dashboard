@@ -10,8 +10,6 @@ import ContextApiProvider from "./context/index.jsx";
 import { AbilityContext } from "./authorization/can.js";
 import { buildAbilityFor } from "./authorization/ability.js";
 import { getAuthItems } from "./utils/permission-util.js";
-import { Provider } from "react-redux";
-import store from "./store/index.js";
 
 const queryClient = new QueryClient();
 
@@ -23,9 +21,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <AbilityContext.Provider value={ability}>
         <QueryClientProvider client={queryClient}>
           <ContextApiProvider>
-            <Provider store={store}>
               <App />
-            </Provider>
           </ContextApiProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>

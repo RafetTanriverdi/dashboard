@@ -94,7 +94,6 @@ const PieChartContainer = () => {
     },
   };
 
-  console.log('errorOrders', errorOrders, 'errorProducts', errorProducts);  
   if (loadingOrders || loadingProducts) return <RTSkeleton />;
   if (errorOrders || errorProducts)
     return (

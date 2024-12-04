@@ -57,7 +57,6 @@ const EditUserPanel = ({
 
     setNewPermissions(newCheckedKeys);
     form.setFieldsValue({ Permissions: newCheckedKeys });
-    console.log(newPermissions, "newPermissions");
   };
 
   const handleRoleChange = (value) => {
