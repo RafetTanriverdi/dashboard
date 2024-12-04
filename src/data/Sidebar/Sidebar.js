@@ -1,20 +1,22 @@
 import { create } from "zustand";
 
 export const useSidebarStore = create((set) => ({
-  isCollapsed: localStorage.getItem("collapse") === "true",
+  isCollapsed: false, // Varsayılan değer
   isMobile: window.innerWidth < 768,
+  initialize: () => {
+    const isCollapsed = localStorage.getItem("collapse") === "true";
+    set({ isCollapsed });
+  },
   setCollapsed: (value) => {
     localStorage.setItem("collapse", value);
     set({ isCollapsed: value });
   },
   handleResize: () => {
     const isMobile = window.innerWidth < 768;
-    set({
-      isMobile,
-      isCollapsed: isMobile
-        ? true
-        : localStorage.getItem("collapse") === "true"?true:false,
-    });
+    const isCollapsed = isMobile
+      ? true
+      : localStorage.getItem("collapse") === "true";
+    set({ isMobile, isCollapsed });
   },
   toggleCollapse: () =>
     set((state) => {

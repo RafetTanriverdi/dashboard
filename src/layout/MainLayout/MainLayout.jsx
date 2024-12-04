@@ -3,33 +3,34 @@ import { Breadcrumb, Layout } from "antd";
 import "./MainLayout.scss";
 import { Helmet } from "react-helmet";
 import RTHeader from "@rt/components/RTHeader/RTHeader";
-import {  useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import { HomeOutlined } from "@ant-design/icons";
 import { useSidebarStore } from "@rt/data/Sidebar/Sidebar";
+import { useLocation } from "react-router-dom";
 
 const { Sider, Content, Header } = Layout;
 
 const MainLayout = ({ sider, content, title }) => {
-  const { isCollapsed, isMobile, handleResize, toggleCollapse, setCollapsed } =
-    useSidebarStore();
-
-  const location = useLocation();
+  const location =useLocation();
   const splitLocation = location.pathname.split("/");
+  const {
+    isCollapsed,
+    isMobile,
+    handleResize,
+    initialize,
+    toggleCollapse,
+  } = useSidebarStore();
 
   useEffect(() => {
-    setCollapsed(localStorage.getItem("collapse") === "true");
-    console.log('initial collapse', localStorage.getItem("collapse")==="true");
-    console.log('initial collapse',localStorage.getItem("collapse")); 
-    console.log('initial isCollapsed', isCollapsed);
-
+    initialize();
+    console.log("Sidebar initialized:", isCollapsed);
   }, []);
 
   useEffect(() => {
-    // Handle resizing and mobile state
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [location.pathname]);
+  }, []);
   return (
     <>
       <Helmet>
