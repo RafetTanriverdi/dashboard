@@ -8,7 +8,11 @@ import { HomeOutlined } from "@ant-design/icons";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { handleResize, initialize, toggleCollapse } from "@rt/store/sidebarSlice";
+import {
+  handleResize,
+  initialize,
+  toggleCollapse,
+} from "@rt/store/sidebarSlice";
 
 const { Sider, Content, Header } = Layout;
 
@@ -25,10 +29,13 @@ const MainLayout = ({ sider, content, title }) => {
 
   useEffect(() => {
     const resizeListener = () => dispatch(handleResize());
-    resizeListener();
-    window.addEventListener("resize", resizeListener);
-    return () => window.removeEventListener("resize", resizeListener);
+    if (typeof window !== "undefined") {
+      resizeListener();
+      window.addEventListener("resize", resizeListener);
+      return () => window.removeEventListener("resize", resizeListener);
+    }
   }, [dispatch]);
+
   return (
     <>
       <Helmet>
