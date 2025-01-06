@@ -121,20 +121,14 @@ Ensure the following tools are installed on your machine:
 Use the following command to clone the project to your local machine:
     
     ```bash
-    bash
-    Kodu kopyala
-    git clone https://github.com/your-repository-name.git
-    
+     git clone https://github.com/your-repository-name.git
     ```
     
 2. **Navigate to the Project Directory**
 Move into the project folder:
     
     ```bash
-    bash
-    Kodu kopyala
-    cd your-repository-name
-    
+    cd your-repository-name   
     ```
     
 3. **Install Dependencies**
