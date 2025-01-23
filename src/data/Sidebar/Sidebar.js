@@ -11,15 +11,25 @@ export const useSidebarStore = create((set) => ({
     set({ isMobile });
   },
 
-  collapsed: cookies.get("collapse") === "true", // Cookie'den başlangıç değeri
+  collapsed: cookies.get("collapse") === "true", 
   setCollapsed: (value) => {
     set({ collapsed: value });
-    cookies.set("collapse", value, { path: "/" }); // Cookie'ye yaz
+    cookies.set("collapse", value, {
+      path: "/",
+      domain: "d3o0qmvpbmut8f.cloudfront.net", 
+      secure: true, 
+      sameSite: "Strict", 
+    }); 
   },
   toggleCollapse: () =>
     set((state) => {
       const newValue = !state.collapsed;
-      cookies.set("collapse", newValue, { path: "/" }); // Cookie'ye yaz
+      cookies.set("collapse", newValue, {
+        path: "/",
+        domain: "d3o0qmvpbmut8f.cloudfront.net", 
+        secure: true, 
+        sameSite: "Strict", 
+      }); 
       return { collapsed: newValue };
     }),
 }));
