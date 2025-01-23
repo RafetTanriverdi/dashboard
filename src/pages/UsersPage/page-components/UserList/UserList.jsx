@@ -13,9 +13,9 @@ import { ENDPOINTS } from "@rt/network/endpoints";
 import dayjs from "dayjs";
 import { Tag } from "antd";
 import { CheckCircleOutlined, SyncOutlined } from "@ant-design/icons";
-import { Can } from "@rt/authorization/can";
 import { Permissions } from "@rt/utils/permission-util";
 import { longDateFormat } from "@rt/utils/long-dateFotmat";
+import { RTButton } from "@rt/components/RTButton";
 
 const TableAntdContainer = ({ style, dataSource }) => {
   const columns = [
@@ -117,19 +117,27 @@ const TableActions = ({ data }) => {
 
   return (
     <Space size="middle">
-      <a role="button" onClick={() => showDrawer(TableView.VIEW)}>
-        View
-      </a>
-      <Can do={Permissions.users.actions.update} on={Permissions.users.subject}>
-        <a role="button" onClick={() => showDrawer(TableView.EDIT)}>
-          Edit
-        </a>
-      </Can>
-      <Can do={Permissions.users.actions.delete} on={Permissions.users.subject}>
-        <a role="button" onClick={() => showDrawer(TableView.DELETE)}>
-          Delete
-        </a>
-      </Can>
+      <RTButton.action
+        action={Permissions.users.actions.read}
+        subject={Permissions.users.subject}
+        onClick={() => showDrawer(TableView.VIEW)}
+        name="View"
+      />
+
+      <RTButton.action
+        action={Permissions.users.actions.update}
+        subject={Permissions.users.subject}
+        onClick={() => showDrawer(TableView.EDIT)}
+        name="Edit"
+      />
+
+      <RTButton.action
+        action={Permissions.users.actions.delete}
+        subject={Permissions.users.subject}
+        onClick={() => showDrawer(TableView.DELETE)}
+        name="Delete"
+      />
+
       {open && type === TableView.VIEW && (
         <ViewUserDrawer onClose={onClose} open={open} inheritedData={data} />
       )}

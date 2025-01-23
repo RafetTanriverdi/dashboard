@@ -1,6 +1,8 @@
+import RTAlert from "@rt/components/RTFeedback/Alert/Alert";
+import RTSkeleton from "@rt/components/RTSkeleton/RTSkeleton";
 import { ENDPOINTS } from "@rt/network/endpoints";
 import axiosInstance from "@rt/network/httpRequester";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Divider } from "antd";
 import { Form } from "antd";
 import { Typography } from "antd";
@@ -53,8 +55,16 @@ const dropdownItems = [
   },
 ];
 
-const EditOrderPanel = ({ data }) => {
+const EditOrderPanel = ({ orderId }) => {
   const queryClient = useQueryClient();
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["Order", orderId],
+    queryFn: () =>
+      axiosInstance
+        .get(ENDPOINTS.ORDERS.GET.replace(":orderId", orderId))
+        .then((res) => res.data),
+  });
 
   let timeLine = [];
 
@@ -108,17 +118,21 @@ const EditOrderPanel = ({ data }) => {
   }
 
   const mutation = useMutation({
-    mutationKey: ["UpdateOrderStatus", data.orderId],
+    mutationKey: ["UpdateOrderStatus", orderId],
     mutationFn: (status) =>
       axiosInstance.patch(
-        ENDPOINTS.ORDERS.UPDATE.replace(":orderId", data.orderId),
+        ENDPOINTS.ORDERS.UPDATE.replace(":orderId", orderId),
         { status: status }
       ),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["Orders List"] });
-      queryClient.invalidateQueries({ queryKey: ["Order", data.orderId] });
+      queryClient.invalidateQueries({ queryKey: ["Order", orderId] });
     },
   });
+
+  if (isLoading) return <RTSkeleton />;
+  if (error)
+    return <RTAlert message={error.response.data.message} type="error" />;
 
   return (
     <>

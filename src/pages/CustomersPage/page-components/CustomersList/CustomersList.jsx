@@ -17,6 +17,8 @@ import { Tag } from "antd";
 import { capitalizeFirstLetter } from "@rt/utils/capitalizeFirstLetter";
 import { longDateFormat } from "@rt/utils/long-dateFotmat";
 import RTAlert from "@rt/components/RTFeedback/Alert/Alert";
+import { RTButton } from "@rt/components/RTButton";
+import { Permissions } from "@rt/utils/permission-util";
 
 const TableAntdContainer = ({ style, dataSource }) => {
   const columns = [
@@ -98,8 +100,9 @@ const TableActions = ({ data }) => {
 
   return (
     <Space>
-      <a
-        role="button"
+      <RTButton.action
+        action={Permissions.customers.actions.details}
+        subject={Permissions.customers.subject}
         onClick={() =>
           navigate(
             generatePath(getRoutePath(ROUTES_ID.customerDetails), {
@@ -107,15 +110,21 @@ const TableActions = ({ data }) => {
             })
           )
         }
-      >
-        View
-      </a>
-      <a role="button" onClick={() => showDrawer(TableView.EDIT)}>
-        Edit
-      </a>
-      <a role="button" onClick={() => showDrawer(TableView.DELETE)}>
-        Delete
-      </a>
+        name="View"
+      />
+      <RTButton.action
+        action={Permissions.customers.actions.update}
+        subject={Permissions.customers.subject}
+        onClick={() => showDrawer(TableView.EDIT)}
+        name="Edit"
+      />
+      <RTButton.action
+        action={Permissions.customers.actions.delete}
+        subject={Permissions.customers.subject}
+        onClick={() => showDrawer(TableView.DELETE)}
+        name="Delete"
+      />
+
       {open && type === TableView.EDIT && (
         <EditCustomerStatusDrawer
           open={open}
@@ -144,7 +153,7 @@ const TableContainer = () => {
 
   dataSource = data?.data
     ?.sort((a, b) => {
-      new Date(a.createdAt) - new Date(b.createdAt);
+      return new Date(b.updatedAt) - new Date(a.updatedAt);
     })
     .map((item) => {
       return {

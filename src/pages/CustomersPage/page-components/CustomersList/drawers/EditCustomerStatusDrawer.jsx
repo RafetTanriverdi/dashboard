@@ -87,7 +87,10 @@ const EditCustomerStatusDrawer = ({ open, onClose, inheritedData }) => {
           </div>
         }
       >
-        <RTAuthContainer>
+        <RTAuthContainer
+          action={Permissions.customers.actions.update}
+          subject={Permissions.customers.subject}
+        >
           <EditCustomerStatusPanel
             id={key}
             newStatus={newStatus}

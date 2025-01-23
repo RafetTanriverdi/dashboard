@@ -3,7 +3,7 @@ import { Breadcrumb, Layout } from "antd";
 import "./MainLayout.scss";
 import { Helmet } from "react-helmet";
 import RTHeader from "@rt/components/RTHeader/RTHeader";
-import {  useEffect } from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { HomeOutlined } from "@ant-design/icons";
 import { useSidebarStore } from "@rt/data/Sidebar/Sidebar";
@@ -19,14 +19,13 @@ const MainLayout = ({ sider, content, title }) => {
 
   useEffect(() => {
     setCollapsed(localStorage.getItem("collapse") === "true");
-
-  }, []);
+  }, [setCollapsed]);
 
   useEffect(() => {
-    // Handle resizing and mobile state
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [location.pathname]);
+  }, [location.pathname, handleResize]);
+
   return (
     <>
       <Helmet>

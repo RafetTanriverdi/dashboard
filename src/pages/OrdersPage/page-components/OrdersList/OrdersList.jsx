@@ -15,6 +15,8 @@ import "./OrdersList.scss";
 import { longDateFormat } from "@rt/utils/long-dateFotmat";
 import dayjs from "dayjs";
 import RTAlert from "@rt/components/RTFeedback/Alert/Alert";
+import { Permissions } from "@rt/utils/permission-util";
+import { RTButton } from "@rt/components/RTButton";
 
 const OrdersListContainer = () => {
   const { data, isLoading, error } = useQuery({
@@ -26,18 +28,20 @@ const OrdersListContainer = () => {
   let tableData = [];
 
   if (hasArrayElement(data)) {
-    tableData = data.map((item) => {
-      return {
-        key: item.orderId,
-        id: item.orderId,
-        customer: item.customerName,
-        customerEmail: item.customerEmail,
-        total: item.amountTotal / 100,
-        createdAt: item.createdAt,
-        status: item.currentStatus,
-        products: item.products.length,
-      };
-    });
+    tableData = data
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      .map((item) => {
+        return {
+          key: item.orderId,
+          id: item.orderId,
+          customer: item.customerName,
+          customerEmail: item.customerEmail,
+          total: item.amountTotal / 100,
+          createdAt: item.createdAt,
+          status: item.currentStatus,
+          products: item.products.length,
+        };
+      });
   }
   if (isLoading) {
     return (
@@ -47,7 +51,7 @@ const OrdersListContainer = () => {
     );
   }
   if (error) {
-    return <RTAlert type='error' message={error.response.data.message} />;
+    return <RTAlert type="error" message={error.response.data.message} />;
   }
   return <OrderListTable data={tableData} />;
 };
@@ -67,10 +71,33 @@ const TableActions = ({ data }) => {
 
   return (
     <Space>
-      <a onClick={() => showDrawer(TableView.VIEW)}>View</a>
-      <a onClick={() => showDrawer(TableView.EDIT)}>Edit</a>
-      <a onClick={() => showDrawer(TableView.DELETE)}>Delete</a>
-      <a onClick={() => showDrawer(TableView.REFUND)}>Refund</a>
+      <RTButton.action
+        action={Permissions.orders.actions.read}
+        subject={Permissions.orders.subject}
+        onClick={() => showDrawer(TableView.VIEW)}
+        name="View"
+      />
+
+      <RTButton.action
+        action={Permissions.orders.actions.update}
+        subject={Permissions.orders.subject}
+        onClick={() => showDrawer(TableView.EDIT)}
+        name="Edit"
+      />
+
+      <RTButton.action
+        action={Permissions.orders.actions.delete}
+        subject={Permissions.orders.subject}
+        onClick={() => showDrawer(TableView.DELETE)}
+        name="Delete"
+      />
+
+      <RTButton.action
+        action={Permissions.orders.actions.refund}
+        subject={Permissions.orders.subject}
+        onClick={() => showDrawer(TableView.REFUND)}
+        name="Refund"
+      />
 
       {open && type === TableView.VIEW && (
         <ViewOrderDrawer onClose={onClose} open={open} data={data} />

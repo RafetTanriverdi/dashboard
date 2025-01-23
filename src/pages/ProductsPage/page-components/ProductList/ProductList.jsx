@@ -139,7 +139,7 @@ const TableActions = ({ data, categoriesData }) => {
         name="Edit"
       />
       <RTButton.action
-        action={Permissions.products.actions.update}
+        action={Permissions.products.actions.delete}
         subject={Permissions.products.subject}
         onClick={() => showDrawer(TableView.DELETE)}
         name="Delete"
