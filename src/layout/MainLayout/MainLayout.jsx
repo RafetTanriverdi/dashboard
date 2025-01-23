@@ -11,7 +11,7 @@ import { useSidebarStore } from "@rt/data/Sidebar/Sidebar";
 const { Sider, Content, Header } = Layout;
 
 const MainLayout = ({ sider, content, title }) => {
-  const { isCollapsed, isMobile, handleResize, toggleCollapse } =
+  const { isMobile, handleResize, collapsed, toggleCollapse } =
     useSidebarStore();
 
   const location = useLocation();
@@ -21,6 +21,8 @@ const MainLayout = ({ sider, content, title }) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [handleResize]);
+
+  
 
   return (
     <>
@@ -32,7 +34,7 @@ const MainLayout = ({ sider, content, title }) => {
       <Layout className="container">
         <Header className="header">
           <RTHeader
-            open={isCollapsed}
+            open={collapsed}
             setOpen={toggleCollapse}
             isMobile={isMobile}
           />
@@ -40,7 +42,7 @@ const MainLayout = ({ sider, content, title }) => {
         <Layout>
           <Sider
             collapsible
-            collapsed={isCollapsed}
+            collapsed={collapsed}
             onCollapse={toggleCollapse}
             breakpoint="lg"
             collapsedWidth={isMobile ? 0 : 50}

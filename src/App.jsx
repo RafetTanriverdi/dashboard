@@ -43,6 +43,9 @@ function App() {
       }
     };
     user();
+    if (cookies.collapse === undefined) {
+      setCookie("collapse", true, { path: "/" }); 
+    }
   }, []);
 
   useEffect(() => {
