@@ -11,20 +11,16 @@ import { useSidebarStore } from "@rt/data/Sidebar/Sidebar";
 const { Sider, Content, Header } = Layout;
 
 const MainLayout = ({ sider, content, title }) => {
-  const { isCollapsed, isMobile, handleResize, toggleCollapse, setCollapsed } =
+  const { isCollapsed, isMobile, handleResize, toggleCollapse } =
     useSidebarStore();
 
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
 
   useEffect(() => {
-    setCollapsed(localStorage.getItem("collapse") === "true");
-  }, [setCollapsed]);
-
-  useEffect(() => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [location.pathname, handleResize]);
+  }, [handleResize]);
 
   return (
     <>
