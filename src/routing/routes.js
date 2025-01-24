@@ -145,22 +145,22 @@ export const routes = [
     fileName: "CalendarPageAlias",
     isPublic: false,
   },
-  {
-    id: ROUTES_ID.feedback,
-    path: "/feedback",
-    title: "Feedback",
-    modulePath: "FeedbackPage/FeedbackPage",
-    fileName: "FeedbackPageAlias",
-    isPublic: false,
-  },
-  {
-    id: ROUTES_ID.faq,
-    path: "/faq",
-    title: "FAQ",
-    modulePath: "FAQPage/FAQPage",
-    fileName: "FAQPageAlias",
-    isPublic: false,
-  },
+  // {
+  //   id: ROUTES_ID.feedback,
+  //   path: "/feedback",
+  //   title: "Feedback",
+  //   modulePath: "FeedbackPage/FeedbackPage",
+  //   fileName: "FeedbackPageAlias",
+  //   isPublic: false,
+  // },
+  // {
+  //   id: ROUTES_ID.faq,
+  //   path: "/faq",
+  //   title: "FAQ",
+  //   modulePath: "FAQPage/FAQPage",
+  //   fileName: "FAQPageAlias",
+  //   isPublic: false,
+  // },
 ];
 
 export const FLAT_ROUTES = flatRoutes(routes);

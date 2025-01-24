@@ -15,8 +15,8 @@ import { Truck } from "lucide-react";
 import { SquareUser } from "lucide-react";
 import { Network } from "lucide-react";
 import { CalendarRange } from "lucide-react";
-import { Megaphone } from "lucide-react";
-import { ShieldQuestion } from "lucide-react";
+// import { Megaphone } from "lucide-react";
+// import { ShieldQuestion } from "lucide-react";
 import { LogOut } from "lucide-react";
 
 Amplify.configure(awsmobile);
@@ -115,16 +115,16 @@ const RTSider = () => {
       icon: <CalendarRange />,
       label: <NavLink to={getRoutePath(ROUTES_ID.calendar)}>Calendar</NavLink>,
     },
-    {
-      key: "feedback",
-      icon: <Megaphone />,
-      label: <NavLink to={getRoutePath(ROUTES_ID.feedback)}>Feedback</NavLink>,
-    },
-    {
-      key: "faq",
-      icon: <ShieldQuestion />,
-      label: <NavLink to={getRoutePath(ROUTES_ID.faq)}>FAQ</NavLink>,
-    },
+    // {
+    //   key: "feedback",
+    //   icon: <Megaphone />,
+    //   label: <NavLink to={getRoutePath(ROUTES_ID.feedback)}>Feedback</NavLink>,
+    // },
+    // {
+    //   key: "faq",
+    //   icon: <ShieldQuestion />,
+    //   label: <NavLink to={getRoutePath(ROUTES_ID.faq)}>FAQ</NavLink>,
+    // },
   ];
 
   const signOutItem = {
