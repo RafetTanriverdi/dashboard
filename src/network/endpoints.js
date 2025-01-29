@@ -5,6 +5,7 @@ export const ENDPOINTS = {
     GET: "users/:userId",
     ADD: "users",
     LIST: "users",
+    TEAM:'users/team',
     MYPROFILE: {
       GET: "users/:userId/my-profile",
       UPDATE: "users/:userId/my-profile",

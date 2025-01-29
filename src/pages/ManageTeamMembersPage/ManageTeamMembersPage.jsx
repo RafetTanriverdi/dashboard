@@ -1,33 +1,68 @@
 import { useCallback } from "react";
 import ReactFlow, {
-  //addEdge,
-  ConnectionLineType,
+  Controls,
+  MiniMap,
   useNodesState,
   useEdgesState,
-  MiniMap,
-  Controls,
-  Panel,
+  ConnectionLineType,
 } from "reactflow";
 import dagre from "dagre";
 
-import { initialNodes, initialEdges } from "./nodes-edges.js";
-
 import "reactflow/dist/style.css";
-import MainLayout from "@rt/layout/MainLayout/MainLayout.jsx";
-import RTSider from "@rt/components/RTSider/RTSider.jsx";
-import { Segmented } from "antd";
-import { ArrowDownOutlined, ArrowRightOutlined } from "@ant-design/icons";
-import { Typography } from "antd";
+import MainLayout from "@rt/layout/MainLayout/MainLayout";
+import RTSider from "@rt/components/RTSider/RTSider";
+import { useQuery } from "@tanstack/react-query";
+import { ENDPOINTS } from "@rt/network/endpoints";
+import axiosInstance from "@rt/network/httpRequester";
 
+// Roller
+const roleOptions = [
+  { name: "Owner", rank: 1, permissions: ["All:Access"] },
+  {
+    name: "Admin",
+    rank: 2,
+    permissions: [
+      "Product:Create",
+      "Product:Read",
+      "Product:Update",
+      "Product:Delete",
+      "User:Manage",
+    ],
+  },
+  {
+    name: "Product Manager",
+    rank: 3,
+    permissions: ["Product:Create", "Product:Read", "Product:Update"],
+  },
+  {
+    name: "Customer Service",
+    rank: 4,
+    permissions: ["Customer:Read", "Order:Update", "Order:Refund"],
+  },
+  {
+    name: "User",
+    rank: 5,
+    permissions: ["Product:Read", "Order:Read", "Customer:Details"],
+  },
+];
+
+// Kullanıcılar
+const users = [
+  { id: "user1", name: "Alice", roles: ["Owner"] },
+  { id: "user2", name: "Bob", roles: ["Admin"] },
+  { id: "user3", name: "Charlie", roles: ["Product Manager", "User"] },
+  { id: "user4", name: "Diana", roles: ["Customer Service", "User"] },
+];
+
+// Dagre Konfigürasyonu
 const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
 
 const nodeWidth = 172;
 const nodeHeight = 36;
 
-const getLayoutedElements = (nodes, edges, direction = "TB") => {
-  const isHorizontal = direction === "LR";
-  dagreGraph.setGraph({ rankdir: direction });
+const getLayoutedElements = (nodes, edges) => {
+  dagreGraph.setGraph({ rankdir: "TB" });
 
   nodes.forEach((node) => {
     dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
@@ -41,101 +76,104 @@ const getLayoutedElements = (nodes, edges, direction = "TB") => {
 
   nodes.forEach((node) => {
     const nodeWithPosition = dagreGraph.node(node.id);
-    node.targetPosition = isHorizontal ? "left" : "top";
-    node.sourcePosition = isHorizontal ? "right" : "bottom";
-
-    // We are shifting the dagre node position (anchor=center center) to the top left
-    // so it matches the React Flow node anchor point (top left).
     node.position = {
       x: nodeWithPosition.x - nodeWidth / 2,
       y: nodeWithPosition.y - nodeHeight / 2,
     };
-
-    return node;
   });
 
   return { nodes, edges };
 };
 
-const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
-  initialNodes,
-  initialEdges
-);
+// Düğümleri ve Kenarları Dinamik Oluşturma
+const generateNodesAndEdges = (roles, users) => {
+  const nodes = roles.map((role) => ({
+    id: role.name,
+    data: { label: role.name },
+    position: { x: 0, y: 0 },
+    style: { background: "#D6EAF8", border: "1px solid #1F618D" },
+  }));
 
-export const LayoutFlow = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(layoutedNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(layoutedEdges);
+  users.forEach((user) => {
+    nodes.push({
+      id: user.id,
+      data: { label: `${user.name}\nRoles: ${user.roles.join(", ")}` },
+      position: { x: 0, y: 0 },
+      style: { background: "#FADBD8", border: "1px solid #CB4335" },
+    });
+  });
 
-  // const onConnect = useCallback(
-  //   (params) =>
-  //     setEdges((eds) =>
-  //       addEdge(
-  //         { ...params, type: ConnectionLineType.SmoothStep, animated: true },
-  //         eds
-  //       )
-  //     ),
-  //   []
-  // );
-
-  const onLayout = useCallback(
-    (direction) => {
-      const { nodes: layoutedNodes, edges: layoutedEdges } =
-        getLayoutedElements(nodes, edges, direction);
-
-      setNodes([...layoutedNodes]);
-      setEdges([...layoutedEdges]);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [nodes, edges]
+  const edges = users.flatMap((user) =>
+    user.roles.map((role) => ({
+      id: `edge-${user.id}-${role}`,
+      source: role,
+      target: user.id,
+      type: "smoothstep",
+    }))
   );
+
+  return getLayoutedElements(nodes, edges);
+};
+
+// Ana Bileşen
+const RoleHierarchyFlow = () => {
+  const { nodes, edges } = generateNodesAndEdges(roleOptions, users);
+  const [currentNodes, setNodes, onNodesChange] = useNodesState(nodes);
+  const [currentEdges, setEdges, onEdgesChange] = useEdgesState(edges);
+
+  const {data} = useQuery({
+    queryKey: ["team-members"],
+    queryFn:() => {
+      return axiosInstance.get(ENDPOINTS.USER.TEAM).then((res) => res.data);
+    },
+  });
+
+  console.log(data);
+  const onLayout = useCallback(() => {
+    const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
+      currentNodes,
+      currentEdges
+    );
+    setNodes(layoutedNodes);
+    setEdges(layoutedEdges);
+  }, [currentNodes, currentEdges]);
+
   return (
-    <>
+    <div style={{ width: "100%", height: "100vh" }}>
       <ReactFlow
-        nodes={nodes}
-        edges={edges}
+        nodes={currentNodes}
+        edges={currentEdges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         connectionLineType={ConnectionLineType.SmoothStep}
         fitView
       >
-        <Panel
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            width: "100%",
-            padding: " 0 10px",
-          }}
-        >
-          <Typography.Title
-            level={3}
-          >
-            Your Team
-          </Typography.Title>
-          <Segmented
-            style={{ margin: "10px" }}
-            options={[
-              { value: "TB", label: "Vertical", icon: <ArrowDownOutlined /> },
-              {
-                value: "LR",
-                label: "Horizontial",
-                icon: <ArrowRightOutlined />,
-              },
-            ]}
-            onChange={(e) => onLayout(e)}
-          />
-        </Panel>
-        <MiniMap />
         <Controls />
+        <MiniMap />
+        <button
+          style={{
+            position: "absolute",
+            top: 10,
+            left: 10,
+            padding: "5px 10px",
+            backgroundColor: "#3498DB",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+          }}
+          onClick={onLayout}
+        >
+          Reorganize Layout
+        </button>
       </ReactFlow>
-    </>
+    </div>
   );
 };
 
 const ManageTeamMembersPageContainer = () => {
   return (
     <div style={{ width: "100%", height: "100%" }}>
-      <LayoutFlow />
+      <RoleHierarchyFlow />
     </div>
   );
 };
