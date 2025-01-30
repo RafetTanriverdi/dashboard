@@ -1,3 +1,4 @@
+import awsmobile from "@rt/aws-exports";
 import { RTButton } from "@rt/components/RTButton";
 import { RTInput } from "@rt/components/RTInput";
 import LoginLayout from "@rt/layout/LoginLayout/LoginLayout";
@@ -5,13 +6,17 @@ import { getRoutePath } from "@rt/routing/routes";
 import { ROUTES_ID } from "@rt/routing/routes-id";
 import { Card } from "antd";
 import { Form } from "antd";
+import { Amplify } from "aws-amplify";
 import { confirmSignIn } from "aws-amplify/auth";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 
+Amplify.configure(awsmobile)
 const ForceChangePasswordPageContainer = () => {
   const [newPassword, setNewPassword] = useState("");
+const navigate = useNavigate();
 
   async function handlePasswordChange() {
     try {
@@ -23,7 +28,7 @@ const ForceChangePasswordPageContainer = () => {
       })
 
       if (isSignedIn) {
-        Navigate(getRoutePath(ROUTES_ID.dashboard));
+        navigate(getRoutePath(ROUTES_ID.dashboard));
       } 
     } catch (error) {
       console.error("Error confirming sign in", error);
