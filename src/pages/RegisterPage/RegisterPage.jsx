@@ -76,19 +76,19 @@ const RegisterPageContainer = () => {
             style={{ gap: "10px", background: "none", marginBottom: "20px" }}
           ></Layout>
           <RTInput.text
-            label="username"
+            label="Username"
             name="username"
             className="register-input"
             onChange={(e) => setUsername(e.target.value)}
           />
           <RTInput.text
-            label="email"
+            label="E-mail"
             name="email"
             className="register-input"
             onChange={(e) => setEmail(e.target.value)}
           />
           <RTInput.password
-            label="password"
+            label="Password"
             name="password "
             className="register-input"
             onChange={(e) => setPassword(e.target.value)}

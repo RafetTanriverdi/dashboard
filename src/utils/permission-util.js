@@ -25,7 +25,7 @@ export const Permissions = {
   users: {
     subject: "User",
     actions: {
-      create: "Create",
+      create:"Create",
       read: "Read",
       update: "Update",
       delete: "Delete",
